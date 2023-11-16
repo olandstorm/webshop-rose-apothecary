@@ -1,0 +1,17 @@
+body {
+  font-family: "Roboto", sans-serif;
+  background-color: $color_white;
+  color: $color_black;
+}
+
+a {
+  color: $color_black;
+  text-decoration: none;
+  &:visited {
+    color: $color_grey;
+  }
+}
+
+.fixed_background {
+  position: fixed;
+}

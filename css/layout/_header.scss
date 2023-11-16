@@ -1,0 +1,16 @@
+header {
+  background-color: $color_deep_grey;
+  max-width: 100%;
+  width: 100vw;
+  min-height: 60px;
+  position: sticky;
+  top: 0;
+  padding: 6vw 0 8vw 0;
+
+  .header_logo {
+    width: 30%;
+    min-width: 100px;
+    height: auto;
+    @include center_center;
+  }
+}

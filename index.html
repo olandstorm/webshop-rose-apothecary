@@ -6,11 +6,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rose Apothecary</title>
     <link rel="stylesheet" href="css/style.css" type="text/css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,700;1,300;1,400&display=swap"
+        rel="stylesheet">
     <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
     <link rel="manifest" href="/site.webmanifest">
-
     <meta name="description"
         content="Find anything you need from our picturesque store. It's a general store, but it's also a very specific store. It's also not just a store, it's like a place where people can come and get coffee or drinks, but it's not a coffee shop, nor is it a bar. Yeah, it's an environment. And yes, we will be selling things, but it's more like a branded immersive experience.">
     <meta property="og:title" content="One of a kind">
@@ -66,10 +69,311 @@
       "priceRange": "$$$"
     }
   </script>
-
 </head>
 
 <body>
+    <header>
+        <button id="toggleNav" aria-label="Open menu" class="menu_btn">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        <nav id="fullNav">
+            <ul>
+                <a href="#" class="menuLink">
+                    <li>Home</li>
+                </a>
+                <a href="#" class="menuLink">
+                    <li>About us</li>
+                </a>
+                <a href="#" class="menuLink">
+                    <li>News</li>
+                </a>
+                <a href="#" class="menuLink">
+                    <li>Contact</li>
+                </a>
+            </ul>
+            <!-- <div><button id="toggleTheme" aria-label="Change color theme"></button></div> -->
+        </nav>
+        <img src="assets/img/logo/rose_apothecary_w.webp" alt="Logo of Rose Apothecary" width="905" height="394"
+            class="header_logo">
+        <!-- <button id="shoppingCart" aria-label="Shopping cart"></button> -->
+    </header>
+
+    <main>
+        <section class="product_page">
+            <article>
+                <h1>Rose Apothecary</h1>
+                <p>
+                    We finally moved online. From your favorite small town to the world wide web. Find anything you need
+                    from
+                    our picturesque store. It's a general store, but it's also a very specific store. It's also not just
+                    a
+                    store, it's like a place where people can come and get coffee or drinks, but it's not a coffee shop,
+                    nor
+                    is it a bar. Yeah, it's an environment. And yes, we will be selling things, but it's more like a
+                    branded
+                    immersive experience.
+                </p>
+            </article>
+            <div>
+                <button id="filterBtn" aria-label="Filter products"></button>
+                <button id="sortBtn" aria-label="Sort products"></button>
+                <div id="sortFilterField">
+                    <!-- Här kommer sorterings och filtreringsalternativen upp -->
+                </div>
+            </div>
+            <section class="product_container">
+                <!-- Dessa är bara för styling och tas bort sen -->
+                <article>
+                    <img src="assets/img/products/bed_linen_1.webp" alt="" height="600" width="783">
+                    <h2>Product</h2>
+                    <p>Product description with some text about what the product is.</p>
+                    <p>Price: 13 $</p>
+                    <p>Rating: 5/5</p>
+                    <button class="decrease_btn">-</button><button class="increase_btn">+</button><input type="number">
+                    <button class="total_btn">Buy 65$</button>
+                </article>
+                <article>
+                    <img src="assets/img/products/bed_linen_1.webp" alt="" height="600" width="783">
+                    <h2>Product</h2>
+                    <p>Product description with some text about what the product is.</p>
+                    <p>Price: 13 $</p>
+                    <p>Rating: 5/5</p>
+                    <button class="decrease_btn">-</button><button class="increase_btn">+</button><input type="number">
+                    <button class="total_btn">Buy 65$</button>
+                </article>
+                <article>
+                    <img src="assets/img/products/bed_linen_1.webp" alt="" height="600" width="783">
+                    <h2>Product</h2>
+                    <p>Product description with some text about what the product is.</p>
+                    <p>Price: 13 $</p>
+                    <p>Rating: 5/5</p>
+                    <button class="decrease_btn">-</button><button class="increase_btn">+</button><input type="number">
+                    <button class="total_btn">Buy 65$</button>
+                </article>
+                <article>
+                    <img src="assets/img/products/bed_linen_1.webp" alt="" height="600" width="783">
+                    <h2>Product</h2>
+                    <p>Product description with some text about what the product is.</p>
+                    <p>Price: 13 $</p>
+                    <p>Rating: 5/5</p>
+                    <button class="decrease_btn">-</button><button class="increase_btn">+</button><input type="number">
+                    <button class="total_btn">Buy 65$</button>
+                </article>
+                <article>
+                    <img src="assets/img/products/bed_linen_1.webp" alt="" height="600" width="783">
+                    <h2>Product</h2>
+                    <p>Product description with some text about what the product is.</p>
+                    <p>Price: 13 $</p>
+                    <p>Rating: 5/5</p>
+                    <button class="decrease_btn">-</button><button class="increase_btn">+</button><input type="number">
+                    <button class="total_btn">Buy 65$</button>
+                </article>
+                <article>
+                    <img src="assets/img/products/bed_linen_1.webp" alt="" height="600" width="783">
+                    <h2>Product</h2>
+                    <p>Product description with some text about what the product is.</p>
+                    <p>Price: 13 $</p>
+                    <p>Rating: 5/5</p>
+                    <button class="decrease_btn">-</button><button class="increase_btn">+</button><input type="number">
+                    <button class="total_btn">Buy 65$</button>
+                </article>
+                <article>
+                    <img src="assets/img/products/bed_linen_1.webp" alt="" height="600" width="783">
+                    <h2>Product</h2>
+                    <p>Product description with some text about what the product is.</p>
+                    <p>Price: 13 $</p>
+                    <p>Rating: 5/5</p>
+                    <button class="decrease_btn">-</button><button class="increase_btn">+</button><input type="number">
+                    <button class="total_btn">Buy 65$</button>
+                </article>
+                <article>
+                    <img src="assets/img/products/bed_linen_1.webp" alt="" height="600" width="783">
+                    <h2>Product</h2>
+                    <p>Product description with some text about what the product is.</p>
+                    <p>Price: 13 $</p>
+                    <p>Rating: 5/5</p>
+                    <button class="decrease_btn">-</button><button class="increase_btn">+</button><input type="number">
+                    <button class="total_btn">Buy 65$</button>
+                </article>
+                <article>
+                    <img src="assets/img/products/bed_linen_1.webp" alt="" height="600" width="783">
+                    <h2>Product</h2>
+                    <p>Product description with some text about what the product is.</p>
+                    <p>Price: 13 $</p>
+                    <p>Rating: 5/5</p>
+                    <button class="decrease_btn">-</button><button class="increase_btn">+</button><input type="number">
+                    <button class="total_btn">Buy 65$</button>
+                </article>
+                <article>
+                    <img src="assets/img/products/bed_linen_1.webp" alt="" height="600" width="783">
+                    <h2>Product</h2>
+                    <p>Product description with some text about what the product is.</p>
+                    <p>Price: 13 $</p>
+                    <p>Rating: 5/5</p>
+                    <button class="decrease_btn">-</button><button class="increase_btn">+</button><input type="number">
+                    <button class="total_btn">Buy 65$</button>
+                </article>
+            </section>
+        </section>
+        <section class="cart_page">
+
+
+
+            <h2>Your order</h2>
+            <div>
+                <button id="codeBtn">Add code</button>
+                <div>
+                    <p>Add your code for campains or special offers:</p>
+                    <input type="text" id="codeInput"><button id="addCode">Add</button>
+                </div>
+                <p><span>Product</span><span>Quantity</span><span>Total</span></p>
+                <article>
+                    <img src="assets/img/products/bed_linen_1.webp" alt="" height="600" width="783">
+                    <h2>Product</h2>
+                    <button class="decrease_btn">-</button><span class="product_amount">1</span><button
+                        class="increase_btn">+</button>
+                    <p>Price: 13$</p>
+                    <p>Total: 13$</p>
+                </article>
+                <article>
+                    <img src="assets/img/products/bed_linen_1.webp" alt="" height="600" width="783">
+                    <h2>Product</h2>
+                    <button class="decrease_btn">-</button><span class="product_amount">6</span><button
+                        class="increase_btn">+</button>
+                    <p>Price: 13 $</p>
+                    <p>Total: 56 $</p>
+                </article>
+                <div id="checkoutTotal">
+                    <!-- Här kommer en rad med rabatt läggas in också om det tillämpas -->
+                    <p>Shipping</p>
+                    <p id="shippingSum">69 $</p>
+                    <p>Total inc VAT</p>
+                    <p>69 $</p>
+                </div>
+            </div>
+            <form>
+                <fieldset>
+                    <legend>Please enter your information to continue</legend>
+                    <label>
+                        <span>First name</span>
+                        <input type="text" placeholder="First Name">
+                    </label>
+                    <label>
+                        <span>Second name</span>
+                        <input type="text" placeholder="Second Name">
+                    </label>
+                    <label>
+                        <span>Street</span>
+                        <input type="text" placeholder="Street">
+                    </label>
+                    <label>
+                        <span>Postal code</span>
+                        <input type="text" placeholder="Postal Code">
+                    </label>
+                    <label>
+                        <span>Postal area</span>
+                        <input type="text" placeholder="Postal Area">
+                    </label>
+                    <label>
+                        <span>Door code, if needed</span>
+                        <input type="number">
+                    </label>
+                    <label>
+                        <span>Phone number</span>
+                        <input type="tel" placeholder="Phone Number">
+                    </label>
+                    <label>
+                        <span>Email</span>
+                        <input type="email" placeholder="Your Email">
+                    </label>
+                    <label>
+                        <span>Card</span>
+                        <input type="radio" name="payment_method">
+                    </label>
+                    <label>
+                        <span>Credit</span>
+                        <input type="radio" name="payment_method">
+                    </label>
+                </fieldset>
+                <fieldset id="cardForm">
+                    <legend>Card</legend>
+                    <label>
+                        <span>Card number</span>
+                        <input type="number">
+                    </label>
+                    <label>
+                        <span>Expiration date</span>
+                        <select name="year">
+                            <option value="">Year</option>
+                            <option value="2023">2023</option>
+                            <option value="2024">2024</option>
+                            <option value="2025">2025</option>
+                            <option value="2026">2026</option>
+                            <option value="2027">2027</option>
+                            <option value="2028">2028</option>
+                            <option value="2029">2029</option>
+                            <option value="2030">2030</option>
+                        </select>
+                        <select name="month">
+                            <option value="">Month</option>
+                            <option value="01">01</option>
+                            <option value="02">02</option>
+                            <option value="03">03</option>
+                            <option value="04">04</option>
+                            <option value="05">05</option>
+                            <option value="06">06</option>
+                            <option value="07">07</option>
+                            <option value="08">08</option>
+                            <option value="09">09</option>
+                            <option value="10">10</option>
+                            <option value="11">11</option>
+                            <option value="12">12</option>
+                        </select>
+                    </label>
+                </fieldset>
+                <fieldset id="creditForm">
+                    <legend>Credit</legend>
+                    <label>
+                        <span>Personal number</span>
+                        <input type="text">
+                    </label>
+                </fieldset>
+                <fieldset>
+                    <label>
+                        <span>Would you like our newsletter and recieve our amazing offers before others?</span>
+                        <input type="checkbox" checked>
+                    </label>
+                    <label>
+                        <span>Do you agree to our privacy policy?</span>
+                        <input type="checkbox">
+                    </label>
+                    <button id="checkoutBtn" type="submit">Checkout</button>
+                    <button id="clearBtn" type="reset">Clear all</button>
+                </fieldset>
+            </form>
+
+        </section>
+    </main>
+    <footer>
+        <div class="flower_img"></div>
+        <section>
+            <h3>Rose Apothecary</h3>
+            <address>
+                <span>Main road 4,</span>
+                <span>Schitt's Creek,</span>
+                <span>Elmdale County, Ontario,</span>
+                <span>Canada</span>
+                <a href="mailto:info@roseapothecary.com">info@roseapothecary.com</a>
+            </address>
+        </section>
+        <div class="flower_img"></div>
+    </footer>
+
+
+
+
 
     <script src="js/main.js"></script>
 </body>
