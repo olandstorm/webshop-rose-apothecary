@@ -14,3 +14,7 @@
 ## Location
 
     Main road 4, Schitt's Creek, Elmdale County, Ontario, Canada
+
+## Slogan
+
+    'One of a kind'
