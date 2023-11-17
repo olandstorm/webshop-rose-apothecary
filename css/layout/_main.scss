@@ -1,0 +1,29 @@
+.product_page {
+  background-color: $color_white;
+  color: $color_black;
+
+  .description_card {
+    background-color: $color_light_grey;
+    text-align: center;
+    margin: 50px auto 90px auto;
+    width: 90vw;
+    padding: 30px 5vw;
+
+    h1 {
+      padding-top: 20px;
+      padding-bottom: 10px;
+    }
+
+    img {
+      height: auto;
+      width: 75%;
+      max-width: 350px;
+      margin: 20px auto;
+    }
+  }
+}
+
+.cart_page {
+  background-color: red;
+  @include visually_hidden;
+}

@@ -13,4 +13,14 @@ header {
     height: auto;
     @include center_center;
   }
+
+  .shopping_btn {
+    @include header_btn;
+    right: 8px;
+    top: 10px;
+    z-index: 999;
+  }
+  .shopping_black {
+    color: $color_black;
+  }
 }

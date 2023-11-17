@@ -3,24 +3,46 @@ nav.open {
   position: fixed;
   width: 100vw;
   max-width: 100%;
-  height: 100vh;
-  max-height: 100%;
+  height: 100%;
   top: 0;
   left: 0;
   padding-top: 60px;
-  overflow: visible;
+  z-index: 50;
+  overflow-y: auto;
 
   ul {
     list-style: none;
     padding: 0;
     width: 90%;
-    margin: auto;
+    margin: 0 auto 0;
     li {
       margin-top: 20px;
       border-bottom: $color_black 1px solid;
       color: $color_black;
       text-transform: uppercase;
     }
+  }
+
+  .nav_spacer {
+    height: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+  .theme_btn {
+    cursor: pointer;
+    border: 0;
+    padding: 0;
+    margin-left: 5vw;
+    background: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .light_mode_icon {
+    @include visually_hidden;
   }
 }
 
@@ -29,29 +51,19 @@ nav:not(.open) {
 }
 
 .menu_btn {
+  @include header_btn;
   border-radius: 8px;
-  position: absolute;
-  top: 10px;
   left: 8px;
-  height: 35px;
-  width: 35px;
-  padding: 0;
-  border: 0;
-  cursor: pointer;
-  color: #fff;
-  background: transparent;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  top: 10px;
   flex-wrap: wrap;
   z-index: 99;
   span {
     display: block;
     background: $color_white;
-    width: 35px;
+    width: 25px;
     height: 3px;
     border-radius: 4px;
-    margin-bottom: 6px;
+    margin-bottom: 5px;
     transition: all 0.4s ease-in-out;
   }
   &.open {

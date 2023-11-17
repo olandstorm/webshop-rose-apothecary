@@ -10,6 +10,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,700;1,300;1,400&display=swap"
         rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
     <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
@@ -79,31 +80,42 @@
             <span></span>
         </button>
         <nav id="fullNav">
-            <ul>
-                <a href="#" class="menuLink">
-                    <li>Home</li>
-                </a>
-                <a href="#" class="menuLink">
-                    <li>About us</li>
-                </a>
-                <a href="#" class="menuLink">
-                    <li>News</li>
-                </a>
-                <a href="#" class="menuLink">
-                    <li>Contact</li>
-                </a>
-            </ul>
-            <!-- <div><button id="toggleTheme" aria-label="Change color theme"></button></div> -->
+            <div class="nav_spacer">
+                <ul>
+                    <a href="#" class="menuLink">
+                        <li>Home</li>
+                    </a>
+                    <a href="#" class="menuLink">
+                        <li>About us</li>
+                    </a>
+                    <a href="#" class="menuLink">
+                        <li>News</li>
+                    </a>
+                    <a href="#" class="menuLink">
+                        <li>Contact</li>
+                    </a>
+                </ul>
+                <button id="toggleTheme" class="theme_btn" aria-label="Change color theme">
+                    <span class="material-symbols-outlined dark_mode_icon">
+                        dark_mode
+                    </span>
+                    <span class="material-symbols-outlined light_mode_icon">
+                        light_mode
+                    </span>
+                </button>
         </nav>
         <img src="assets/img/logo/rose_apothecary_w.webp" alt="Logo of Rose Apothecary" width="905" height="394"
             class="header_logo">
-        <!-- <button id="shoppingCart" aria-label="Shopping cart"></button> -->
+        <button id="shoppingCart" class="shopping_btn"><span class="material-symbols-outlined">
+                shopping_cart
+            </span></button>
+        </div>
     </header>
 
     <main>
         <section class="product_page">
-            <article>
-                <h1>Rose Apothecary</h1>
+            <article class="description_card">
+                <h1>Best wishes and warmest regards</h1>
                 <p>
                     We finally moved online. From your favorite small town to the world wide web. Find anything you need
                     from
@@ -115,6 +127,8 @@
                     branded
                     immersive experience.
                 </p>
+                <img src="assets/img/logo/phrase_b.webp" alt="A sign that says handcrafted with care" width="650"
+                    height="50">
             </article>
             <div>
                 <button id="filterBtn" aria-label="Filter products"></button>

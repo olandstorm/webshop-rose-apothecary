@@ -1,6 +1,6 @@
 /**
  *      [] Skriv pseudokod
- *      []
+ *      [] Gör så att menyn stängs när man klickar på kundvagnen i menyn
  *      []
  *      []
  *      []
@@ -12,30 +12,22 @@ const menuBtn = document.querySelector('#toggleNav');
 const nav = document.querySelector('#fullNav');
 const bodyTag = document.body;
 const menuLinks = document.querySelectorAll('.menuLink');
+const shoppingCart = document.querySelector('#shoppingCart');
 
 function toggleMenu() {
   const isOpen = nav.classList.toggle('open');
   menuBtn.classList.toggle('open');
+  bodyTag.classList.toggle('fixed_background');
+  shoppingCart.classList.toggle('shopping_black');
   if (isOpen) {
     menuBtn.setAttribute('aria-label', 'Close meny');
-    bodyTag.classList.add('fixed_background');
   } else {
     menuBtn.setAttribute('aria-label', 'Open meny');
-    bodyTag.classList.remove('fixed_background');
   }
 }
-
-/* function closeMenu() {
-  menuBtn.classList.toggle('open');
-  nav.classList.toggle('open');
-} */
 
 menuLinks.forEach((item) => {
   item.addEventListener('click', toggleMenu);
 });
 
 menuBtn.addEventListener('click', toggleMenu);
-
-/* for (let i = 0; i < menuLinks.length; i += 1) {
-  menuLinks[i].addEventListener('click', closeMenu);
-} */
