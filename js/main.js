@@ -14,6 +14,7 @@ const bodyTag = document.body;
 const menuLinks = document.querySelectorAll('.menuLink');
 const shoppingCart = document.querySelector('#shoppingCart');
 
+// Funktion för att öppna och stänga navigationsmenyn, även med länkarna
 function toggleMenu() {
   const isOpen = nav.classList.toggle('open');
   menuBtn.classList.toggle('open');
@@ -26,8 +27,11 @@ function toggleMenu() {
   }
 }
 
+// Loop med event för länkarna i navigationsmenyn
+// ! Medveten anonym funktion !
 menuLinks.forEach((item) => {
   item.addEventListener('click', toggleMenu);
 });
 
+// Event för menyknapp
 menuBtn.addEventListener('click', toggleMenu);

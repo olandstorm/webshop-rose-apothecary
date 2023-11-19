@@ -21,6 +21,14 @@
       margin: 20px auto;
     }
   }
+
+  .product_container {
+    display: flex;
+    margin: auto;
+    flex-wrap: wrap;
+    width: 90vw;
+    justify-content: space-between;
+  }
 }
 
 .cart_page {
