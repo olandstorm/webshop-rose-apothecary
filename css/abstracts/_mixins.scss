@@ -57,11 +57,28 @@
   }
 }
 
+@mixin nav_open($light-theme: true) {
+  @if $light-theme {
+    background-color: $color_canvas;
+    color: $color_text;
+  } @else {
+    background-color: $color_secondary_dark;
+    color: $color_text_dark;
+  }
+}
 @mixin reversed($light-theme: true) {
   @if $light-theme {
     background-color: $color_text;
   } @else {
     background-color: $color_text_dark;
+  }
+}
+
+@mixin text_color($light-theme: true) {
+  @if $light-theme {
+    color: $color_text;
+  } @else {
+    color: $color_text_dark;
   }
 }
 
@@ -78,5 +95,13 @@
     border-bottom: $color_text 1px solid;
   } @else {
     border-bottom: $color_text_dark 1px solid;
+  }
+}
+
+@mixin product_card_color($light-theme: true) {
+  @if $light-theme {
+    background-color: $color_primary;
+  } @else {
+    background-color: $color_primary_dark;
   }
 }

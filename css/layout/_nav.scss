@@ -1,7 +1,7 @@
 nav.open {
-  @include theme_colors($light-theme: true);
+  @include nav_open($light-theme: true);
   body.dark_mode & {
-    @include theme_colors($light-theme: false);
+    @include nav_open($light-theme: false);
   }
   position: fixed;
   width: 100vw;
@@ -19,10 +19,10 @@ nav.open {
     width: 90%;
     margin: 0 auto 0;
     li {
-      @include theme_colors($light-theme: true);
+      @include text_color($light-theme: true);
       @include nav_border_color($light-theme: true);
       body.dark_mode & {
-        @include theme_colors($light-theme: false);
+        @include text_color($light-theme: false);
         @include nav_border_color($light-theme: false);
       }
       width: 100%;
@@ -57,6 +57,14 @@ nav.open {
     display: flex;
     align-items: center;
     justify-content: center;
+  }
+
+  .light_mode_icon,
+  .dark_mode_icon {
+    @include text_color($light-theme: true);
+    body.dark_mode & {
+      @include text_color($light-theme: false);
+    }
   }
 }
 

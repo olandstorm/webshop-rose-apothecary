@@ -1,7 +1,10 @@
 .product_card {
+  @include product_card_color($light-theme: true);
+  body.dark_mode & {
+    @include product_card_color($light-theme: false);
+  }
   width: 90%;
   min-height: 200px;
-  background-color: $color_primary;
   display: flex;
   flex-direction: column;
 

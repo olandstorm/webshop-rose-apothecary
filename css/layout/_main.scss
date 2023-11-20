@@ -5,7 +5,10 @@
   }
 
   .description_card {
-    background-color: $color_primary;
+    @include product_card_color($light-theme: true);
+    body.dark_mode & {
+      @include product_card_color($light-theme: false);
+    }
     text-align: center;
     margin: 50px auto 90px auto;
     width: 90vw;

@@ -21,6 +21,9 @@ header {
     z-index: 999;
   }
   .shopping_black {
-    color: $color_text;
+    @include text_color($light-theme: true);
+    body.dark_mode & {
+      @include text_color($light-theme: false);
+    }
   }
 }
