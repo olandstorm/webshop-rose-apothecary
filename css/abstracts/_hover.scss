@@ -3,7 +3,10 @@ a:hover {
 }
 
 nav.open ul li a:hover {
-  color: $color_secondary;
+  @include nav_hover_color($light-theme: true);
+  body.dark_mode & {
+    @include nav_hover_color($light-theme: false);
+  }
 }
 
 .decrease_btn:hover,

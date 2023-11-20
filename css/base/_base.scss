@@ -1,14 +1,17 @@
 body {
   font-family: "Roboto", sans-serif;
-  background-color: $color_canvas;
-  color: $color_text;
+  @include theme_colors($light-theme: true);
+}
+.dark_mode {
+  background-color: $color_canvas_dark;
+  color: $color_text_dark;
 }
 
 a {
-  color: $color_text;
+  color: $black;
   text-decoration: none;
   &:visited {
-    color: $color_secondary;
+    color: $light_grey;
   }
 }
 
@@ -33,4 +36,14 @@ h2 {
 
 p {
   font-size: 1rem;
+}
+
+.visually_hidden {
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
 }

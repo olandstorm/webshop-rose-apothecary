@@ -8,8 +8,10 @@ button {
 .decrease_btn,
 .increase_btn,
 .total_btn {
-  color: $color_canvas;
-  background-color: $color_text;
+  @include theme_colors_reversed($light-theme: true);
+  body.dark_mode & {
+    @include theme_colors_reversed($light-theme: false);
+  }
   border: none;
   border-radius: 2px;
 }

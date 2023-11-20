@@ -10,9 +10,14 @@
 
 const menuBtn = document.querySelector('#toggleNav');
 const nav = document.querySelector('#fullNav');
+
 const bodyTag = document.body;
+
 const menuLinks = document.querySelectorAll('.menuLink');
 const shoppingCart = document.querySelector('#shoppingCart');
+const themeToggle = document.querySelector('#toggleTheme');
+const lightMode = document.querySelector('#lightModeIcon');
+const darkMode = document.querySelector('#darkModeIcon');
 
 // Funktion för att öppna och stänga navigationsmenyn, även med länkarna
 function toggleMenu() {
@@ -35,3 +40,24 @@ menuLinks.forEach((item) => {
 
 // Event för menyknapp
 menuBtn.addEventListener('click', toggleMenu);
+
+// Toggle för dark/lightmode
+
+if (
+  // eslint-disable-next-line
+  window.matchMedia &&
+  window.matchMedia('(prefers-color-scheme: dark)').matches
+) {
+  document.body.classList.add('dark_mode');
+  darkMode.classList.toggle('visually_hidden');
+} else {
+  lightMode.classList.toggle('visually_hidden');
+}
+
+function toggleTheme() {
+  document.body.classList.toggle('dark_mode');
+  lightMode.classList.toggle('visually_hidden');
+  darkMode.classList.toggle('visually_hidden');
+}
+
+themeToggle.addEventListener('click', toggleTheme);

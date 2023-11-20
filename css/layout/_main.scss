@@ -1,6 +1,8 @@
 .product_page {
-  background-color: $color_canvas;
-  color: $color_text;
+  @include theme_colors($light-theme: true);
+  body.dark_mode & {
+    @include theme_colors($light-theme: false);
+  }
 
   .description_card {
     background-color: $color_primary;

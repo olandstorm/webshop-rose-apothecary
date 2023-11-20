@@ -36,3 +36,47 @@
   color: $white;
   justify-content: center;
 }
+
+@mixin theme_colors($light-theme: true) {
+  @if $light-theme {
+    background-color: $color_canvas;
+    color: $color_text;
+  } @else {
+    background-color: $color_canvas_dark;
+    color: $color_text_dark;
+  }
+}
+
+@mixin theme_colors_reversed($light-theme: true) {
+  @if $light-theme {
+    background-color: $color_text;
+    color: $color_canvas;
+  } @else {
+    background-color: $color_text_dark;
+    color: $color_canvas_dark;
+  }
+}
+
+@mixin reversed($light-theme: true) {
+  @if $light-theme {
+    background-color: $color_text;
+  } @else {
+    background-color: $color_text_dark;
+  }
+}
+
+@mixin nav_hover_color($light-theme: true) {
+  @if $light-theme {
+    color: $color_secondary;
+  } @else {
+    color: $color_primary_dark;
+  }
+}
+
+@mixin nav_border_color($light-theme: true) {
+  @if $light-theme {
+    border-bottom: $color_text 1px solid;
+  } @else {
+    border-bottom: $color_text_dark 1px solid;
+  }
+}

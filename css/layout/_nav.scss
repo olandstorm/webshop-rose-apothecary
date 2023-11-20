@@ -1,5 +1,8 @@
 nav.open {
-  background: $color_canvas;
+  @include theme_colors($light-theme: true);
+  body.dark_mode & {
+    @include theme_colors($light-theme: false);
+  }
   position: fixed;
   width: 100vw;
   max-width: 100%;
@@ -16,16 +19,24 @@ nav.open {
     width: 90%;
     margin: 0 auto 0;
     li {
+      @include theme_colors($light-theme: true);
+      @include nav_border_color($light-theme: true);
+      body.dark_mode & {
+        @include theme_colors($light-theme: false);
+        @include nav_border_color($light-theme: false);
+      }
       width: 100%;
       margin-top: 20px;
       border-bottom: $color_text 1px solid;
-      color: $color_text;
       text-transform: uppercase;
       a {
         width: 100%;
         display: inline-block;
         &:visited {
-          color: $color_text;
+          @include theme_colors($light-theme: true);
+          body.dark_mode & {
+            @include theme_colors($light-theme: false);
+          }
         }
       }
     }
@@ -47,10 +58,6 @@ nav.open {
     align-items: center;
     justify-content: center;
   }
-
-  .light_mode_icon {
-    @include visually_hidden;
-  }
 }
 
 nav:not(.open) {
@@ -66,7 +73,7 @@ nav:not(.open) {
   z-index: 99;
   span {
     display: block;
-    background: $color_canvas;
+    background: $white;
     width: 25px;
     height: 3px;
     border-radius: 4px;
@@ -80,12 +87,18 @@ nav:not(.open) {
     span:nth-child(1) {
       transform: rotate(45deg);
       position: absolute;
-      background: $color_text;
+      @include reversed($light-theme: true);
+      body.dark_mode & {
+        @include reversed($light-theme: false);
+      }
     }
     span:nth-child(3) {
       transform: rotate(-45deg);
       position: absolute;
-      background: $color_text;
+      @include reversed($light-theme: true);
+      body.dark_mode & {
+        @include reversed($light-theme: false);
+      }
     }
   }
 }
