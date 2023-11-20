@@ -1,7 +1,13 @@
 a:hover {
-  color: $color_red;
+  color: $color_accent;
 }
 
-nav.open ul li:hover {
-  color: $color_grey;
+nav.open ul li a:hover {
+  color: $color_secondary;
+}
+
+.decrease_btn:hover,
+.increase_btn:hover,
+.total_btn:hover {
+  background-color: $color_btn_hover;
 }

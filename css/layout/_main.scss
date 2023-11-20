@@ -1,9 +1,9 @@
 .product_page {
-  background-color: $color_white;
-  color: $color_black;
+  background-color: $color_canvas;
+  color: $color_text;
 
   .description_card {
-    background-color: $color_light_grey;
+    background-color: $color_primary;
     text-align: center;
     margin: 50px auto 90px auto;
     width: 90vw;
@@ -26,8 +26,10 @@
     display: flex;
     margin: auto;
     flex-wrap: wrap;
-    width: 90vw;
-    justify-content: space-between;
+    width: 95vw;
+    justify-content: space-around;
+    align-items: flex-start;
+    row-gap: 20px;
   }
 }
 

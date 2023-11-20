@@ -1,7 +1,22 @@
-$color_white: rgb(255, 255, 255);
-$color_light_grey: rgb(248, 248, 248);
-$color_grey: rgb(237, 237, 237);
-$color_black: rgb(0, 0, 0);
-$color_red: rgb(235, 0, 0);
-$color_dark_grey: rgb(47, 47, 47);
-$color_deep_grey: rgb(18, 18, 18);
+// Light mode
+$color_canvas: rgb(255, 255, 255);
+$color_primary: rgb(248, 248, 248);
+$color_secondary: rgb(237, 237, 237);
+$color_text: rgb(0, 0, 0);
+$color_accent: rgb(235, 0, 0);
+$color_btn_hover: rgb(47, 47, 47);
+
+// Dark mode
+$color_canvas_dark: rgb(0, 0, 0);
+$color_primary_dark: rgb(47, 47, 47);
+$color_secondary_dark: rgb(18, 18, 18);
+$color_text_dark: rgb(255, 255, 255);
+$color_btn_hover_dark: rgb(237, 237, 237);
+
+// Constants
+$white: rgb(255, 255, 255);
+$black: rgb(0, 0, 0);
+$dark_grey: rgb(18, 18, 18);
+$grey: rgb(47, 47, 47);
+$light_grey: rgb(237, 237, 237);
+$almost_white: rgb(248, 248, 248);

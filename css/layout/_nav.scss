@@ -1,5 +1,5 @@
 nav.open {
-  background: $color_white;
+  background: $color_canvas;
   position: fixed;
   width: 100vw;
   max-width: 100%;
@@ -16,10 +16,18 @@ nav.open {
     width: 90%;
     margin: 0 auto 0;
     li {
+      width: 100%;
       margin-top: 20px;
-      border-bottom: $color_black 1px solid;
-      color: $color_black;
+      border-bottom: $color_text 1px solid;
+      color: $color_text;
       text-transform: uppercase;
+      a {
+        width: 100%;
+        display: inline-block;
+        &:visited {
+          color: $color_text;
+        }
+      }
     }
   }
 
@@ -31,7 +39,6 @@ nav.open {
     align-items: flex-start;
   }
   .theme_btn {
-    cursor: pointer;
     border: 0;
     padding: 0;
     margin-left: 5vw;
@@ -59,7 +66,7 @@ nav:not(.open) {
   z-index: 99;
   span {
     display: block;
-    background: $color_white;
+    background: $color_canvas;
     width: 25px;
     height: 3px;
     border-radius: 4px;
@@ -73,12 +80,12 @@ nav:not(.open) {
     span:nth-child(1) {
       transform: rotate(45deg);
       position: absolute;
-      background: $color_black;
+      background: $color_text;
     }
     span:nth-child(3) {
       transform: rotate(-45deg);
       position: absolute;
-      background: $color_black;
+      background: $color_text;
     }
   }
 }

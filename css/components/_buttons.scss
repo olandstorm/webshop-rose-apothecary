@@ -1,0 +1,24 @@
+button {
+  color: $color_text;
+  min-width: 35px;
+  min-height: 35px;
+  cursor: pointer;
+}
+
+.decrease_btn,
+.increase_btn,
+.total_btn {
+  color: $color_canvas;
+  background-color: $color_text;
+  border: none;
+  border-radius: 2px;
+}
+
+.total_btn {
+  padding: 0 15px;
+}
+
+.increase_btn,
+.decrease_btn {
+  margin-right: 10px;
+}

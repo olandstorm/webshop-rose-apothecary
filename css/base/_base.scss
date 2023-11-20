@@ -1,14 +1,14 @@
 body {
   font-family: "Roboto", sans-serif;
-  background-color: $color_white;
-  color: $color_black;
+  background-color: $color_canvas;
+  color: $color_text;
 }
 
 a {
-  color: $color_black;
+  color: $color_text;
   text-decoration: none;
   &:visited {
-    color: $color_grey;
+    color: $color_secondary;
   }
 }
 
@@ -16,9 +16,19 @@ a {
   position: fixed;
 }
 
-h1 {
+h1,
+h2,
+h3 {
   text-transform: uppercase;
+}
+
+h1,
+h3 {
   font-size: 1rem;
+}
+
+h2 {
+  font-size: 1.1rem;
 }
 
 p {

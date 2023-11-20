@@ -1,19 +1,38 @@
 .product_card {
-  width: 33%;
-  height: 500px;
-  border: $color_black 1px solid;
+  width: 90%;
+  min-height: 200px;
+  background-color: $color_primary;
+  display: flex;
+  flex-direction: column;
 
   .product_img_container {
     width: 100%;
-    height: 50%;
+    height: 35vh;
+    margin-bottom: 10px;
 
     .product_img {
       width: 100%;
-      height: auto;
+      height: 100%;
+      object-fit: cover;
     }
   }
+  .product_info {
+    margin: 10px;
 
-  input {
-    width: 10px;
+    p {
+      margin-bottom: 10px;
+    }
+
+    .total_btn {
+      display: block;
+      width: 100%;
+      margin: auto;
+      margin-top: 20px;
+    }
+
+    input {
+      width: 3rem;
+      height: 35px;
+    }
   }
 }

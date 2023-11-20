@@ -1,5 +1,5 @@
 header {
-  background-color: $color_deep_grey;
+  background-color: $dark_grey;
   max-width: 100%;
   width: 100vw;
   min-height: 60px;
@@ -21,6 +21,6 @@ header {
     z-index: 999;
   }
   .shopping_black {
-    color: $color_black;
+    color: $color_text;
   }
 }
