@@ -47,13 +47,13 @@
   }
 }
 
-@mixin theme_colors_reversed($light-theme: true) {
+@mixin product_buttons($light-theme: true) {
   @if $light-theme {
     background-color: $color_text;
     color: $color_canvas;
   } @else {
-    background-color: $color_text_dark;
-    color: $color_canvas_dark;
+    background-color: $color_secondary_dark;
+    color: $color_canvas;
   }
 }
 
@@ -103,5 +103,13 @@
     background-color: $color_primary;
   } @else {
     background-color: $color_primary_dark;
+  }
+}
+
+@mixin btn_hover($light-theme: true) {
+  @if $light-theme {
+    background-color: $color_btn_hover;
+  } @else {
+    background-color: $color_text;
   }
 }

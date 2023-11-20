@@ -8,9 +8,9 @@ button {
 .decrease_btn,
 .increase_btn,
 .total_btn {
-  @include theme_colors_reversed($light-theme: true);
+  @include product_buttons($light-theme: true);
   body.dark_mode & {
-    @include theme_colors_reversed($light-theme: false);
+    @include product_buttons($light-theme: false);
   }
   border: none;
   border-radius: 2px;

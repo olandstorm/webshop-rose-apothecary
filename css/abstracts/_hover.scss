@@ -12,5 +12,8 @@ nav.open ul li a:hover {
 .decrease_btn:hover,
 .increase_btn:hover,
 .total_btn:hover {
-  background-color: $color_btn_hover;
+  @include btn_hover($light-theme: true);
+  body.dark_mode & {
+    @include btn_hover($light-theme: false);
+  }
 }
