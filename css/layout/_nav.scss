@@ -19,10 +19,8 @@ nav.open {
     width: 90%;
     margin: 0 auto 0;
     li {
-      @include text_color($light-theme: true);
       @include nav_border_color($light-theme: true);
       body.dark_mode & {
-        @include text_color($light-theme: false);
         @include nav_border_color($light-theme: false);
       }
       width: 100%;
@@ -32,6 +30,10 @@ nav.open {
       a {
         width: 100%;
         display: inline-block;
+        @include text_color($light-theme: true);
+        body.dark_mode & {
+          @include text_color($light-theme: false);
+        }
         &:visited {
           @include theme_colors($light-theme: true);
           body.dark_mode & {

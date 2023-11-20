@@ -1,7 +1,15 @@
 /**
  *      [] Skriv pseudokod
- *      [] Gör så att menyn stängs när man klickar på kundvagnen i menyn
- *      []
+ *
+ *      // productGroup
+ *      [] Skapa en array för alla produkter i butiken
+ *      [] Fyll i all info om objekten i arrayen
+ *      [] Gör en loop som visar produkterna i HTML-strukturen
+ *
+ *      // cartPage
+ *      [] En funktion så att när man klickar på kundvagnen stängs alltid menyn för att Open-klassen
+ *          tas bort
+ *      [] Därefter tas kunden till kundkorgen
  *      []
  *      []
  *      []
