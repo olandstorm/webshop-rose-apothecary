@@ -22,14 +22,12 @@
  *      [] Har ett event som placerar munkarna i varukorgen när man klickar på knappen
  *      [] Nollställer produktkortet när man klickat på knappen
  *
- *      // sortering
- *      [] En knapp för sortering öppnar ett fönster med alternativ
+ *
+ *      // filtrering och sortering
+ *      [X] En knapp för filtrering och sortering öppnar fält med alternativ
  *      [] Man kan sortera på namn, pris, kategori och rating åt båda håll
  *      [] Det finns knappar för alla dessa alternativ
- *
- *      // filtrering
- *      [] En knapp för filtrering öppnar samma fönster som sortering
- *      [] Olika radio-buttons kan filtrera på olika spann av pris
+ *      [] Olika checkboxar kan filtrera på olika spann av pris
  *
  *      // varukorgen
  *      [] Uppdateras /VISUELLT/ när man klickar på beställningsknapparna
@@ -77,6 +75,9 @@ const phraseImgBlack = document.querySelector('#phraseImageBlack');
 const phraseImgWhite = document.querySelector('#phraseImageWhite');
 
 const productContainer = document.querySelector('#productContainer');
+
+const filterBtn = document.querySelector('#filterBtn');
+const filterField = document.querySelector('#sortFilterField');
 
 // Funktion för att öppna och stänga navigationsmenyn, även med länkarna
 function toggleMenu() {
@@ -161,6 +162,7 @@ const products = [
     ],
     rating: 5,
     category: 'soap',
+    amount: 0,
   },
   {
     name: 'Latte Love',
@@ -183,6 +185,7 @@ const products = [
     ],
     rating: 4.5,
     category: 'soap',
+    amount: 0,
   },
   {
     name: 'Cloudy Mood',
@@ -201,6 +204,7 @@ const products = [
     ],
     rating: 4,
     category: 'soap',
+    amount: 0,
   },
   {
     name: 'Honey Cream',
@@ -219,6 +223,7 @@ const products = [
     ],
     rating: 4,
     category: 'skincare',
+    amount: 0,
   },
   {
     name: 'Just Breezy',
@@ -237,6 +242,7 @@ const products = [
     ],
     rating: 4.5,
     category: 'candle',
+    amount: 0,
   },
   {
     name: 'Unpuff',
@@ -259,6 +265,7 @@ const products = [
     ],
     rating: 5,
     category: 'skincare',
+    amount: 0,
   },
   {
     name: 'Dreamy Linen',
@@ -277,6 +284,7 @@ const products = [
     ],
     rating: 4.5,
     category: 'linen',
+    amount: 0,
   },
   {
     name: 'New Faces',
@@ -299,6 +307,7 @@ const products = [
     ],
     rating: 4,
     category: 'skincare',
+    amount: 0,
   },
   {
     name: 'Sweet Kiss',
@@ -317,6 +326,7 @@ const products = [
     ],
     rating: 5,
     category: 'skincare',
+    amount: 0,
   },
   {
     name: 'Perfectly Musky',
@@ -335,10 +345,28 @@ const products = [
     ],
     rating: 4,
     category: 'soap',
+    amount: 0,
   },
 ];
 
-// en funktion för att printa produkterna
+// Funktioner för att minska och öka antal produkter
+
+function decreaseAmount(e) {
+  const index = e.currentTarget.dataset.id;
+  if (products[index].amount <= 0) {
+    products[index].amount = 0;
+  } else {
+    products[index].amount -= 1;
+  }
+  printProducts();
+}
+function increaseAmount(e) {
+  const index = e.currentTarget.dataset.id;
+  products[index].amount += 1;
+  printProducts();
+}
+
+// En funktion för att printa produkterna
 function printProducts() {
   productContainer.innerHTML = '';
 
@@ -352,16 +380,36 @@ function printProducts() {
     </figure>
     <div class="product_info">
         <h2>${product.name}</h2>
-        <p>${product.description}</p>
+        <p class="product_description">${product.description}</p>
         <p>Price: ${product.price} $</p>
         <p>Rating: ${product.rating}/5</p>
-        <button class="decrease_btn">-</button><button class="increase_btn">+</button><input
-            type="number">
-        <button class="total_btn">Buy 65$</button>
+        <button class="decrease_btn" data-id="${index}">-</button><button class="increase_btn" data-id="${index}">+</button><input
+            type="number" min="0" value="${product.amount}">
+        <button class="total_btn">
+        Buy ${product.price * product.amount}$</button>
     </div>
 </article>
     `;
   });
+
+  // Öka och minska antal med knapparna
+  const decreaseBtn = document.querySelectorAll('.decrease_btn');
+  const increaseBtn = document.querySelectorAll('.increase_btn');
+
+  decreaseBtn.forEach((btn) => {
+    btn.addEventListener('click', decreaseAmount);
+  });
+
+  increaseBtn.forEach((btn) => {
+    btn.addEventListener('click', increaseAmount);
+  });
 }
 
 printProducts();
+
+// Filter och sortering
+function toggleFilter() {
+  filterField.classList.toggle('visually_hidden');
+}
+
+filterBtn.addEventListener('click', toggleFilter);

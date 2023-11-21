@@ -52,13 +52,8 @@ nav.open {
     align-items: flex-start;
   }
   .theme_btn {
-    border: 0;
-    padding: 0;
     margin-left: 5vw;
-    background: transparent;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    @include icon_btn;
   }
 
   .light_mode_icon,

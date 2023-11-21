@@ -37,6 +37,15 @@
   justify-content: center;
 }
 
+@mixin icon_btn {
+  background: transparent;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 0;
+  padding: 0;
+}
+
 @mixin theme_colors($light-theme: true) {
   @if $light-theme {
     background-color: $color_canvas;
@@ -95,6 +104,22 @@
     border-bottom: $color_text 1px solid;
   } @else {
     border-bottom: $color_text_dark 1px solid;
+  }
+}
+
+@mixin filter_option($light-theme: true) {
+  @if $light-theme {
+    background-color: $color_primary;
+  } @else {
+    background-color: $color_primary_dark;
+  }
+}
+
+@mixin filter_field_bg($light-theme: true) {
+  @if $light-theme {
+    background-color: $color_text;
+  } @else {
+    background-color: $color_text_dark;
   }
 }
 
