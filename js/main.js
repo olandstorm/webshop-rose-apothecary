@@ -1,19 +1,64 @@
 /**
- *      [] Skriv pseudokod
  *
- *      // productGroup
+ *
+ *
+ *      [X] Skriv pseudokod
+ *
+ *
+ *
+ *
+ *      // produkterna
  *      [] Skapa en array för alla produkter i butiken
  *      [] Fyll i all info om objekten i arrayen
  *      [] Gör en loop som visar produkterna i HTML-strukturen
+ *      [] Fredagar efter 15 - måndag kl 03 ökar alla priser med 15%
  *
- *      // cartPage
- *      [] En funktion så att när man klickar på kundvagnen stängs alltid menyn för att Open-klassen
- *          tas bort
- *      [] Därefter tas kunden till kundkorgen
- *      []
- *      []
- *      []
- *      []
+ *      // plus och minus
+ *      [] Skapa event för plus och minusknappar som ökar/minskar antalet av produkten
+ *      [] När antalet uppdateras uppdateras också beställningsknappens värde
+ *
+ *      // beställningsknappen
+ *      [] Printar antal * priset
+ *      [] Har ett event som placerar munkarna i varukorgen när man klickar på knappen
+ *      [] Nollställer produktkortet när man klickat på knappen
+ *
+ *      // sortering
+ *      [] En knapp för sortering öppnar ett fönster med alternativ
+ *      [] Man kan sortera på namn, pris, kategori och rating åt båda håll
+ *      [] Det finns knappar för alla dessa alternativ
+ *
+ *      // filtrering
+ *      [] En knapp för filtrering öppnar samma fönster som sortering
+ *      [] Olika radio-buttons kan filtrera på olika spann av pris
+ *
+ *      // varukorgen
+ *      [] Uppdateras /VISUELLT/ när man klickar på beställningsknapparna
+ *      [] ! OPTIONAL ! Har en dropdownmeny när man hovrar över som visar valda produkter i nuläget
+ *      [] Stänger produktsidan och öppnar varukorgssidan vid klick
+ *      [] Stänger alltid menyn också om man klickar på varukorgen
+ *
+ *      // varukorgssidan
+ *      [] Visar alla valda produkter i en loop
+ *      [] Man kan ändra antal med knappar samt ta bort alla produkter av en sort med en knapp
+ *      [] Man kan också rensa alla produkter med en knapp
+ *      [] Det finns ett fält för rabattkoder
+ *      [] Prisspecifikation med frakt och totalpris visas och uppdateras /VISUELLT/ vid ändringar
+ *      [] Måndagar innan kl 10 är det 10% rabatt på totalen och en text visas och förklarar detta
+ *      [] Vid beställning >10 st av samma produkt tillkommer rabatt på 10% på den varan
+ *      [] Vid beställning av mer än 15 produkter är frakten gratis, annars 25kr + 10% av totalen
+ *      [] Användaren har bara 15 min från att varukorgssidan öppnas att slutföra beställningen
+ *      [] Användaren meddelas om detta överskrids och allt rensas/nollställs
+ *
+ *      // formuläret
+ *      [] Man kan välja betalsätt vilket öppnar två olika formulär
+ *      [] Har man beställt för mer än 800 kr kan man inte välja faktura
+ *      [] Alla fält, förutom kort-fälten, valideras
+ *      [] Felen som finns markeras tydligt
+ *      [] Knappen skicka är inte möjlig att klicka förrän alla fält är validerade
+ *
+ *
+ *
+ *
  */
 
 const menuBtn = document.querySelector('#toggleNav');
