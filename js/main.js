@@ -11,22 +11,22 @@
  *      [X] Skapa en array för alla produkter i butiken
  *      [] Fyll i all info om objekten i arrayen
  *      [X] Gör en loop som visar produkterna i HTML-strukturen
- *      [] Fredagar efter 15 - måndag kl 03 ökar alla priser med 15%
+ *      [X] Fredagar efter 15 - måndag kl 03 ökar alla priser med 15%
  *
  *      // plus och minus
- *      [] Skapa event för plus och minusknappar som ökar/minskar antalet av produkten
- *      [] När antalet uppdateras uppdateras också beställningsknappens värde
+ *      [X] Skapa event för plus och minusknappar som ökar/minskar antalet av produkten
+ *      [X] När antalet uppdateras uppdateras också beställningsknappens värde
  *
  *      // beställningsknappen
- *      [] Printar antal * priset
+ *      [X] Printar antal * priset
  *      [] Har ett event som placerar munkarna i varukorgen när man klickar på knappen
  *      [] Nollställer produktkortet när man klickat på knappen
  *
  *
  *      // filtrering och sortering
  *      [X] En knapp för filtrering och sortering öppnar fält med alternativ
- *      [] Man kan sortera på namn, pris, kategori och rating åt båda håll
- *      [] Det finns knappar för alla dessa alternativ
+ *      [X] Man kan sortera på namn, pris, kategori och rating åt båda håll
+ *      [X] Det finns knappar för alla dessa alternativ
  *      [] Olika checkboxar kan filtrera på olika spann av pris
  *
  *      // varukorgen
@@ -78,6 +78,14 @@ const productContainer = document.querySelector('#productContainer');
 
 const filterBtn = document.querySelector('#filterBtn');
 const filterField = document.querySelector('#sortFilterField');
+const sortNameAZ = document.querySelector('#sortNameAZ');
+const sortNameZA = document.querySelector('#sortNameZA');
+const sortPrice19 = document.querySelector('#sortPrice19');
+const sortPrice91 = document.querySelector('#sortPrice91');
+const sortCategoryAZ = document.querySelector('#sortCategoryAZ');
+const sortCategoryZA = document.querySelector('#sortCategoryZA');
+const sortRating19 = document.querySelector('#sortRating19');
+const sortRating91 = document.querySelector('#sortRating91');
 
 // Funktion för att öppna och stänga navigationsmenyn, även med länkarna
 function toggleMenu() {
@@ -349,26 +357,19 @@ const products = [
   },
 ];
 
-// Funktioner för att minska och öka antal produkter
-
-function decreaseAmount(e) {
-  const index = e.currentTarget.dataset.id;
-  if (products[index].amount <= 0) {
-    products[index].amount = 0;
-  } else {
-    products[index].amount -= 1;
-  }
-  printProducts();
-}
-function increaseAmount(e) {
-  const index = e.currentTarget.dataset.id;
-  products[index].amount += 1;
-  printProducts();
-}
-
 // En funktion för att printa produkterna
 function printProducts() {
+  let priceChange = 1;
+  const today = new Date();
+  const isFriday = today.getDay() === 6;
+  const isMonday = today.getDay() === 1;
+  const currentHour = today.getHours();
+
   productContainer.innerHTML = '';
+
+  if ((isFriday && currentHour >= 15) || (isMonday && currentHour <= 3)) {
+    priceChange = 1.15;
+  }
 
   products.forEach((product, index) => {
     productContainer.innerHTML += `
@@ -381,16 +382,34 @@ function printProducts() {
     <div class="product_info">
         <h2>${product.name}</h2>
         <p class="product_description">${product.description}</p>
-        <p>Price: ${product.price} $</p>
+        <p>Price: ${Math.round(product.price * priceChange)} $</p>
         <p>Rating: ${product.rating}/5</p>
-        <button class="decrease_btn" data-id="${index}">-</button><button class="increase_btn" data-id="${index}">+</button><input
-            type="number" min="0" value="${product.amount}">
+        <button class="decrease_btn" data-id="${index}">-</button>
+        <button class="increase_btn" data-id="${index}">+</button>
+        <input type="number" min="0" value="${product.amount}">
         <button class="total_btn">
-        Buy ${product.price * product.amount}$</button>
+        Buy ${Math.round(product.price * priceChange * product.amount)}$
+        </button>
     </div>
 </article>
     `;
   });
+  // Funktioner för att minska och öka antal produkter
+
+  function decreaseAmount(e) {
+    const index = e.currentTarget.dataset.id;
+    if (products[index].amount <= 0) {
+      products[index].amount = 0;
+    } else {
+      products[index].amount -= 1;
+    }
+    printProducts();
+  }
+  function increaseAmount(e) {
+    const index = e.currentTarget.dataset.id;
+    products[index].amount += 1;
+    printProducts();
+  }
 
   // Öka och minska antal med knapparna
   const decreaseBtn = document.querySelectorAll('.decrease_btn');
@@ -413,3 +432,95 @@ function toggleFilter() {
 }
 
 filterBtn.addEventListener('click', toggleFilter);
+
+// Sortera på pris
+
+function sortListPrice19() {
+  products.sort((product1, product2) => product1.price - product2.price);
+  printProducts();
+}
+
+function sortListPrice91() {
+  products.sort((product1, product2) => product2.price - product1.price);
+  printProducts();
+}
+
+sortPrice19.addEventListener('click', sortListPrice19);
+sortPrice91.addEventListener('click', sortListPrice91);
+
+// Sortera på rating
+
+function sortListRating19() {
+  products.sort((product1, product2) => product1.rating - product2.rating);
+  printProducts();
+}
+
+function sortListRating91() {
+  products.sort((product1, product2) => product2.rating - product1.rating);
+  printProducts();
+}
+
+sortRating19.addEventListener('click', sortListRating19);
+sortRating91.addEventListener('click', sortListRating91);
+
+// Sortera på namn
+
+function sortListNameAZ() {
+  products.sort((product1, product2) => {
+    if (product1.name < product2.name) {
+      return -1;
+    }
+    if (product1.name > product2.name) {
+      return 1;
+    }
+    return 0;
+  });
+  printProducts();
+}
+
+function sortListNameZA() {
+  products.sort((product1, product2) => {
+    if (product1.name > product2.name) {
+      return -1;
+    }
+    if (product1.name < product2.name) {
+      return 1;
+    }
+    return 0;
+  });
+  printProducts();
+}
+
+sortNameAZ.addEventListener('click', sortListNameAZ);
+sortNameZA.addEventListener('click', sortListNameZA);
+
+// Sortera på kategori
+
+function sortListCategoryAZ() {
+  products.sort((product1, product2) => {
+    if (product1.category < product2.category) {
+      return -1;
+    }
+    if (product1.category > product2.category) {
+      return 1;
+    }
+    return 0;
+  });
+  printProducts();
+}
+
+function sortListCategoryZA() {
+  products.sort((product1, product2) => {
+    if (product1.category > product2.category) {
+      return -1;
+    }
+    if (product1.category < product2.category) {
+      return 1;
+    }
+    return 0;
+  });
+  printProducts();
+}
+
+sortCategoryAZ.addEventListener('click', sortListCategoryAZ);
+sortCategoryZA.addEventListener('click', sortListCategoryZA);
