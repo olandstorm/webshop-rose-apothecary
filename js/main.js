@@ -9,14 +9,15 @@
  *
  *      // produkterna
  *      [X] Skapa en array för alla produkter i butiken
- *      [] Fyll i all info om objekten i arrayen
- *      [] Skriv in så att alla bilder får rätt mått i innerHTML
+ *      [X] Fyll i all info om objekten i arrayen
+ *      [X] Skriv in så att alla bilder får rätt mått i innerHTML
  *      [X] Gör en loop som visar produkterna i HTML-strukturen
  *      [X] Fredagar efter 15 - måndag kl 03 ökar alla priser med 15%
  *
  *      // plus och minus
  *      [X] Skapa event för plus och minusknappar som ökar/minskar antalet av produkten
  *      [X] När antalet uppdateras uppdateras också beställningsknappens värde
+ *      [] Värdet ska ändras när man skriver in en siffra i input också
  *
  *      // beställningsknappen
  *      [X] Printar antal * priset
@@ -158,15 +159,21 @@ const products = [
     images: [
       {
         src: './assets/img/products/soap_pink_1.webp',
-        alt: '',
+        alt: 'Two bars of pink soap',
+        width: 600,
+        height: 900,
       },
       {
         src: './assets/img/products/soap_pink_2.webp',
-        alt: '',
+        alt: 'Three bars of pink soap',
+        width: 600,
+        height: 848,
       },
       {
         src: './assets/img/products/soap_pink_3.webp',
-        alt: '',
+        alt: 'Three bars of pink soap',
+        width: 600,
+        height: 900,
       },
     ],
     rating: 5,
@@ -180,16 +187,22 @@ const products = [
     price: 5,
     images: [
       {
-        src: './assets/img/products/soap_cacao_1.webp',
-        alt: '',
+        src: './assets/img/products/soap_coffee_1.webp',
+        alt: 'A bar of brown soap with coffee beans on',
+        width: 600,
+        height: 900,
       },
       {
-        src: './assets/img/products/soap_cacao_2.webp',
-        alt: '',
+        src: './assets/img/products/soap_coffee_2.webp',
+        alt: 'Two bars of brown soap with coffee beans on',
+        width: 600,
+        height: 900,
       },
       {
-        src: './assets/img/products/soap_cacao_3.webp',
-        alt: '',
+        src: './assets/img/products/soap_coffee_3.webp',
+        alt: 'Two bars of brown soap with coffee beans on',
+        width: 600,
+        height: 900,
       },
     ],
     rating: 4.5,
@@ -204,11 +217,15 @@ const products = [
     images: [
       {
         src: './assets/img/products/soap_black_1.webp',
-        alt: '',
+        alt: 'Two bars of black and white soap',
+        width: 600,
+        height: 900,
       },
       {
         src: './assets/img/products/soap_black_2.webp',
-        alt: '',
+        alt: 'Four bars of black and white soap',
+        width: 600,
+        height: 900,
       },
     ],
     rating: 4,
@@ -223,11 +240,15 @@ const products = [
     images: [
       {
         src: './assets/img/products/cream_honey_1.webp',
-        alt: '',
+        alt: 'A jar of cream with the color of honey',
+        width: 600,
+        height: 900,
       },
       {
         src: './assets/img/products/cream_honey_2.webp',
-        alt: '',
+        alt: 'A jar of cream with the color of honey on a linen fabric',
+        width: 600,
+        height: 900,
       },
     ],
     rating: 4,
@@ -242,11 +263,15 @@ const products = [
     images: [
       {
         src: './assets/img/products/candle_1.webp',
-        alt: '',
+        alt: 'A candle in a brown glass jar in a beige staged set up',
+        width: 600,
+        height: 900,
       },
       {
         src: './assets/img/products/candle_2.webp',
-        alt: '',
+        alt: 'A candle in a brown glass jar on a beige linen fabric with a wooden plate behind',
+        width: 600,
+        height: 900,
       },
     ],
     rating: 4.5,
@@ -261,15 +286,21 @@ const products = [
     images: [
       {
         src: './assets/img/products/serum_eye_1.webp',
-        alt: '',
+        alt: 'Three pipette bottles with white unnamed labels',
+        width: 600,
+        height: 799,
       },
       {
         src: './assets/img/products/serum_eye_2.webp',
-        alt: '',
+        alt: 'A pipette bottle with white unnamed label on staged with two glass jars with wooden lids',
+        width: 600,
+        height: 798,
       },
       {
         src: './assets/img/products/serum_lip_eye.webp',
-        alt: '',
+        alt: 'Two pipette bottles an a glass jar with a wooden lid on a rustic beige plate',
+        width: 600,
+        height: 799,
       },
     ],
     rating: 5,
@@ -284,11 +315,15 @@ const products = [
     images: [
       {
         src: './assets/img/products/bed_linen_1.webp',
-        alt: '',
+        alt: 'A brown wooden bed with white linen bed sheets',
+        width: 783,
+        height: 600,
       },
       {
         src: './assets/img/products/bed_linen_2.webp',
-        alt: '',
+        alt: 'A brown wooden bed with white linen bed sheets',
+        width: 600,
+        height: 901,
       },
     ],
     rating: 4.5,
@@ -303,15 +338,21 @@ const products = [
     images: [
       {
         src: './assets/img/products/serum_brown_1.webp',
-        alt: '',
+        alt: 'A brown pipette bottle staged on a green leaf and mirror',
+        width: 600,
+        height: 900,
       },
       {
         src: './assets/img/products/serum_brown_2.webp',
-        alt: '',
+        alt: 'A brown pipette bottle staged next to two green leafs',
+        width: 600,
+        height: 900,
       },
       {
         src: './assets/img/products/serum_brown_3.webp',
-        alt: '',
+        alt: 'A brown pipette bottle staged with towels, green leafs and wooden plates',
+        width: 900,
+        height: 600,
       },
     ],
     rating: 4,
@@ -326,11 +367,15 @@ const products = [
     images: [
       {
         src: './assets/img/products/serum_lip_1.webp',
-        alt: '',
+        alt: 'An open glass pipette bottle with a red liquid inside standing on a glass jar with a wooden lid',
+        width: 600,
+        height: 799,
       },
       {
         src: './assets/img/products/serum_lip_eye.webp',
-        alt: '',
+        alt: 'Two pipette bottles an a glass jar with a wooden lid on a rustic beige plate',
+        width: 600,
+        height: 799,
       },
     ],
     rating: 5,
@@ -345,11 +390,15 @@ const products = [
     images: [
       {
         src: './assets/img/products/bottle_fluid_soap_1.webp',
-        alt: '',
+        alt: 'A brown soap pump staged with wood and beige set up',
+        width: 900,
+        height: 600,
       },
       {
         src: './assets/img/products/bottle_fluid_soap_hand_oil_serum.webp',
-        alt: '',
+        alt: 'A brown soap pump with other brown glass jars staged with wood and beige set up',
+        width: 600,
+        height: 900,
       },
     ],
     rating: 4,
@@ -377,7 +426,7 @@ function printProducts() {
     <article class="product_card" id="product_card__${[index]}">
     <figure class="product_img_container">
       <img src="${product.images[0].src}" alt="${product.images[0].alt}" 
-      height="600" width="783"
+      height="${product.images[0].height}" width="${product.images[0].width}"
       class="product_img">
     </figure>
     <div class="product_info">
@@ -387,7 +436,7 @@ function printProducts() {
         <p>Rating: ${product.rating}/5</p>
         <button class="decrease_btn" data-id="${index}">-</button>
         <button class="increase_btn" data-id="${index}">+</button>
-        <input type="number" min="0" value="${product.amount}">
+        <input type="number" min="0" max="100" value="${product.amount}">
         <button class="total_btn">
         Buy $${Math.round(product.price * priceChange * product.amount)}
         </button>
