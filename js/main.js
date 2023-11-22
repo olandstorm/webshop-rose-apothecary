@@ -10,6 +10,7 @@
  *      // produkterna
  *      [X] Skapa en array för alla produkter i butiken
  *      [] Fyll i all info om objekten i arrayen
+ *      [] Skriv in så att alla bilder får rätt mått i innerHTML
  *      [X] Gör en loop som visar produkterna i HTML-strukturen
  *      [X] Fredagar efter 15 - måndag kl 03 ökar alla priser med 15%
  *
@@ -27,7 +28,7 @@
  *      [X] En knapp för filtrering och sortering öppnar fält med alternativ
  *      [X] Man kan sortera på namn, pris, kategori och rating åt båda håll
  *      [X] Det finns knappar för alla dessa alternativ
- *      [] Olika checkboxar kan filtrera på olika spann av pris
+ *      [] Olika radiobuttons kan filtrera på olika spann av pris
  *
  *      // varukorgen
  *      [] Uppdateras /VISUELLT/ när man klickar på beställningsknapparna
@@ -382,13 +383,13 @@ function printProducts() {
     <div class="product_info">
         <h2>${product.name}</h2>
         <p class="product_description">${product.description}</p>
-        <p>Price: ${Math.round(product.price * priceChange)} $</p>
+        <p>Price: $${Math.round(product.price * priceChange)}</p>
         <p>Rating: ${product.rating}/5</p>
         <button class="decrease_btn" data-id="${index}">-</button>
         <button class="increase_btn" data-id="${index}">+</button>
         <input type="number" min="0" value="${product.amount}">
         <button class="total_btn">
-        Buy ${Math.round(product.price * priceChange * product.amount)}$
+        Buy $${Math.round(product.price * priceChange * product.amount)}
         </button>
     </div>
 </article>
@@ -488,6 +489,7 @@ function sortListNameZA() {
     }
     return 0;
   });
+
   printProducts();
 }
 

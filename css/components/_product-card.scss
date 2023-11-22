@@ -25,6 +25,11 @@
     p {
       margin-bottom: 10px;
     }
+
+    button {
+      touch-action: manipulation;
+    }
+
     .product_description {
       font-weight: 300;
       font-size: 0.8rem;
