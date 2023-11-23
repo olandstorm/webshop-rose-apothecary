@@ -17,3 +17,10 @@ nav.open ul li a:hover {
     @include btn_hover($light-theme: false);
   }
 }
+
+.open_products:hover {
+  @include back_btn_hover($light-theme: true);
+  body.dark_mode & {
+    @include back_btn_hover($light-theme: false);
+  }
+}

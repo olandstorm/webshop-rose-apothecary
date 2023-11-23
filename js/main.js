@@ -34,8 +34,8 @@
  *      // varukorgen
  *      [] Uppdateras /VISUELLT/ när man klickar på beställningsknapparna
  *      [] ! OPTIONAL ! Har en dropdownmeny när man hovrar över som visar valda produkter i nuläget
- *      [] Stänger produktsidan och öppnar varukorgssidan vid klick
- *      [] Stänger alltid menyn också om man klickar på varukorgen
+ *      [X] Stänger produktsidan och öppnar varukorgssidan vid klick
+ *      [X] Stänger alltid menyn också om man klickar på varukorgen
  *
  *      // varukorgssidan
  *      [] Visar alla valda produkter i en loop
@@ -67,7 +67,11 @@ const nav = document.querySelector('#fullNav');
 const bodyTag = document.body;
 
 const menuLinks = document.querySelectorAll('.menuLink');
+
 const shoppingCart = document.querySelector('#shoppingCart');
+const productPage = document.querySelector('#productPage');
+const cartPage = document.querySelector('#cartPage');
+const backToProducts = document.querySelector('#backToProducts');
 
 const themeToggle = document.querySelector('#toggleTheme');
 const lightMode = document.querySelector('#lightModeIcon');
@@ -434,9 +438,11 @@ function printProducts() {
         <p class="product_description">${product.description}</p>
         <p>Price: $${Math.round(product.price * priceChange)}</p>
         <p>Rating: ${product.rating}/5</p>
+        <div class="adjust_amount_container">
         <button class="decrease_btn" data-id="${index}">-</button>
+        <p class="amount_number">${product.amount}</p>
         <button class="increase_btn" data-id="${index}">+</button>
-        <input type="number" min="0" max="100" value="${product.amount}">
+        </div>
         <button class="total_btn">
         Buy $${Math.round(product.price * priceChange * product.amount)}
         </button>
@@ -445,6 +451,8 @@ function printProducts() {
     `;
   });
   // Funktioner för att minska och öka antal produkter
+  const decreaseBtn = document.querySelectorAll('.decrease_btn');
+  const increaseBtn = document.querySelectorAll('.increase_btn');
 
   function decreaseAmount(e) {
     const index = e.currentTarget.dataset.id;
@@ -455,6 +463,7 @@ function printProducts() {
     }
     printProducts();
   }
+
   function increaseAmount(e) {
     const index = e.currentTarget.dataset.id;
     products[index].amount += 1;
@@ -462,8 +471,6 @@ function printProducts() {
   }
 
   // Öka och minska antal med knapparna
-  const decreaseBtn = document.querySelectorAll('.decrease_btn');
-  const increaseBtn = document.querySelectorAll('.increase_btn');
 
   decreaseBtn.forEach((btn) => {
     btn.addEventListener('click', decreaseAmount);
@@ -575,3 +582,29 @@ function sortListCategoryZA() {
 
 sortCategoryAZ.addEventListener('click', sortListCategoryAZ);
 sortCategoryZA.addEventListener('click', sortListCategoryZA);
+
+// Öppna beställningsformuläret
+
+function openCart() {
+  cartPage.classList.remove('visually_hidden');
+  productPage.classList.add('visually_hidden');
+
+  if (nav.classList.contains('open')) {
+    toggleMenu();
+  }
+  if (productPage.classList.contains('visually_hidden')) {
+    setTimeout((document.body.scrollTop = 0), 0);
+    setTimeout((document.documentElement.scrollTop = 0), 0);
+  }
+}
+
+shoppingCart.addEventListener('click', openCart);
+
+// Gå tillbaka till produktsidan
+
+function shopMore() {
+  cartPage.classList.add('visually_hidden');
+  productPage.classList.remove('visually_hidden');
+}
+
+backToProducts.addEventListener('click', shopMore);

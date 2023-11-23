@@ -138,3 +138,20 @@
     background-color: $color_text;
   }
 }
+
+@mixin back_button($light-theme: true) {
+  @if $light-theme {
+    background-color: $color_secondary;
+    color: $color_text;
+  } @else {
+    background-color: $color_primary_dark;
+    color: $color_canvas;
+  }
+}
+@mixin back_btn_hover($light-theme: true) {
+  @if $light-theme {
+    background-color: $color_primary;
+  } @else {
+    background-color: $color_secondary_dark;
+  }
+}

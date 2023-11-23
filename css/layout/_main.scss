@@ -68,6 +68,7 @@
       .filter_option {
         display: flex;
         align-items: center;
+        column-gap: 2.5vw;
         padding: 10px;
         width: calc(100% - 2px);
         @include filter_option($light-theme: true);
@@ -111,6 +112,15 @@
 }
 
 .cart_page {
-  background-color: red;
-  @include visually_hidden;
+  margin-top: 50px;
+  @include theme_colors($light-theme: true);
+  body.dark_mode & {
+    @include theme_colors($light-theme: false);
+  }
+  .order_summary {
+    @include product_card_color($light-theme: true);
+    body.dark_mode & {
+      @include product_card_color($light-theme: false);
+    }
+  }
 }

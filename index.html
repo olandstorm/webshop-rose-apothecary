@@ -105,7 +105,7 @@
     </header>
 
     <main>
-        <section class="product_page">
+        <section class="product_page" id="productPage">
             <article class="description_card">
                 <h1>Best wishes and warmest regards</h1>
                 <p>
@@ -166,19 +166,19 @@
                     <div class="price_range">
                         <span class="price_range_title">Select price range:</span>
                         <label>
-                            <input type="radio" name="priceRange">
+                            <input type="radio" name="priceRange" id="tenAndBelow">
                             <span class="price_range_text">$0-10</span>
                         </label>
                         <label>
-                            <input type="radio" name="priceRange">
+                            <input type="radio" name="priceRange" id="elevenTo30">
                             <span class="price_range_text">$11-30</span>
                         </label>
                         <label>
-                            <input type="radio" name="priceRange">
+                            <input type="radio" name="priceRange" id="above30">
                             <span class="price_range_text">$30+</span>
                         </label>
                         <label>
-                            <input type="radio" name="priceRange" checked>
+                            <input type="radio" name="priceRange" id="clearFilter" checked>
                             <span class="price_range_text">All prices</span>
                         </label>
                     </div>
@@ -187,7 +187,7 @@
             </div>
             <section class="product_container" id="productContainer">
                 <!-- Dessa är bara för styling och tas bort sen -->
-                <article class="product_card">
+                <!--                 <article class="product_card">
                     <div class="product_img_container">
                         <img src="assets/img/products/bed_linen_1.webp" alt="" height="600" width="783"
                             class="product_img">
@@ -336,45 +336,47 @@
                             type="number">
                         <button class="total_btn">Buy 65$</button>
                     </div>
-                </article>
+                </article> -->
             </section>
         </section>
-        <section class="cart_page">
+        <section class="cart_page visually_hidden" id="cartPage">
 
-
-
-            <h2>Your order</h2>
-            <div>
-                <button id="codeBtn">Add code</button>
+            <button id="backToProducts" class="open_products"><span class="material-symbols-outlined">
+                    keyboard_arrow_left</span>Shop more</button>
+            <section class="order_summary">
+                <h2>Your order</h2>
                 <div>
-                    <p>Add your code for campains or special offers:</p>
-                    <input type="text" id="codeInput"><button id="addCode">Add</button>
+                    <button id="codeBtn">Add code</button>
+                    <div>
+                        <p>Add your code for campains or special offers:</p>
+                        <input type="text" id="codeInput"><button id="addCode">Add</button>
+                    </div>
+                    <p><span>Product</span><span>Quantity</span><span>Total</span></p>
+                    <article>
+                        <img src="assets/img/products/bed_linen_1.webp" alt="" height="600" width="783">
+                        <h2>Product</h2>
+                        <button class="decrease_btn">-</button><span class="product_amount">1</span><button
+                            class="increase_btn">+</button>
+                        <p>Price: 13$</p>
+                        <p>Total: 13$</p>
+                    </article>
+                    <article>
+                        <img src="assets/img/products/bed_linen_1.webp" alt="" height="600" width="783">
+                        <h2>Product</h2>
+                        <button class="decrease_btn">-</button><span class="product_amount">6</span><button
+                            class="increase_btn">+</button>
+                        <p>Price: 13 $</p>
+                        <p>Total: 56 $</p>
+                    </article>
+                    <div id="checkoutTotal">
+                        <!-- Här kommer en rad med rabatt läggas in också om det tillämpas -->
+                        <p>Shipping</p>
+                        <p id="shippingSum">69 $</p>
+                        <p>Total inc VAT</p>
+                        <p>69 $</p>
+                    </div>
                 </div>
-                <p><span>Product</span><span>Quantity</span><span>Total</span></p>
-                <article>
-                    <img src="assets/img/products/bed_linen_1.webp" alt="" height="600" width="783">
-                    <h2>Product</h2>
-                    <button class="decrease_btn">-</button><span class="product_amount">1</span><button
-                        class="increase_btn">+</button>
-                    <p>Price: 13$</p>
-                    <p>Total: 13$</p>
-                </article>
-                <article>
-                    <img src="assets/img/products/bed_linen_1.webp" alt="" height="600" width="783">
-                    <h2>Product</h2>
-                    <button class="decrease_btn">-</button><span class="product_amount">6</span><button
-                        class="increase_btn">+</button>
-                    <p>Price: 13 $</p>
-                    <p>Total: 56 $</p>
-                </article>
-                <div id="checkoutTotal">
-                    <!-- Här kommer en rad med rabatt läggas in också om det tillämpas -->
-                    <p>Shipping</p>
-                    <p id="shippingSum">69 $</p>
-                    <p>Total inc VAT</p>
-                    <p>69 $</p>
-                </div>
-            </div>
+            </section>
             <form>
                 <fieldset>
                     <legend>Please enter your information to continue</legend>

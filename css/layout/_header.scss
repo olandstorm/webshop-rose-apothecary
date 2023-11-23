@@ -14,17 +14,4 @@ header {
     height: auto;
     @include center_center;
   }
-
-  .shopping_btn {
-    @include header_btn;
-    right: 8px;
-    top: 10px;
-    z-index: 999;
-  }
-  .shopping_black {
-    @include text_color($light-theme: true);
-    body.dark_mode & {
-      @include text_color($light-theme: false);
-    }
-  }
 }
