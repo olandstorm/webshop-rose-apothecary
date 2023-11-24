@@ -49,9 +49,41 @@ button {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 20px;
   min-height: 35px;
   padding-right: 15px;
   text-transform: uppercase;
   font-size: 0.9rem;
+}
+
+.summary_btn {
+  @include product_buttons($light-theme: true);
+  body.dark_mode & {
+    @include product_buttons($light-theme: false);
+  }
+  border: none;
+  border-radius: 2px;
+  padding: 0 10px;
+}
+
+.add_code_btn {
+  margin-top: 40px;
+}
+
+.code_btn {
+  margin-left: 10px;
+}
+
+.delete_product {
+  @include icon_btn;
+  @include delete_btn($light-theme: true);
+  body.dark_mode & {
+    @include delete_btn($light-theme: false);
+  }
+}
+
+.cart_adjust_btn {
+  @include delete_btn($light-theme: true);
+  body.dark_mode & {
+    @include delete_btn($light-theme: false);
+  }
 }

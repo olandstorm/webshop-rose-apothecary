@@ -11,7 +11,8 @@ nav.open ul li a:hover {
 
 .decrease_btn:hover,
 .increase_btn:hover,
-.total_btn:hover {
+.total_btn:hover,
+.summary_btn:hover {
   @include btn_hover($light-theme: true);
   body.dark_mode & {
     @include btn_hover($light-theme: false);
@@ -22,5 +23,12 @@ nav.open ul li a:hover {
   @include back_btn_hover($light-theme: true);
   body.dark_mode & {
     @include back_btn_hover($light-theme: false);
+  }
+}
+
+.delete_product:hover {
+  @include delete_btn_hover($light-theme: true);
+  body.dark_mode & {
+    @include delete_btn_hover($light-theme: false);
   }
 }

@@ -155,3 +155,52 @@
     background-color: $color_secondary_dark;
   }
 }
+
+@mixin promo_field($light-theme: true) {
+  @if $light-theme {
+    background-color: $color_secondary;
+    color: $color_text;
+  } @else {
+    background-color: $color_secondary;
+    color: $color_text;
+  }
+}
+@mixin cart_product($light-theme: true) {
+  @if $light-theme {
+    background-color: $color_secondary;
+    color: $color_text;
+  } @else {
+    background-color: $color_secondary_dark;
+    color: $color_text_dark;
+  }
+}
+
+@mixin delete_btn($light-theme: true) {
+  @if $light-theme {
+    background-color: $color_secondary;
+    color: $color_primary_dark;
+  } @else {
+    background-color: $color_secondary_dark;
+    color: $color_secondary;
+  }
+}
+
+@mixin delete_btn_hover($light-theme: true) {
+  @if $light-theme {
+    color: $color_accent;
+    background-color: $color_primary_dark;
+  } @else {
+    color: $color_accent;
+    background-color: $color_canvas_dark;
+  }
+}
+
+@mixin delete_btn($light-theme: true) {
+  @if $light-theme {
+    background-color: $color_text;
+    color: $color_canvas;
+  } @else {
+    background-color: $color_primary_dark;
+    color: $color_text_dark;
+  }
+}

@@ -93,6 +93,9 @@ const sortCategoryZA = document.querySelector('#sortCategoryZA');
 const sortRating19 = document.querySelector('#sortRating19');
 const sortRating91 = document.querySelector('#sortRating91');
 
+const promoContainer = document.querySelector('#promoCodeContainer');
+const codeBtn = document.querySelector('#codeBtn');
+
 // Funktion för att öppna och stänga navigationsmenyn, även med länkarna
 function toggleMenu() {
   const isOpen = nav.classList.toggle('open');
@@ -183,6 +186,7 @@ const products = [
     rating: 5,
     category: 'soap',
     amount: 0,
+    id: 0,
   },
   {
     name: 'Latte Love',
@@ -212,6 +216,7 @@ const products = [
     rating: 4.5,
     category: 'soap',
     amount: 0,
+    id: 1,
   },
   {
     name: 'Cloudy Mood',
@@ -235,6 +240,7 @@ const products = [
     rating: 4,
     category: 'soap',
     amount: 0,
+    id: 2,
   },
   {
     name: 'Honey Cream',
@@ -258,6 +264,7 @@ const products = [
     rating: 4,
     category: 'skincare',
     amount: 0,
+    id: 3,
   },
   {
     name: 'Just Breezy',
@@ -281,6 +288,7 @@ const products = [
     rating: 4.5,
     category: 'candle',
     amount: 0,
+    id: 4,
   },
   {
     name: 'Unpuff',
@@ -310,6 +318,7 @@ const products = [
     rating: 5,
     category: 'skincare',
     amount: 0,
+    id: 5,
   },
   {
     name: 'Dreamy Linen',
@@ -333,6 +342,7 @@ const products = [
     rating: 4.5,
     category: 'linen',
     amount: 0,
+    id: 6,
   },
   {
     name: 'New Faces',
@@ -362,6 +372,7 @@ const products = [
     rating: 4,
     category: 'skincare',
     amount: 0,
+    id: 7,
   },
   {
     name: 'Sweet Kiss',
@@ -385,6 +396,7 @@ const products = [
     rating: 5,
     category: 'skincare',
     amount: 0,
+    id: 8,
   },
   {
     name: 'Perfectly Musky',
@@ -408,9 +420,29 @@ const products = [
     rating: 4,
     category: 'soap',
     amount: 0,
+    id: 9,
   },
 ];
-
+/**
+ *
+ *
+ *
+ *
+ * test
+ *
+ *
+ *
+ */
+const cartArray = [];
+/**
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ */
 // En funktion för att printa produkterna
 function printProducts() {
   let priceChange = 1;
@@ -443,7 +475,7 @@ function printProducts() {
         <p class="amount_number">${product.amount}</p>
         <button class="increase_btn" data-id="${index}">+</button>
         </div>
-        <button class="total_btn">
+        <button class="total_btn" data-id="${index}">
         Buy $${Math.round(product.price * priceChange * product.amount)}
         </button>
     </div>
@@ -482,7 +514,42 @@ function printProducts() {
 }
 
 printProducts();
+/**
+ *
+ *
+ *
+ * Testar med kundvagn
+ *
+ *
+ *
+ *
+ *
+ */
+const buyItem = document.querySelectorAll('.total_btn');
+function addToCart(e) {
+  const index = e.currentTarget.dataset.id;
+  const productInCart = cartArray.find(
+    (cartProduct) => cartProduct.id === Number(index)
+  );
+  productInCart.amount += 3;
+}
 
+buyItem.forEach((btn) => {
+  btn.addEventListener('click', addToCart);
+});
+
+/**
+ *
+ *
+ *
+ *
+ *
+ * testar
+ *
+ *
+ *
+ *
+ */
 // Filter och sortering
 function toggleFilter() {
   filterField.classList.toggle('visually_hidden');
@@ -608,3 +675,10 @@ function shopMore() {
 }
 
 backToProducts.addEventListener('click', shopMore);
+
+// Toggle rabattkodsfältet
+function openCodeField() {
+  promoContainer.classList.toggle('visually_hidden');
+}
+
+codeBtn.addEventListener('click', openCodeField);

@@ -19,3 +19,7 @@
 @media screen and (min-width: 400px) {
   @import "abstracts/product-rows";
 }
+
+@media screen and (max-width: 400px) {
+  @import "abstracts/cart-rows";
+}
