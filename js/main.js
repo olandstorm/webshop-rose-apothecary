@@ -17,12 +17,11 @@
  *      // plus och minus
  *      [X] Skapa event för plus och minusknappar som ökar/minskar antalet av produkten
  *      [X] När antalet uppdateras uppdateras också beställningsknappens värde
- *      [] Värdet ska ändras när man skriver in en siffra i input också
  *
  *      // beställningsknappen
  *      [X] Printar antal * priset
- *      [] Har ett event som placerar munkarna i varukorgen när man klickar på knappen
- *      [] Nollställer produktkortet när man klickat på knappen
+ *      [X] Har ett event som placerar munkarna i varukorgen när man klickar på knappen
+ *      [X] Nollställer produktkortet när man klickat på knappen
  *
  *
  *      // filtrering och sortering
@@ -41,7 +40,7 @@
  *      [] Visar alla valda produkter i en loop
  *      [] Man kan ändra antal med knappar samt ta bort alla produkter av en sort med en knapp
  *      [] Man kan också rensa alla produkter med en knapp
- *      [] Det finns ett fält för rabattkoder
+ *      [X] Det finns ett fält för rabattkoder
  *      [] Prisspecifikation med frakt och totalpris visas och uppdateras /VISUELLT/ vid ändringar
  *      [] Måndagar innan kl 10 är det 10% rabatt på totalen och en text visas och förklarar detta
  *      [] Vid beställning >10 st av samma produkt tillkommer rabatt på 10% på den varan
@@ -423,26 +422,10 @@ const products = [
     id: 9,
   },
 ];
-/**
- *
- *
- *
- *
- * test
- *
- *
- *
- */
+
+// En array för alla produkter som hamnar i varukorgen
 const cartArray = [];
-/**
- *
- *
- *
- *
- *
- *
- *
- */
+
 // En funktion för att printa produkterna
 function printProducts() {
   let priceChange = 1;
@@ -463,7 +446,7 @@ function printProducts() {
     <figure class="product_img_container">
       <img src="${product.images[0].src}" alt="${product.images[0].alt}" 
       height="${product.images[0].height}" width="${product.images[0].width}"
-      class="product_img">
+      class="product_img" loading="lazy">
     </figure>
     <div class="product_info">
         <h2>${product.name}</h2>
@@ -472,16 +455,17 @@ function printProducts() {
         <p>Rating: ${product.rating}/5</p>
         <div class="adjust_amount_container">
         <button class="decrease_btn" data-id="${index}">-</button>
-        <p class="amount_number">${product.amount}</p>
+        <p class="amount_number" id="amount-${index}">${product.amount}</p>
         <button class="increase_btn" data-id="${index}">+</button>
         </div>
-        <button class="total_btn" data-id="${index}">
+        <button class="total_btn" id="total-${index}">
         Buy $${Math.round(product.price * priceChange * product.amount)}
         </button>
     </div>
 </article>
     `;
   });
+
   // Funktioner för att minska och öka antal produkter
   const decreaseBtn = document.querySelectorAll('.decrease_btn');
   const increaseBtn = document.querySelectorAll('.increase_btn');
@@ -503,7 +487,6 @@ function printProducts() {
   }
 
   // Öka och minska antal med knapparna
-
   decreaseBtn.forEach((btn) => {
     btn.addEventListener('click', decreaseAmount);
   });
@@ -511,45 +494,66 @@ function printProducts() {
   increaseBtn.forEach((btn) => {
     btn.addEventListener('click', increaseAmount);
   });
+
+  /**
+   * -------------------------
+   *  Lägga till i kundvagn
+   * -------------------------
+   */
+
+  const buyItem = document.querySelectorAll('.total_btn');
+
+  // Funktion för att lägga till produkter i kundvagnen
+
+  function addToCart(e) {
+    const index = e.currentTarget.id.split('-')[1];
+
+    console.log(e.currentTarget.id);
+
+    // Välja ut rätt produkt
+    const productToAdd = {
+      ...products[index],
+    };
+
+    // Kolla om produkten finns i varukorgen
+    const existingProduct = cartArray.find(
+      // eslint-disable-next-line
+      (product) => product.id === productToAdd.id
+    );
+
+    // Om den finns adderas amounten istället för att lägga till ny produkt
+    if (existingProduct) {
+      existingProduct.amount += productToAdd.amount;
+      // Annars läggs den till som ny produkt
+    } else {
+      cartArray.push(productToAdd);
+    }
+
+    // Nollställa antalet i product-arrayen
+    products[index].amount = 0;
+
+    // Nollställa antalet i HTML-strukturen
+    const amountNumber = document.getElementById(`amount-${index}`);
+    const totalBtn = document.getElementById(`total-${index}`);
+
+    // Om summan är mer än noll ändras den till noll
+    if (amountNumber) {
+      amountNumber.textContent = products[index].amount;
+    }
+
+    if (totalBtn) {
+      totalBtn.textContent = 'Buy $0';
+    }
+    console.log(cartArray);
+  }
+
+  buyItem.forEach((btn) => {
+    btn.addEventListener('click', addToCart);
+  });
 }
 
 printProducts();
-/**
- *
- *
- *
- * Testar med kundvagn
- *
- *
- *
- *
- *
- */
-const buyItem = document.querySelectorAll('.total_btn');
-function addToCart(e) {
-  const index = e.currentTarget.dataset.id;
-  const productInCart = cartArray.find(
-    (cartProduct) => cartProduct.id === Number(index)
-  );
-  productInCart.amount += 3;
-}
 
-buyItem.forEach((btn) => {
-  btn.addEventListener('click', addToCart);
-});
-
-/**
- *
- *
- *
- *
- *
- * testar
- *
- *
- *
- *
- */
 // Filter och sortering
 function toggleFilter() {
   filterField.classList.toggle('visually_hidden');

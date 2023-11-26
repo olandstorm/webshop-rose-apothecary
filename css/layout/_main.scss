@@ -198,6 +198,16 @@
       .checkout_total {
         width: 100%;
         text-align: right;
+        display: flex;
+        justify-content: flex-end;
+        flex-wrap: wrap;
+
+        p {
+          flex-grow: 2;
+        }
+        p:nth-child(2n) {
+          flex-grow: 0;
+        }
       }
     }
   }
