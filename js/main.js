@@ -446,7 +446,7 @@ function printProducts() {
     <figure class="product_img_container">
       <img src="${product.images[0].src}" alt="${product.images[0].alt}" 
       height="${product.images[0].height}" width="${product.images[0].width}"
-      class="product_img" loading="lazy">
+      class="product_img">
     </figure>
     <div class="product_info">
         <h2>${product.name}</h2>
