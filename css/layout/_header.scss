@@ -15,4 +15,27 @@ header {
     height: auto;
     @include center_center;
   }
+
+  .cart_number {
+    background-color: rgba($color_secondary, 0.9);
+    color: $color_text;
+    position: absolute;
+    right: 28px;
+    top: 22px;
+    z-index: 1999;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    pointer-events: none;
+  }
+  .amount_color {
+    @include cart_number($light-theme: true);
+    body.dark_mode & {
+      @include cart_number($light-theme: false);
+    }
+  }
 }

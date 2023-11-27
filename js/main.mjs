@@ -37,7 +37,7 @@
  *      [X] Stänger alltid menyn också om man klickar på varukorgen
  *
  *      // varukorgssidan
- *      [] Visar alla valda produkter i en loop
+ *      [X] Visar alla valda produkter i en loop
  *      [] Man kan ändra antal med knappar samt ta bort alla produkter av en sort med en knapp
  *      [] Man kan också rensa alla produkter med en knapp
  *      [X] Det finns ett fält för rabattkoder
@@ -56,9 +56,15 @@
  *      [] Knappen skicka är inte möjlig att klicka förrän alla fält är validerade
  *
  *
+ *      [] Se över alla klasser (knapparna tex)
+ *      [] Lägga till ruta om försäkran om att man vill tömma varukorg
  *
  *
  */
+
+// Importera produkterna från products.mjs
+// eslint-disable-next-line
+import products from './products.mjs';
 
 const menuBtn = document.querySelector('#toggleNav');
 const nav = document.querySelector('#fullNav');
@@ -68,6 +74,7 @@ const bodyTag = document.body;
 const menuLinks = document.querySelectorAll('.menuLink');
 
 const shoppingCart = document.querySelector('#shoppingCart');
+const cartAmount = document.querySelector('#amountCounter');
 const productPage = document.querySelector('#productPage');
 const cartPage = document.querySelector('#cartPage');
 const backToProducts = document.querySelector('#backToProducts');
@@ -80,9 +87,12 @@ const phraseImgBlack = document.querySelector('#phraseImageBlack');
 const phraseImgWhite = document.querySelector('#phraseImageWhite');
 
 const productContainer = document.querySelector('#productContainer');
+const cartProducts = document.querySelector('#cartProducts');
+const clearCart = document.querySelector('#clearCartBtn');
 
 const filterBtn = document.querySelector('#filterBtn');
 const filterField = document.querySelector('#sortFilterField');
+
 const sortNameAZ = document.querySelector('#sortNameAZ');
 const sortNameZA = document.querySelector('#sortNameZA');
 const sortPrice19 = document.querySelector('#sortPrice19');
@@ -94,6 +104,10 @@ const sortRating91 = document.querySelector('#sortRating91');
 
 const promoContainer = document.querySelector('#promoCodeContainer');
 const codeBtn = document.querySelector('#codeBtn');
+const checkoutTotal = document.querySelector('#checkoutTotal');
+
+// En array för alla produkter som hamnar i varukorgen
+let cartArray = [];
 
 // Funktion för att öppna och stänga navigationsmenyn, även med länkarna
 function toggleMenu() {
@@ -101,6 +115,7 @@ function toggleMenu() {
   menuBtn.classList.toggle('open');
   bodyTag.classList.toggle('fixed_background');
   shoppingCart.classList.toggle('shopping_black');
+  cartAmount.classList.toggle('amount_color');
   if (isOpen) {
     menuBtn.setAttribute('aria-label', 'Close meny');
   } else {
@@ -140,7 +155,7 @@ if (
   lightMode.classList.toggle('visually_hidden');
   changePhraseToBlack();
 }
-
+// Ändra färgtema
 function toggleTheme() {
   document.body.classList.toggle('dark_mode');
   lightMode.classList.toggle('visually_hidden');
@@ -155,277 +170,209 @@ function toggleTheme() {
 
 themeToggle.addEventListener('click', toggleTheme);
 
-// En objekt-array med alla produkter
-const products = [
-  {
-    name: 'Dear Rose',
-    description:
-      'Indulge your senses in the intoxicating allure of our bestselling rose-scented soap, where every lather unveils a symphony of delicate floral notes that transport you to a blooming garden of unparalleled elegance and timeless sophistication.',
-    price: 6,
-    images: [
-      {
-        src: './assets/img/products/soap_pink_1.webp',
-        alt: 'Two bars of pink soap',
-        width: 600,
-        height: 900,
-      },
-      {
-        src: './assets/img/products/soap_pink_2.webp',
-        alt: 'Three bars of pink soap',
-        width: 600,
-        height: 848,
-      },
-      {
-        src: './assets/img/products/soap_pink_3.webp',
-        alt: 'Three bars of pink soap',
-        width: 600,
-        height: 900,
-      },
-    ],
-    rating: 5,
-    category: 'soap',
-    amount: 0,
-    id: 0,
-  },
-  {
-    name: 'Latte Love',
-    description:
-      'Elevate your shower experience with the invigorating aroma of our coffee-scented soap, as each lather releases the rich and robust fragrance of freshly ground beans, awakening your senses to a delightful symphony of warmth and revitalization.',
-    price: 5,
-    images: [
-      {
-        src: './assets/img/products/soap_coffee_1.webp',
-        alt: 'A bar of brown soap with coffee beans on',
-        width: 600,
-        height: 900,
-      },
-      {
-        src: './assets/img/products/soap_coffee_2.webp',
-        alt: 'Two bars of brown soap with coffee beans on',
-        width: 600,
-        height: 900,
-      },
-      {
-        src: './assets/img/products/soap_coffee_3.webp',
-        alt: 'Two bars of brown soap with coffee beans on',
-        width: 600,
-        height: 900,
-      },
-    ],
-    rating: 4.5,
-    category: 'soap',
-    amount: 0,
-    id: 1,
-  },
-  {
-    name: 'Cloudy Mood',
-    description:
-      'Purify and rejuvenate your skin with our charcoal-infused soap, expertly crafted to draw out impurities and toxins, leaving your complexion refreshed and invigorated as the activated charcoal works its magic to provide a deep, cleansing experience.',
-    price: 5,
-    images: [
-      {
-        src: './assets/img/products/soap_black_1.webp',
-        alt: 'Two bars of black and white soap',
-        width: 600,
-        height: 900,
-      },
-      {
-        src: './assets/img/products/soap_black_2.webp',
-        alt: 'Four bars of black and white soap',
-        width: 600,
-        height: 900,
-      },
-    ],
-    rating: 4,
-    category: 'soap',
-    amount: 0,
-    id: 2,
-  },
-  {
-    name: 'Honey Cream',
-    description:
-      'Nourish your skin with the golden elixir of our honey-based cream, a luscious blend that not only envelopes you in a sweet, luxurious fragrance but also deeply moisturizes and revitalizes, leaving your skin with a radiant, dew-kissed glow.',
-    price: 23,
-    images: [
-      {
-        src: './assets/img/products/cream_honey_1.webp',
-        alt: 'A jar of cream with the color of honey',
-        width: 600,
-        height: 900,
-      },
-      {
-        src: './assets/img/products/cream_honey_2.webp',
-        alt: 'A jar of cream with the color of honey on a linen fabric',
-        width: 600,
-        height: 900,
-      },
-    ],
-    rating: 4,
-    category: 'skincare',
-    amount: 0,
-    id: 3,
-  },
-  {
-    name: 'Just Breezy',
-    description:
-      'Transform your space into a tranquil haven with the refreshing essence of our breezy-scented candle, where delicate notes of sea breeze and crisp air dance harmoniously, creating an atmosphere that evokes the serene tranquility of a coastal retreat.',
-    price: 27,
-    images: [
-      {
-        src: './assets/img/products/candle_1.webp',
-        alt: 'A candle in a brown glass jar in a beige staged set up',
-        width: 600,
-        height: 900,
-      },
-      {
-        src: './assets/img/products/candle_2.webp',
-        alt: 'A candle in a brown glass jar on a beige linen fabric with a wooden plate behind',
-        width: 600,
-        height: 900,
-      },
-    ],
-    rating: 4.5,
-    category: 'candle',
-    amount: 0,
-    id: 4,
-  },
-  {
-    name: 'Unpuff',
-    description:
-      'Elevate your skincare routine with our rejuvenating eye serum, a luxurious elixir meticulously crafted to diminish fine lines and fatigue, as it delicately revitalizes the delicate skin around your eyes, leaving them bright, refreshed, and beautifully awakened.',
-    price: 24,
-    images: [
-      {
-        src: './assets/img/products/serum_eye_1.webp',
-        alt: 'Three pipette bottles with white unnamed labels',
-        width: 600,
-        height: 799,
-      },
-      {
-        src: './assets/img/products/serum_eye_2.webp',
-        alt: 'A pipette bottle with white unnamed label on staged with two glass jars with wooden lids',
-        width: 600,
-        height: 798,
-      },
-      {
-        src: './assets/img/products/serum_lip_eye.webp',
-        alt: 'Two pipette bottles an a glass jar with a wooden lid on a rustic beige plate',
-        width: 600,
-        height: 799,
-      },
-    ],
-    rating: 5,
-    category: 'skincare',
-    amount: 0,
-    id: 5,
-  },
-  {
-    name: 'Dreamy Linen',
-    description:
-      'Indulge in the epitome of luxury and comfort with our expensive linen bedsheets, meticulously woven from the finest threads to caress your skin with a sumptuously smooth texture, elevating your sleep experience to a level of opulence that transcends the ordinary.',
-    price: 89,
-    images: [
-      {
-        src: './assets/img/products/bed_linen_1.webp',
-        alt: 'A brown wooden bed with white linen bed sheets',
-        width: 783,
-        height: 600,
-      },
-      {
-        src: './assets/img/products/bed_linen_2.webp',
-        alt: 'A brown wooden bed with white linen bed sheets',
-        width: 600,
-        height: 901,
-      },
-    ],
-    rating: 4.5,
-    category: 'linen',
-    amount: 0,
-    id: 6,
-  },
-  {
-    name: 'New Faces',
-    description:
-      'Immerse your skin in the transformative luxury of our face serum, a sublime elixir infused with potent antioxidants and nourishing extracts that glide effortlessly, working in harmony to reveal a radiant complexion, as fine lines fade away, leaving your skin embraced in a velvety softness and youthful luminosity.',
-    price: 26,
-    images: [
-      {
-        src: './assets/img/products/serum_brown_1.webp',
-        alt: 'A brown pipette bottle staged on a green leaf and mirror',
-        width: 600,
-        height: 900,
-      },
-      {
-        src: './assets/img/products/serum_brown_2.webp',
-        alt: 'A brown pipette bottle staged next to two green leafs',
-        width: 600,
-        height: 900,
-      },
-      {
-        src: './assets/img/products/serum_brown_3.webp',
-        alt: 'A brown pipette bottle staged with towels, green leafs and wooden plates',
-        width: 900,
-        height: 600,
-      },
-    ],
-    rating: 4,
-    category: 'skincare',
-    amount: 0,
-    id: 7,
-  },
-  {
-    name: 'Sweet Kiss',
-    description:
-      'Revitalize your lips with our exquisite lip serum, a velvety elixir enriched with hydrating botanicals and plumping peptides, delicately enhancing your pout with a burst of moisture and a subtle, natural fullness, for irresistibly soft and beautifully defined lips.',
-    price: 28,
-    images: [
-      {
-        src: './assets/img/products/serum_lip_1.webp',
-        alt: 'An open glass pipette bottle with a red liquid inside standing on a glass jar with a wooden lid',
-        width: 600,
-        height: 799,
-      },
-      {
-        src: './assets/img/products/serum_lip_eye.webp',
-        alt: 'Two pipette bottles an a glass jar with a wooden lid on a rustic beige plate',
-        width: 600,
-        height: 799,
-      },
-    ],
-    rating: 5,
-    category: 'skincare',
-    amount: 0,
-    id: 8,
-  },
-  {
-    name: 'Perfectly Musky',
-    description:
-      'Immerse yourself in the captivating allure of our musk-scented liquid soap, a velvety lather that envelops your senses with a rich, warm embrace, leaving your skin delicately perfumed with the timeless and seductive essence of musk.',
-    price: 27,
-    images: [
-      {
-        src: './assets/img/products/bottle_fluid_soap_1.webp',
-        alt: 'A brown soap pump staged with wood and beige set up',
-        width: 900,
-        height: 600,
-      },
-      {
-        src: './assets/img/products/bottle_fluid_soap_hand_oil_serum.webp',
-        alt: 'A brown soap pump with other brown glass jars staged with wood and beige set up',
-        width: 600,
-        height: 900,
-      },
-    ],
-    rating: 4,
-    category: 'soap',
-    amount: 0,
-    id: 9,
-  },
-];
+// Minska antal i kundvagn
+function decreaseCartAmount(e) {
+  const index = e.currentTarget.dataset.id;
+  if (cartArray[index].amount <= 1) {
+    cartArray[index].amount = 1;
+  } else {
+    cartArray[index].amount -= 1;
+  }
+  // eslint-disable-next-line
+  printCart();
+}
 
-// En array för alla produkter som hamnar i varukorgen
-const cartArray = [];
+// Öka antal i kundvagn
+function increaseCartAmount(e) {
+  const index = e.currentTarget.dataset.id;
+  cartArray[index].amount += 1;
+  // eslint-disable-next-line
+  printCart();
+}
 
+// Ta bort enskild produkt i listan
+function deleteSingleProduct(e) {
+  const productId = Number(e.currentTarget.id.replace('delete-', ''));
+  console.log(productId);
+  const index = cartArray.findIndex((product) => product.id === productId);
+  if (index > -1) {
+    cartArray.splice(index, 1);
+  }
+  const lastItemDelete = cartArray.length;
+  if (lastItemDelete === 0) {
+    clearCart.classList.add('visually_hidden');
+    cartAmount.classList.add('visually_hidden');
+  }
+  // eslint-disable-next-line
+  printCart();
+}
+// En funktion för att printa varukorgen
+function printCart() {
+  let priceChange = 1;
+  let totalSum = 0;
+  let totalAmount = 0;
+  const today = new Date();
+  const isFriday = today.getDay() === 6;
+  const isMonday = today.getDay() === 1;
+  const currentHour = today.getHours();
+
+  cartProducts.innerHTML = '';
+
+  if ((isFriday && currentHour >= 15) || (isMonday && currentHour <= 3)) {
+    priceChange = 1.15;
+  }
+
+  cartArray.forEach((product, index) => {
+    totalSum += product.amount * product.price;
+    totalAmount += product.amount;
+    cartProducts.innerHTML += `
+    <article class="product_in_cart" id="cartItem_${[index]}">
+    <div class="cart_pic_name">
+        <figure>
+            <img 
+            src="${product.images[0].src}" 
+            alt="${product.images[0].alt}" 
+            height="${product.images[0].height}" 
+            width="${product.images[0].width}"
+            >
+        </figure>
+        <h2>${product.name}</h2>
+    </div>
+    <div class="cart_amount_container">
+        <div class="adjust_btn_container">
+            <button class="decrease_cart_btn cart_adjust_btn" data-id="${index}">-</button><span
+                class="product_amount">${product.amount}</span><button
+                class="increase_cart_btn cart_adjust_btn" data-id="${index}">+</button>
+        </div>
+        <p>Price: $${Math.round(product.price * priceChange)}</p>
+    </div>
+    <div class="cart_total_container">
+        <p>Total: 
+        $${Math.round(product.price * priceChange * product.amount)}
+        </p>
+    </div>
+    <button class="delete_product" 
+    id="delete-${product.id}">
+    <span class="material-symbols-outlined">
+            delete
+        </span></button>
+    </article>
+    `;
+  });
+
+  // För att skriva ut totalen
+  checkoutTotal.innerHTML = '';
+  checkoutTotal.innerHTML = `
+  <p>Subtotal:</p>
+  <p id="totalSum">$${totalSum}</p>
+  <p>Shipping:</p>
+  <p id="shippingSum">$50</p>
+  <p>Total inc VAT:</p>
+  <p id="billedAmount">$${totalSum}</p>
+  `;
+
+  // För att uppdatera numret på varukorgen
+  if (totalAmount > 0) {
+    cartAmount.classList.remove('visually_hidden');
+    clearCart.classList.remove('visually_hidden');
+    cartAmount.innerHTML = '';
+    cartAmount.innerHTML = `
+   ${totalAmount}
+  `;
+  }
+
+  // Ta bort enskild produkt
+  Array.from(document.querySelectorAll('.delete_product')).forEach((btn) => {
+    btn.addEventListener('click', deleteSingleProduct);
+  });
+
+  // Funktioner för att minska och öka antal produkter
+  const decreaseCartBtn = document.querySelectorAll('.decrease_cart_btn');
+  const increaseCartBtn = document.querySelectorAll('.increase_cart_btn');
+
+  // Öka och minska antal med knapparna
+  decreaseCartBtn.forEach((btn) => {
+    btn.addEventListener('click', decreaseCartAmount);
+  });
+
+  increaseCartBtn.forEach((btn) => {
+    btn.addEventListener('click', increaseCartAmount);
+  });
+}
+
+// Tömma varukorgen med knappen
+function emptyCart() {
+  cartArray = [];
+  clearCart.classList.add('visually_hidden');
+  cartAmount.classList.add('visually_hidden');
+  printCart();
+  console.log(cartArray);
+}
+clearCart.addEventListener('click', emptyCart);
+
+// Knapparna för att öka och minska antalet
+function decreaseAmount(e) {
+  const index = e.currentTarget.dataset.id;
+  if (products[index].amount <= 0) {
+    products[index].amount = 0;
+  } else {
+    products[index].amount -= 1;
+  }
+  // eslint-disable-next-line
+  printProducts();
+}
+
+function increaseAmount(e) {
+  const index = e.currentTarget.dataset.id;
+  products[index].amount += 1;
+  // eslint-disable-next-line
+  printProducts();
+}
+
+// Funktion för att lägga till produkter i kundvagnen
+function addToCart(e) {
+  const index = e.currentTarget.id.split('-')[1];
+  console.log(e.currentTarget.id);
+
+  // Välja ut rätt produkt
+  const productToAdd = {
+    ...products[index],
+  };
+
+  // Kolla om produkten finns i varukorgen
+  const existingProduct = cartArray.find(
+    // eslint-disable-next-line
+    (product) => product.id === productToAdd.id
+  );
+
+  // Om den finns adderas amounten istället för att lägga till ny produkt
+  if (existingProduct) {
+    existingProduct.amount += productToAdd.amount;
+    // Annars läggs den till som ny produkt
+  } else {
+    cartArray.push(productToAdd);
+  }
+
+  // Nollställa antalet i product-arrayen
+  products[index].amount = 0;
+
+  // Nollställa antalet i HTML-strukturen
+  const amountNumber = document.getElementById(`amount-${index}`);
+  const totalBtn = document.getElementById(`total-${index}`);
+
+  // Om summan är mer än noll ändras den till noll
+  if (amountNumber) {
+    amountNumber.textContent = products[index].amount;
+  }
+
+  if (totalBtn) {
+    totalBtn.textContent = 'Buy $0';
+  }
+  console.log(cartArray);
+  // eslint-disable-next-line
+  gsap.to('#amountCounter', { scale: 2, yoyo: true, repeat: 1 });
+  printCart();
+}
 // En funktion för att printa produkterna
 function printProducts() {
   let priceChange = 1;
@@ -470,22 +417,6 @@ function printProducts() {
   const decreaseBtn = document.querySelectorAll('.decrease_btn');
   const increaseBtn = document.querySelectorAll('.increase_btn');
 
-  function decreaseAmount(e) {
-    const index = e.currentTarget.dataset.id;
-    if (products[index].amount <= 0) {
-      products[index].amount = 0;
-    } else {
-      products[index].amount -= 1;
-    }
-    printProducts();
-  }
-
-  function increaseAmount(e) {
-    const index = e.currentTarget.dataset.id;
-    products[index].amount += 1;
-    printProducts();
-  }
-
   // Öka och minska antal med knapparna
   decreaseBtn.forEach((btn) => {
     btn.addEventListener('click', decreaseAmount);
@@ -495,57 +426,8 @@ function printProducts() {
     btn.addEventListener('click', increaseAmount);
   });
 
-  /**
-   * -------------------------
-   *  Lägga till i kundvagn
-   * -------------------------
-   */
-
+  // Lägga till i kundkorgen
   const buyItem = document.querySelectorAll('.total_btn');
-
-  // Funktion för att lägga till produkter i kundvagnen
-
-  function addToCart(e) {
-    const index = e.currentTarget.id.split('-')[1];
-
-    console.log(e.currentTarget.id);
-
-    // Välja ut rätt produkt
-    const productToAdd = {
-      ...products[index],
-    };
-
-    // Kolla om produkten finns i varukorgen
-    const existingProduct = cartArray.find(
-      // eslint-disable-next-line
-      (product) => product.id === productToAdd.id
-    );
-
-    // Om den finns adderas amounten istället för att lägga till ny produkt
-    if (existingProduct) {
-      existingProduct.amount += productToAdd.amount;
-      // Annars läggs den till som ny produkt
-    } else {
-      cartArray.push(productToAdd);
-    }
-
-    // Nollställa antalet i product-arrayen
-    products[index].amount = 0;
-
-    // Nollställa antalet i HTML-strukturen
-    const amountNumber = document.getElementById(`amount-${index}`);
-    const totalBtn = document.getElementById(`total-${index}`);
-
-    // Om summan är mer än noll ändras den till noll
-    if (amountNumber) {
-      amountNumber.textContent = products[index].amount;
-    }
-
-    if (totalBtn) {
-      totalBtn.textContent = 'Buy $0';
-    }
-    console.log(cartArray);
-  }
 
   buyItem.forEach((btn) => {
     btn.addEventListener('click', addToCart);
@@ -654,7 +536,7 @@ function sortListCategoryZA() {
 sortCategoryAZ.addEventListener('click', sortListCategoryAZ);
 sortCategoryZA.addEventListener('click', sortListCategoryZA);
 
-// Öppna beställningsformuläret
+// Öppna kundkorgen
 
 function openCart() {
   cartPage.classList.remove('visually_hidden');

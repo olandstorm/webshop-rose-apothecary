@@ -102,6 +102,8 @@
         <button id="shoppingCart" class="shopping_btn"><span class="material-symbols-outlined">
                 shopping_cart
             </span></button>
+        <div class="cart_number visually_hidden" id="amountCounter">
+        </div>
     </header>
 
     <main>
@@ -166,177 +168,26 @@
                     <div class="price_range">
                         <span class="price_range_title">Select price range:</span>
                         <label>
-                            <input type="radio" name="priceRange" id="tenAndBelow">
+                            <input type="radio" name="priceRange" id="tenAndBelow" value="ten">
                             <span class="price_range_text">$0-10</span>
                         </label>
                         <label>
-                            <input type="radio" name="priceRange" id="elevenTo30">
+                            <input type="radio" name="priceRange" id="elevenTo30" value="tentothirty">
                             <span class="price_range_text">$11-30</span>
                         </label>
                         <label>
-                            <input type="radio" name="priceRange" id="above30">
+                            <input type="radio" name="priceRange" id="above30" value="abovethirty">
                             <span class="price_range_text">$30+</span>
                         </label>
                         <label>
-                            <input type="radio" name="priceRange" id="clearFilter" checked>
+                            <input type="radio" name="priceRange" id="clearFilter" value="all" checked>
                             <span class="price_range_text">All prices</span>
                         </label>
                     </div>
-                    <!-- Här kommer sorterings och filtreringsalternativen upp -->
                 </div>
             </div>
             <section class="product_container" id="productContainer">
-                <!-- Dessa är bara för styling och tas bort sen -->
-                <!--                 <article class="product_card">
-                    <div class="product_img_container">
-                        <img src="assets/img/products/bed_linen_1.webp" alt="" height="600" width="783"
-                            class="product_img">
-                    </div>
-                    <div class="product_info">
-                        <h2>Product</h2>
-                        <p>Product description with some text about what the product is.</p>
-                        <p>Price: 13 $</p>
-                        <p>Rating: 5/5</p>
-                        <button class="decrease_btn">-</button><button class="increase_btn">+</button><input
-                            type="number">
-                        <button class="total_btn">Buy 65$</button>
-                    </div>
-                </article>
-                <article class="product_card">
-                    <div class="product_img_container">
-                        <img src="assets/img/products/bed_linen_1.webp" alt="" height="600" width="783"
-                            class="product_img">
-                    </div>
-                    <div class="product_info">
-                        <h2>Product</h2>
-                        <p>Product description with some text about what the product is.</p>
-                        <p>Price: 13 $</p>
-                        <p>Rating: 5/5</p>
-                        <button class="decrease_btn">-</button><button class="increase_btn">+</button><input
-                            type="number">
-                        <button class="total_btn">Buy 65$</button>
-                    </div>
-                </article>
-                <article class="product_card">
-                    <div class="product_img_container">
-                        <img src="assets/img/products/bed_linen_1.webp" alt="" height="600" width="783"
-                            class="product_img">
-                    </div>
-                    <div class="product_info">
-                        <h2>Product</h2>
-                        <p>Product description with some text about what the product is.</p>
-                        <p>Price: 13 $</p>
-                        <p>Rating: 5/5</p>
-                        <button class="decrease_btn">-</button><button class="increase_btn">+</button><input
-                            type="number">
-                        <button class="total_btn">Buy 65$</button>
-                    </div>
-                </article>
-                <article class="product_card">
-                    <div class="product_img_container">
-                        <img src="assets/img/products/bed_linen_1.webp" alt="" height="600" width="783"
-                            class="product_img">
-                    </div>
-                    <div class="product_info">
-                        <h2>Product</h2>
-                        <p>Product description with some text about what the product is.</p>
-                        <p>Price: 13 $</p>
-                        <p>Rating: 5/5</p>
-                        <button class="decrease_btn">-</button><button class="increase_btn">+</button><input
-                            type="number">
-                        <button class="total_btn">Buy 65$</button>
-                    </div>
-                </article>
-                <article class="product_card">
-                    <div class="product_img_container">
-                        <img src="assets/img/products/bed_linen_1.webp" alt="" height="600" width="783"
-                            class="product_img">
-                    </div>
-                    <div class="product_info">
-                        <h2>Product</h2>
-                        <p>Product description with some text about what the product is.</p>
-                        <p>Price: 13 $</p>
-                        <p>Rating: 5/5</p>
-                        <button class="decrease_btn">-</button><button class="increase_btn">+</button><input
-                            type="number">
-                        <button class="total_btn">Buy 65$</button>
-                    </div>
-                </article>
-                <article class="product_card">
-                    <div class="product_img_container">
-                        <img src="assets/img/products/bed_linen_1.webp" alt="" height="600" width="783"
-                            class="product_img">
-                    </div>
-                    <div class="product_info">
-                        <h2>Product</h2>
-                        <p>Product description with some text about what the product is.</p>
-                        <p>Price: 13 $</p>
-                        <p>Rating: 5/5</p>
-                        <button class="decrease_btn">-</button><button class="increase_btn">+</button><input
-                            type="number">
-                        <button class="total_btn">Buy 65$</button>
-                    </div>
-                </article>
-                <article class="product_card">
-                    <div class="product_img_container">
-                        <img src="assets/img/products/bed_linen_1.webp" alt="" height="600" width="783"
-                            class="product_img">
-                    </div>
-                    <div class="product_info">
-                        <h2>Product</h2>
-                        <p>Product description with some text about what the product is.</p>
-                        <p>Price: 13 $</p>
-                        <p>Rating: 5/5</p>
-                        <button class="decrease_btn">-</button><button class="increase_btn">+</button><input
-                            type="number">
-                        <button class="total_btn">Buy 65$</button>
-                    </div>
-                </article>
-                <article class="product_card">
-                    <div class="product_img_container">
-                        <img src="assets/img/products/bed_linen_1.webp" alt="" height="600" width="783"
-                            class="product_img">
-                    </div>
-                    <div class="product_info">
-                        <h2>Product</h2>
-                        <p>Product description with some text about what the product is.</p>
-                        <p>13 $ / set</p>
-                        <p>Rating: 5/5</p>
-                        <button class="decrease_btn">-</button><button class="increase_btn">+</button><input
-                            type="number">
-                        <button class="total_btn">Buy 65$</button>
-                    </div>
-                </article>
-                <article class="product_card">
-                    <div class="product_img_container">
-                        <img src="assets/img/products/bed_linen_1.webp" alt="" height="600" width="783"
-                            class="product_img">
-                    </div>
-                    <div class="product_info">
-                        <h2>Product</h2>
-                        <p>Product description with some text about what the product is.</p>
-                        <p>Price: 13 $</p>
-                        <p>Rating: 5/5</p>
-                        <button class="decrease_btn">-</button><button class="increase_btn">+</button><input
-                            type="number">
-                        <button class="total_btn">Buy 65$</button>
-                    </div>
-                </article>
-                <article class="product_card">
-                    <div class="product_img_container">
-                        <img src="assets/img/products/bed_linen_1.webp" alt="" height="600" width="783"
-                            class="product_img">
-                    </div>
-                    <div class="product_info">
-                        <h2>Product</h2>
-                        <p>Product description with some text about what the product is.</p>
-                        <p>Price: 13 $</p>
-                        <p>Rating: 5/5</p>
-                        <button class="decrease_btn">-</button><button class="increase_btn">+</button><input
-                            type="number">
-                        <button class="total_btn">Buy 65$</button>
-                    </div>
-                </article> -->
+                <!-- Här kommer alla produkter upp från JS -->
             </section>
         </section>
         <section class="cart_page visually_hidden" id="cartPage">
@@ -346,7 +197,7 @@
             </div>
             <section class="order_summary">
                 <h2>Your order</h2>
-
+                <button id="clearCartBtn" class="summary_btn clear_cart_btn visually_hidden">Clear order</button>
                 <button id="codeBtn" class="summary_btn add_code_btn">Add code</button>
                 <div id="promoCodeContainer" class="promo_code_container visually_hidden">
                     <p>Add your code for campains or special offers:</p>
@@ -356,78 +207,18 @@
                     <h3>Product</h3>
                     <h3>Quantity</h3>
                     <h3>Total</h3>
-                    <article class="product_in_cart">
-                        <div class="cart_pic_name">
-                            <figure>
-                                <img src="assets/img/products/bed_linen_1.webp" alt="" height="600" width="783">
-                            </figure>
-                            <h2>Name</h2>
-                        </div>
-                        <div class="cart_amount_container">
-                            <div class="adjust_btn_container">
-                                <button class="decrease_btn cart_adjust_btn">-</button><span
-                                    class="product_amount">1</span><button
-                                    class="increase_btn cart_adjust_btn">+</button>
-                            </div>
-                            <p>Price: 13$</p>
-                        </div>
-                        <div class="cart_total_container">
-                            <p>Total: 13$</p>
-                        </div>
-                        <button class="delete_product"><span class="material-symbols-outlined">
-                                delete
-                            </span></button>
-                    </article>
-                    <article class="product_in_cart">
-                        <div class="cart_pic_name">
-                            <figure>
-                                <img src="assets/img/products/bed_linen_1.webp" alt="" height="600" width="783">
-                            </figure>
-                            <h2>Name</h2>
-                        </div>
-                        <div class="cart_amount_container">
-                            <div class="adjust_btn_container">
-                                <button class="decrease_btn cart_adjust_btn">-</button><span
-                                    class="product_amount">1</span><button
-                                    class="increase_btn cart_adjust_btn">+</button>
-                            </div>
-                            <p>Price: 13$</p>
-                        </div>
-                        <div class="cart_total_container">
-                            <p>Total: 13$</p>
-                        </div>
-                        <button class="delete_product"><span class="material-symbols-outlined">
-                                delete
-                            </span></button>
-                    </article>
-                    <article class="product_in_cart">
-                        <div class="cart_pic_name">
-                            <figure>
-                                <img src="assets/img/products/bed_linen_1.webp" alt="" height="600" width="783">
-                            </figure>
-                            <h2>Name</h2>
-                        </div>
-                        <div class="cart_amount_container">
-                            <div class="adjust_btn_container">
-                                <button class="decrease_btn cart_adjust_btn">-</button><span
-                                    class="product_amount">1</span><button
-                                    class="increase_btn cart_adjust_btn">+</button>
-                            </div>
-                            <p>Price: 13$</p>
-                        </div>
-                        <div class="cart_total_container">
-                            <p>Total: 13$</p>
-                        </div>
-                        <button class="delete_product"><span class="material-symbols-outlined">
-                                delete
-                            </span></button>
-                    </article>
+                    <div class="cart_products" id="cartProducts">
+                        <p>You have no products yet.</p>
+                    </div>
                     <div id="checkoutTotal" class="checkout_total">
                         <!-- Här kommer en rad med rabatt läggas in också om det tillämpas -->
-                        <p>Shipping</p>
-                        <p id="shippingSum">69 $</p>
-                        <p>Total inc VAT</p>
-                        <p>69 $</p>
+                    </div>
+                    <div class="delete_all_cart">
+                        <article class="delete_all_field">
+                            <h2>Are you sure you want to delete all the products?</h2>
+                            <button id="sureToDelete" class="summary_btn delete_all_btn">Yes, thank you</button>
+                            <button id="backToCart" class="summary_btn">No, take me back</button>
+                        </article>
                     </div>
                 </section>
             </section>
@@ -553,9 +344,8 @@
 
 
 
-
-
-    <script src="js/main.js"></script>
+    <script src="https://unpkg.co/gsap@3/dist/gsap.min.js"></script>
+    <script type="module" src="js/main.mjs"></script>
 </body>
 
 </html>

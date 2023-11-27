@@ -129,6 +129,14 @@
     margin: 20px auto 90px auto;
     width: 90vw;
     padding: 30px 5vw;
+    position: relative;
+
+    .clear_cart_btn {
+      position: absolute;
+      right: 20px;
+      top: 20px;
+    }
+
     .promo_code_container {
       padding: 15px 10px 20px 10px;
       margin: 10px 0;
@@ -146,6 +154,12 @@
       flex-wrap: wrap;
       row-gap: 10px;
 
+      .cart_products {
+        display: flex;
+        flex-wrap: wrap;
+        row-gap: 10px;
+        width: 100%;
+      }
       h3 {
         width: 33.3%;
       }
@@ -203,10 +217,51 @@
         flex-wrap: wrap;
 
         p {
-          flex-grow: 2;
+          width: 50%;
+          margin-right: 10px;
+          @include checkout_numbers($light-theme: true);
+          body.dark_mode & {
+            @include checkout_numbers($light-theme: false);
+          }
+          font-size: 0.9rem;
         }
-        p:nth-child(2n) {
+        p:nth-of-type(2n) {
           flex-grow: 0;
+          width: fit-content;
+        }
+        p:nth-of-type(5),
+        p:nth-of-type(6) {
+          @include text_color($light-theme: true);
+          body.dark_mode & {
+            @include text_color($light-theme: false);
+          }
+          font-size: 1rem;
+          margin-top: 5px;
+        }
+      }
+    }
+    .delete_all_cart {
+      position: fixed;
+      height: 100vh;
+      max-height: 100%;
+      max-width: 100%;
+      width: 100vw;
+      top: 0;
+      left: 0;
+      background-color: rgba($grey, 0.7);
+      .delete_all_field {
+        z-index: 2000;
+        @include center_center;
+        min-height: 200px;
+        padding: 30px 10px;
+        display: flex;
+        gap: 10px;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        @include delete_question($light-theme: true);
+        body.dark_mode & {
+          @include delete_question($light-theme: false);
         }
       }
     }

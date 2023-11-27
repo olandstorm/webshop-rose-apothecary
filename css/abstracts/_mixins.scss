@@ -204,3 +204,39 @@
     color: $color_text_dark;
   }
 }
+
+@mixin checkout_numbers($light-theme: true) {
+  @if $light-theme {
+    color: $color_primary_dark;
+  } @else {
+    color: $color_secondary;
+  }
+}
+
+@mixin cart_number($light-theme: true) {
+  @if $light-theme {
+    background-color: rgba($color_primary_dark, 0.9);
+    color: $color_text_dark;
+  } @else {
+    background-color: rgba($color_secondary, 0.9);
+    color: $color_text;
+  }
+}
+
+@mixin empty_cart_btn($light-theme: true) {
+  @if $light-theme {
+    color: $color_accent;
+  } @else {
+    color: $color_accent;
+  }
+}
+
+@mixin delete_question($light-theme: true) {
+  @if $light-theme {
+    background-color: rgba($color_primary_dark, 0.9);
+    color: $color_text_dark;
+  } @else {
+    background-color: rgba($color_secondary, 0.9);
+    color: $color_text;
+  }
+}
