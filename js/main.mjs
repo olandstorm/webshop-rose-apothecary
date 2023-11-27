@@ -31,17 +31,17 @@
  *      [] Olika radiobuttons kan filtrera på olika spann av pris
  *
  *      // varukorgen
- *      [] Uppdateras /VISUELLT/ när man klickar på beställningsknapparna
+ *      [X] Uppdateras /VISUELLT/ när man klickar på beställningsknapparna
  *      [] ! OPTIONAL ! Har en dropdownmeny när man hovrar över som visar valda produkter i nuläget
  *      [X] Stänger produktsidan och öppnar varukorgssidan vid klick
  *      [X] Stänger alltid menyn också om man klickar på varukorgen
  *
  *      // varukorgssidan
  *      [X] Visar alla valda produkter i en loop
- *      [] Man kan ändra antal med knappar samt ta bort alla produkter av en sort med en knapp
- *      [] Man kan också rensa alla produkter med en knapp
+ *      [X] Man kan ändra antal med knappar samt ta bort alla produkter av en sort med en knapp
+ *      [X] Man kan också rensa alla produkter med en knapp
  *      [X] Det finns ett fält för rabattkoder
- *      [] Prisspecifikation med frakt och totalpris visas och uppdateras /VISUELLT/ vid ändringar
+ *      [X] Prisspecifikation med frakt och totalpris visas och uppdateras /VISUELLT/ vid ändringar
  *      [] Måndagar innan kl 10 är det 10% rabatt på totalen och en text visas och förklarar detta
  *      [] Vid beställning >10 st av samma produkt tillkommer rabatt på 10% på den varan
  *      [] Vid beställning av mer än 15 produkter är frakten gratis, annars 25kr + 10% av totalen
@@ -57,7 +57,7 @@
  *
  *
  *      [] Se över alla klasser (knapparna tex)
- *      [] Lägga till ruta om försäkran om att man vill tömma varukorg
+ *      [X] Lägga till ruta om försäkran om att man vill tömma varukorg
  *
  *
  */
@@ -78,6 +78,10 @@ const cartAmount = document.querySelector('#amountCounter');
 const productPage = document.querySelector('#productPage');
 const cartPage = document.querySelector('#cartPage');
 const backToProducts = document.querySelector('#backToProducts');
+
+const sureToDelete = document.querySelector('#sureToDelete');
+const backToCart = document.querySelector('#backToCart');
+const deleteContainer = document.querySelector('#popUpDelete');
 
 const themeToggle = document.querySelector('#toggleTheme');
 const lightMode = document.querySelector('#lightModeIcon');
@@ -206,6 +210,15 @@ function deleteSingleProduct(e) {
   // eslint-disable-next-line
   printCart();
 }
+
+// Pop-up för att tömma kundvagnen
+function closePopUp() {
+  deleteContainer.classList.add('visually_hidden');
+}
+backToCart.addEventListener('click', closePopUp);
+// eslint-disable-next-line
+sureToDelete.addEventListener('click', emptyCart);
+
 // En funktion för att printa varukorgen
 function printCart() {
   let priceChange = 1;
@@ -305,10 +318,15 @@ function emptyCart() {
   cartArray = [];
   clearCart.classList.add('visually_hidden');
   cartAmount.classList.add('visually_hidden');
+  deleteContainer.classList.add('visually_hidden');
   printCart();
   console.log(cartArray);
 }
-clearCart.addEventListener('click', emptyCart);
+// Pop-up-fönster för att dubbelkolla att användaren vill ta bort alla varor
+function triggerPopUp() {
+  deleteContainer.classList.remove('visually_hidden');
+}
+clearCart.addEventListener('click', triggerPopUp);
 
 // Knapparna för att öka och minska antalet
 function decreaseAmount(e) {
@@ -370,7 +388,13 @@ function addToCart(e) {
   }
   console.log(cartArray);
   // eslint-disable-next-line
-  gsap.to('#amountCounter', { scale: 2, yoyo: true, repeat: 1 });
+  gsap.to('#amountCounter', {
+    scale: 1.3,
+    yoyo: true,
+    repeat: 1,
+    ease: 'power3.out',
+    duration: 0.4,
+  });
   printCart();
 }
 // En funktion för att printa produkterna

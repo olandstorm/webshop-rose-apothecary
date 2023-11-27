@@ -198,7 +198,7 @@
             <section class="order_summary">
                 <h2>Your order</h2>
                 <button id="clearCartBtn" class="summary_btn clear_cart_btn visually_hidden">Clear order</button>
-                <button id="codeBtn" class="summary_btn add_code_btn">Add code</button>
+                <button id="codeBtn" class="summary_btn add_code_btn">Add discount code</button>
                 <div id="promoCodeContainer" class="promo_code_container visually_hidden">
                     <p>Add your code for campains or special offers:</p>
                     <input type="text" id="codeInput"><button id="addCode" class="summary_btn code_btn">Add</button>
@@ -213,7 +213,7 @@
                     <div id="checkoutTotal" class="checkout_total">
                         <!-- Här kommer en rad med rabatt läggas in också om det tillämpas -->
                     </div>
-                    <div class="delete_all_cart">
+                    <div class="delete_all_cart visually_hidden" id="popUpDelete">
                         <article class="delete_all_field">
                             <h2>Are you sure you want to delete all the products?</h2>
                             <button id="sureToDelete" class="summary_btn delete_all_btn">Yes, thank you</button>
