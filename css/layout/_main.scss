@@ -321,6 +321,7 @@
       .confirm_btn_container {
         display: flex;
         justify-content: space-around;
+        flex-wrap: wrap;
         button {
           width: fit-content;
         }

@@ -43,8 +43,9 @@
  *      [X] Det finns ett fält för rabattkoder
  *      [X] Prisspecifikation med frakt och totalpris visas och uppdateras /VISUELLT/ vid ändringar
  *      [] Måndagar innan kl 10 är det 10% rabatt på totalen och en text visas och förklarar detta
- *      [] Vid beställning >10 st av samma produkt tillkommer rabatt på 10% på den varan
- *      [] Vid beställning av mer än 15 produkter är frakten gratis, annars 25kr + 10% av totalen
+ *      [X] Vid beställning >10 st av samma produkt tillkommer rabatt på 10% på den varan
+ *      [X] Vid beställning av mer än 15 produkter är frakten gratis, annars 25kr + 10% av totalen
+ *              ^Ändrat denna till $10 istället för 25kr^
  *      [] Användaren har bara 15 min från att varukorgssidan öppnas att slutföra beställningen
  *      [] Användaren meddelas om detta överskrids och allt rensas/nollställs
  *
@@ -58,6 +59,8 @@
  *
  *      [] Se över alla klasser (knapparna tex)
  *      [X] Lägga till ruta om försäkran om att man vill tömma varukorg
+ *      [] Lägga in fler bilder på varje produkt
+ *      [] Lägg till copytext
  *
  *
  */
@@ -116,6 +119,7 @@ const sortRating91 = document.querySelector('#sortRating91');
 // Variabler för formuläret
 const clearCartAndField = document.querySelector('#clearBtn');
 const cardInvoiceRadios = Array.from(
+  // eslint-disable-next-line
   document.querySelectorAll('input[name="payment_method"]')
 );
 const cardOption = document.querySelector('#cardForm');
@@ -247,7 +251,13 @@ function printCart() {
   }
 
   cartArray.forEach((product, index) => {
-    totalSum += product.amount * product.price;
+    let productPrice = product.price;
+    if (product.amount >= 10) {
+      productPrice *= 0.9;
+    }
+    const adjustedProductPrice = productPrice * priceChange;
+
+    totalSum += product.amount * adjustedProductPrice;
     totalAmount += product.amount;
     cartProducts.innerHTML += `
     <article class="product_in_cart" id="cartItem_${[index]}">
@@ -274,7 +284,7 @@ function printCart() {
     </div>
     <div class="cart_total_container">
         <p>Total: 
-        $${Math.round(product.price * priceChange * product.amount)}
+        $${Math.round(adjustedProductPrice * product.amount)}
         </p>
     </div>
     <button class="delete_product" 
@@ -286,15 +296,22 @@ function printCart() {
     `;
   });
 
+  // räkna ut frakt
+  let shippingSumTotal = 0;
+  if (totalAmount > 15) {
+    shippingSumTotal = '$0';
+  } else {
+    shippingSumTotal = `$${Math.round(10 + 0.1 * totalSum)}`;
+  }
   // För att skriva ut totalen
   checkoutTotal.innerHTML = '';
   checkoutTotal.innerHTML = `
   <p>Subtotal:</p>
-  <p id="totalSum">$${totalSum}</p>
+  <p id="totalSum">$${Math.round(totalSum)}</p>
   <p>Shipping:</p>
-  <p id="shippingSum">$50</p>
+  <p id="shippingSum">${shippingSumTotal}</p>
   <p>Total inc VAT:</p>
-  <p id="billedAmount">$${totalSum}</p>
+  <p id="billedAmount">$${Math.round(totalSum)}</p>
   `;
 
   // För att uppdatera numret på varukorgen
@@ -425,6 +442,12 @@ function printProducts() {
   }
 
   products.forEach((product, index) => {
+    let productPrice = product.price;
+    if (product.amount >= 10) {
+      productPrice *= 0.9;
+    }
+    const adjustedProductPrice = productPrice * priceChange;
+
     productContainer.innerHTML += `
     <article class="product_card" id="product_card__${[index]}">
     <figure class="product_img_container">
@@ -443,7 +466,7 @@ function printProducts() {
         <button class="increase_btn" data-id="${index}">+</button>
         </div>
         <button class="total_btn" id="total-${index}">
-        Buy $${Math.round(product.price * priceChange * product.amount)}
+        Buy $${Math.round(adjustedProductPrice * product.amount)}
         </button>
     </div>
 </article>
