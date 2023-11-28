@@ -2,15 +2,4 @@
   h3 {
     @include visually_hidden;
   }
-  .product_in_cart {
-    flex-direction: column;
-    .cart_total_container,
-    .cart_amount_container,
-    .cart_pic_name {
-      width: 100%;
-      margin: 0;
-      padding: 5px;
-      min-height: auto;
-    }
-  }
 }

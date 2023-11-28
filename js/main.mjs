@@ -28,7 +28,7 @@
  *      [X] En knapp för filtrering och sortering öppnar fält med alternativ
  *      [X] Man kan sortera på namn, pris, kategori och rating åt båda håll
  *      [X] Det finns knappar för alla dessa alternativ
- *      [] Olika radiobuttons kan filtrera på olika spann av pris
+ *      [] ! OPTIONAL ! Olika radiobuttons kan filtrera på olika spann av pris
  *
  *      // varukorgen
  *      [X] Uppdateras /VISUELLT/ när man klickar på beställningsknapparna
@@ -49,7 +49,7 @@
  *      [] Användaren meddelas om detta överskrids och allt rensas/nollställs
  *
  *      // formuläret
- *      [] Man kan välja betalsätt vilket öppnar två olika formulär
+ *      [X] Man kan välja betalsätt vilket öppnar två olika formulär
  *      [] Har man beställt för mer än 800 kr kan man inte välja faktura
  *      [] Alla fält, förutom kort-fälten, valideras
  *      [] Felen som finns markeras tydligt
@@ -66,34 +66,41 @@
 // eslint-disable-next-line
 import products from './products.mjs';
 
+// Variabler för menyn
 const menuBtn = document.querySelector('#toggleNav');
 const nav = document.querySelector('#fullNav');
-
-const bodyTag = document.body;
-
 const menuLinks = document.querySelectorAll('.menuLink');
 
+// Variabel för body
+const bodyTag = document.body;
+
+// Variabler för kundvagnen
 const shoppingCart = document.querySelector('#shoppingCart');
 const cartAmount = document.querySelector('#amountCounter');
 const productPage = document.querySelector('#productPage');
 const cartPage = document.querySelector('#cartPage');
 const backToProducts = document.querySelector('#backToProducts');
+const productContainer = document.querySelector('#productContainer');
+const cartProducts = document.querySelector('#cartProducts');
+const clearCart = document.querySelector('#clearCartBtn');
+const promoContainer = document.querySelector('#promoCodeContainer');
+const codeBtn = document.querySelector('#codeBtn');
+const checkoutTotal = document.querySelector('#checkoutTotal');
 
 const sureToDelete = document.querySelector('#sureToDelete');
 const backToCart = document.querySelector('#backToCart');
 const deleteContainer = document.querySelector('#popUpDelete');
 
+// Variabler för att skifta färgtema
 const themeToggle = document.querySelector('#toggleTheme');
 const lightMode = document.querySelector('#lightModeIcon');
 const darkMode = document.querySelector('#darkModeIcon');
 
+// Variabler för att byta bild i beskrivningen
 const phraseImgBlack = document.querySelector('#phraseImageBlack');
 const phraseImgWhite = document.querySelector('#phraseImageWhite');
 
-const productContainer = document.querySelector('#productContainer');
-const cartProducts = document.querySelector('#cartProducts');
-const clearCart = document.querySelector('#clearCartBtn');
-
+// Variabler för filter
 const filterBtn = document.querySelector('#filterBtn');
 const filterField = document.querySelector('#sortFilterField');
 
@@ -106,9 +113,13 @@ const sortCategoryZA = document.querySelector('#sortCategoryZA');
 const sortRating19 = document.querySelector('#sortRating19');
 const sortRating91 = document.querySelector('#sortRating91');
 
-const promoContainer = document.querySelector('#promoCodeContainer');
-const codeBtn = document.querySelector('#codeBtn');
-const checkoutTotal = document.querySelector('#checkoutTotal');
+// Variabler för formuläret
+const clearCartAndField = document.querySelector('#clearBtn');
+const cardInvoiceRadios = Array.from(
+  document.querySelectorAll('input[name="payment_method"]')
+);
+const cardOption = document.querySelector('#cardForm');
+const invoiceOption = document.querySelector('#invoiceForm');
 
 // En array för alla produkter som hamnar i varukorgen
 let cartArray = [];
@@ -250,6 +261,9 @@ function printCart() {
             >
         </figure>
         <h2>${product.name}</h2>
+        <p class="product_unit_price">
+        $${Math.round(product.price * priceChange)}
+        </p>
     </div>
     <div class="cart_amount_container">
         <div class="adjust_btn_container">
@@ -257,7 +271,6 @@ function printCart() {
                 class="product_amount">${product.amount}</span><button
                 class="increase_cart_btn cart_adjust_btn" data-id="${index}">+</button>
         </div>
-        <p>Price: $${Math.round(product.price * priceChange)}</p>
     </div>
     <div class="cart_total_container">
         <p>Total: 
@@ -592,3 +605,15 @@ function openCodeField() {
 }
 
 codeBtn.addEventListener('click', openCodeField);
+
+// Välja faktura eller kort
+function changePaymentMethod() {
+  invoiceOption.classList.toggle('visually_hidden');
+  cardOption.classList.toggle('visually_hidden');
+}
+cardInvoiceRadios.forEach((radioBtn) => {
+  radioBtn.addEventListener('change', changePaymentMethod);
+});
+
+// Rensa formulär och varukorg
+clearCartAndField.addEventListener('click', emptyCart);

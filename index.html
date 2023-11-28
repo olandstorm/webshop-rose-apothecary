@@ -222,105 +222,88 @@
                     </div>
                 </section>
             </section>
-            <form>
-                <fieldset>
-                    <legend>Please enter your information to continue</legend>
+            <form class="order_form">
+                <div class="general_info">
+                    <h2>Customer information</h2>
                     <label>
                         <span>First name</span>
-                        <input type="text" placeholder="First Name">
+                        <input type="text" placeholder="First Name" autocomplete="given-name">
                     </label>
                     <label>
                         <span>Second name</span>
-                        <input type="text" placeholder="Second Name">
+                        <input type="text" placeholder="Second Name" autocomplete="family-name">
                     </label>
                     <label>
                         <span>Street</span>
-                        <input type="text" placeholder="Street">
+                        <input type="text" placeholder="Street" autocomplete="street-address">
                     </label>
                     <label>
                         <span>Postal code</span>
-                        <input type="text" placeholder="Postal Code">
+                        <input type="text" placeholder="111 22" size="6" autocomplete="postal-code">
                     </label>
                     <label>
                         <span>Postal area</span>
-                        <input type="text" placeholder="Postal Area">
+                        <input type="text" placeholder="Postal Area" autocomplete="address-level1">
                     </label>
                     <label>
                         <span>Door code, if needed</span>
-                        <input type="number">
+                        <input type="text" size="6">
                     </label>
                     <label>
                         <span>Phone number</span>
-                        <input type="tel" placeholder="Phone Number">
+                        <input type="tel" placeholder="Phone Number" autocomplete="tel">
                     </label>
                     <label>
                         <span>Email</span>
-                        <input type="email" placeholder="Your Email">
+                        <input type="email" placeholder="Your Email" autocomplete="email">
+                    </label>
+                </div>
+                <div class="payment_option_container">
+                    <label>
+                        <span class="payment_option">Card</span>
+                        <input type="radio" value="card" name="payment_method" checked>
                     </label>
                     <label>
-                        <span>Card</span>
-                        <input type="radio" name="payment_method">
+                        <span class="payment_option">Invoice</span>
+                        <input type="radio" value="invoice" name="payment_method">
                     </label>
-                    <label>
-                        <span>Credit</span>
-                        <input type="radio" name="payment_method">
-                    </label>
-                </fieldset>
-                <fieldset id="cardForm">
-                    <legend>Card</legend>
-                    <label>
+                </div>
+                <div id="cardForm">
+                    <h2>Card</h2>
+                    <label class="payment_label">
                         <span>Card number</span>
-                        <input type="number">
+                        <input type="text" autocomplete="cc-number">
                     </label>
-                    <label>
+                    <label class="payment_label">
                         <span>Expiration date</span>
-                        <select name="year">
-                            <option value="">Year</option>
-                            <option value="2023">2023</option>
-                            <option value="2024">2024</option>
-                            <option value="2025">2025</option>
-                            <option value="2026">2026</option>
-                            <option value="2027">2027</option>
-                            <option value="2028">2028</option>
-                            <option value="2029">2029</option>
-                            <option value="2030">2030</option>
-                        </select>
-                        <select name="month">
-                            <option value="">Month</option>
-                            <option value="01">01</option>
-                            <option value="02">02</option>
-                            <option value="03">03</option>
-                            <option value="04">04</option>
-                            <option value="05">05</option>
-                            <option value="06">06</option>
-                            <option value="07">07</option>
-                            <option value="08">08</option>
-                            <option value="09">09</option>
-                            <option value="10">10</option>
-                            <option value="11">11</option>
-                            <option value="12">12</option>
-                        </select>
+                        <input type="text" size="5" maxlength="5" placeholder="MM/YY" autocomplete="cc-exp">
                     </label>
-                </fieldset>
-                <fieldset id="creditForm">
-                    <legend>Credit</legend>
-                    <label>
+                    <label class="payment_label">
+                        <span>CVC</span>
+                        <input type="text" size="3" maxlength="3">
+                    </label>
+                </div>
+                <div id="invoiceForm" class="visually_hidden">
+                    <h2>Invoice</h2>
+                    <label class="payment_label">
                         <span>Personal number</span>
                         <input type="text">
                     </label>
-                </fieldset>
-                <fieldset>
+                </div>
+                <div class="confirm_container">
                     <label>
-                        <span>Would you like our newsletter and recieve our amazing offers before others?</span>
                         <input type="checkbox" checked>
+                        <span>Would you like our newsletter and recieve our amazing offers before others?</span>
                     </label>
                     <label>
-                        <span>Do you agree to our privacy policy?</span>
                         <input type="checkbox">
+                        <span>Do you agree to our privacy policy?</span>
                     </label>
-                    <button id="checkoutBtn" type="submit">Checkout</button>
-                    <button id="clearBtn" type="reset">Clear all</button>
-                </fieldset>
+                    <div class="confirm_btn_container">
+                        <button id="checkoutBtn" class="send_order_btn" type="submit" disabled>Checkout</button>
+                        <button id="clearBtn" class="clear_form_cart_btn" type="reset">Clear all</button>
+                    </div>
+                </div>
             </form>
 
             <!-- TODO: Lägg in beställningsbekräftelse-ruta! -->

@@ -35,9 +35,25 @@ nav.open ul li a:hover {
   }
 }
 
-.clear_cart_btn:hover {
+.clear_form_cart_btn:hover,
+.send_order_btn:hover {
+  @include btn_hover($light-theme: true);
+  body.dark_mode & {
+    @include btn_hover($light-theme: false);
+  }
+}
+
+.clear_cart_btn:hover,
+.clear_form_cart_btn:hover {
   @include empty_cart_btn($light-theme: true);
   body.dark_mode & {
     @include empty_cart_btn($light-theme: false);
+  }
+}
+
+button:disabled:hover {
+  @include disabled_btn($light-theme: true);
+  body.dark_mode & {
+    @include disabled_btn($light-theme: false);
   }
 }
