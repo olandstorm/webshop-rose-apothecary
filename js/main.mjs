@@ -61,6 +61,7 @@
  *      [X] Lägga till ruta om försäkran om att man vill tömma varukorg
  *      [] Lägga in fler bilder på varje produkt
  *      [] Lägg till copytext
+ *      [] Fixa en tom varukorg
  *
  *
  */
@@ -239,6 +240,7 @@ function printCart() {
   let priceChange = 1;
   let totalSum = 0;
   let totalAmount = 0;
+  let billedAmount = 0;
   const today = new Date();
   const isFriday = today.getDay() === 6;
   const isMonday = today.getDay() === 1;
@@ -299,19 +301,21 @@ function printCart() {
   // räkna ut frakt
   let shippingSumTotal = 0;
   if (totalAmount > 15) {
-    shippingSumTotal = '$0';
+    shippingSumTotal = 0;
   } else {
-    shippingSumTotal = `$${Math.round(10 + 0.1 * totalSum)}`;
+    shippingSumTotal = `${Math.round(10 + 0.1 * totalSum)}`;
   }
+  billedAmount = Number(shippingSumTotal) + totalSum;
+
   // För att skriva ut totalen
   checkoutTotal.innerHTML = '';
   checkoutTotal.innerHTML = `
   <p>Subtotal:</p>
   <p id="totalSum">$${Math.round(totalSum)}</p>
   <p>Shipping:</p>
-  <p id="shippingSum">${shippingSumTotal}</p>
+  <p id="shippingSum">$${shippingSumTotal}</p>
   <p>Total inc VAT:</p>
-  <p id="billedAmount">$${Math.round(totalSum)}</p>
+  <p id="billedAmount">$${Math.round(billedAmount)}</p>
   `;
 
   // För att uppdatera numret på varukorgen
