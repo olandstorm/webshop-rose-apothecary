@@ -11,6 +11,8 @@
 @import "layout/footer";
 @import "layout/main";
 @import "components/product-card";
+@import "components/slowpopup";
+@import "components/donepopup";
 
 @media (hover: hover) {
   @import "abstracts/hover";
@@ -20,6 +22,6 @@
   @import "abstracts/product-rows";
 }
 
-@media screen and (max-width: 500px) {
+@media screen and (max-width: 700px) {
   @import "abstracts/cart-rows";
 }

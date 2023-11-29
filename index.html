@@ -20,20 +20,17 @@
     <meta property="og:title" content="One of a kind">
     <meta property="og:description"
         content="It's a general store, but it's also a very specific store. It's also not just a store, it's like a place where people can come and get coffee or drinks, but it's not a coffee shop, nor is it a bar. Yeah, it's an environment. And yes, we will be selling things, but it's more like a branded immersive experience.">
-    <!-- TODO: Lägg in bild här -->
-    <meta property="og:image" content="">
-    <!-- TODO: Lägg in bildinfo här -->
-    <meta property="og:image:width" content="">
-    <!-- TODO: Lägg in bildinfo här också -->
-    <meta property="og:image:height" content="">
+    <meta property="og:image"
+        content="https://images.unsplash.com/photo-1607006411601-775c8cc632dc?q=80&w=2187&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D">
+    <meta property="og:image:width" content="3456">
+    <meta property="og:image:height" content="5184">
     <meta name="theme-color" content="#f8f8f8">
-    <!-- TODO: Lägg in bild här  -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org/",
       "@type": "Store",
       "url": "https://medieinstitutet.github.io/fed23d-js-grundkurs-webshop-olandstorm/",
-      "image": "",
+      "image": "https://images.unsplash.com/photo-1607006411601-775c8cc632dc?q=80&w=2187&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       "name": "Rose Apothecary",
       "telephone": "+46 8 123 45 67",
       "address": {
@@ -210,7 +207,7 @@
                     <div class="cart_products" id="cartProducts">
                         <p>You have no products yet.</p>
                     </div>
-                    <div id="checkoutTotal" class="checkout_total">
+                    <div id="checkoutTotal" class="checkout_field">
                         <!-- Här kommer en rad med rabatt läggas in också om det tillämpas -->
                     </div>
                     <div class="delete_all_cart visually_hidden" id="popUpDelete">
@@ -222,7 +219,7 @@
                     </div>
                 </section>
             </section>
-            <form class="order_form">
+            <form class="order_form" id="orderForm">
                 <div class="general_info">
                     <h2>Customer information</h2>
                     <label>
@@ -263,7 +260,7 @@
                         <span class="payment_option">Card</span>
                         <input type="radio" value="card" name="payment_method" checked>
                     </label>
-                    <label>
+                    <label id="invoiceRadio">
                         <span class="payment_option">Invoice</span>
                         <input type="radio" value="invoice" name="payment_method">
                     </label>
@@ -276,7 +273,7 @@
                     </label>
                     <label class="payment_label">
                         <span>Expiration date</span>
-                        <input type="text" size="5" maxlength="5" placeholder="MM/YY" autocomplete="cc-exp">
+                        <input type="text" size="6" maxlength="5" placeholder="MM/YY" autocomplete="cc-exp">
                     </label>
                     <label class="payment_label">
                         <span>CVC</span>
@@ -305,9 +302,39 @@
                     </div>
                 </div>
             </form>
-
-            <!-- TODO: Lägg in beställningsbekräftelse-ruta! -->
-
+            <div class="slow_container visually_hidden" id="slowPopUp">
+                <div class="slow_field">
+                    <h2>You were too slow!</h2>
+                    <button id="tenMoreMin" class="slow_btn">I need 10 more minutes</button>
+                    <button id="clearAllBtn" class="slow_btn slow_clear_btn">Clear my cart</button>
+                </div>
+            </div>
+            <div class="done_container" id="orderDone">
+                <div class="done_field">
+                    <h2>Your order is sent!</h2>
+                    <p>Thank you for choosing Rose Apothecary! We appreciate your recent purchase and look forward to
+                        delighting you with more unique finds in the future.</p>
+                    <p>Estimated days before arrival: <span id="arrivalDays">3</span> days.</p>
+                    <div class="done_order_summary">
+                        <h3>Your order:</h3>
+                        <div class="product_summary_field">
+                            <p class="done_amount">1x</p>
+                            <p>Dear rose</p>
+                            <p>$24</p>
+                        </div>
+                        <div class="product_summary_field">
+                            <p class="done_amount">5x</p>
+                            <p>Cloudy mood</p>
+                            <p>$25</p>
+                        </div>
+                        <div class="product_summary_field">
+                            <p class="done_total">Total:</p>
+                            <p>$49</p>
+                        </div>
+                    </div>
+                    <button id="startOver" class="start_over_btn">Thank you</button>
+                </div>
+            </div>
         </section>
     </main>
     <footer>

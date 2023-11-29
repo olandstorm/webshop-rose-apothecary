@@ -2,11 +2,6 @@
  *
  *
  *
- *      [X] Skriv pseudokod
- *
- *
- *
- *
  *      // produkterna
  *      [X] Skapa en array för alla produkter i butiken
  *      [X] Fyll i all info om objekten i arrayen
@@ -42,26 +37,31 @@
  *      [X] Man kan också rensa alla produkter med en knapp
  *      [X] Det finns ett fält för rabattkoder
  *      [X] Prisspecifikation med frakt och totalpris visas och uppdateras /VISUELLT/ vid ändringar
- *      [] Måndagar innan kl 10 är det 10% rabatt på totalen och en text visas och förklarar detta
+ *      [X] Måndagar innan kl 10 är det 10% rabatt på totalen och en text visas och förklarar detta
  *      [X] Vid beställning >10 st av samma produkt tillkommer rabatt på 10% på den varan
  *      [X] Vid beställning av mer än 15 produkter är frakten gratis, annars 25kr + 10% av totalen
  *              ^Ändrat denna till $10 istället för 25kr^
- *      [] Användaren har bara 15 min från att varukorgssidan öppnas att slutföra beställningen
- *      [] Användaren meddelas om detta överskrids och allt rensas/nollställs
+ *      [X] Användaren har bara 15 min från att varukorgssidan öppnas att slutföra beställningen
+ *      [X] Användaren meddelas om detta överskrids och allt rensas/nollställs
  *
  *      // formuläret
  *      [X] Man kan välja betalsätt vilket öppnar två olika formulär
- *      [] Har man beställt för mer än 800 kr kan man inte välja faktura
+ *      [X] Har man beställt för mer än 800 kr kan man inte välja faktura
  *      [] Alla fält, förutom kort-fälten, valideras
  *      [] Felen som finns markeras tydligt
  *      [] Knappen skicka är inte möjlig att klicka förrän alla fält är validerade
+ *      [] Det ska visas en beställningsöversikt som kommer fram när beställningen läggs
  *
- *
+ *      // EXTRA
  *      [] Se över alla klasser (knapparna tex)
  *      [X] Lägga till ruta om försäkran om att man vill tömma varukorg
  *      [] Lägga in fler bilder på varje produkt
  *      [] Lägg till copytext
- *      [] Fixa en tom varukorg
+ *      [] Fixa en tom varukorgs-vy
+ *      [] Sorterings-funktionen
+ *      [] Lösa visually_hidden-problemet
+ *      [] Fallback-meddelande om användaren inte har JS
+ *      [] Skriv ut vad rabatten är på
  *
  *
  */
@@ -94,6 +94,15 @@ const checkoutTotal = document.querySelector('#checkoutTotal');
 const sureToDelete = document.querySelector('#sureToDelete');
 const backToCart = document.querySelector('#backToCart');
 const deleteContainer = document.querySelector('#popUpDelete');
+
+const tenMoreMin = document.querySelector('#tenMoreMin');
+const clearAllBtn = document.querySelector('#clearAllBtn');
+const slowPopUP = document.querySelector('#slowPopUp');
+
+const invoiceRadio = document.querySelector('#invoiceRadio');
+
+// Timer för långsam användare
+const timerRunning = false;
 
 // Variabler för att skifta färgtema
 const themeToggle = document.querySelector('#toggleTheme');
@@ -142,6 +151,31 @@ function toggleMenu() {
     menuBtn.setAttribute('aria-label', 'Open meny');
   }
 }
+
+// Meddelande för seg kund
+function messageToSlow() {
+  slowPopUP.classList.remove('visually_hidden');
+}
+function startTimer(duration) {
+  setTimeout(messageToSlow, duration);
+}
+
+// Popup när kunden är för långsam
+function clearAll() {
+  // eslint-disable-next-line
+  emptyCart();
+  document.querySelector('#orderForm').reset();
+  slowPopUP.classList.add('visually_hidden');
+  setTimeout((document.body.scrollTop = 0), 0);
+  setTimeout((document.documentElement.scrollTop = 0), 0);
+}
+function addTenMin() {
+  slowPopUP.classList.add('visually_hidden');
+  startTimer(1000 * 60 * 10);
+}
+
+tenMoreMin.addEventListener('click', addTenMin);
+clearAllBtn.addEventListener('click', clearAll);
 
 // Loop med event för länkarna i navigationsmenyn
 // ! Medveten anonym funktion !
@@ -241,13 +275,14 @@ function printCart() {
   let totalSum = 0;
   let totalAmount = 0;
   let billedAmount = 0;
+  let mondayOffer = '';
   const today = new Date();
   const isFriday = today.getDay() === 6;
-  const isMonday = today.getDay() === 1;
+  const isMonday = today.getDay() === 3;
   const currentHour = today.getHours();
 
   cartProducts.innerHTML = '';
-
+  // Helgpåslag av pris 15%
   if ((isFriday && currentHour >= 15) || (isMonday && currentHour <= 3)) {
     priceChange = 1.15;
   }
@@ -298,24 +333,36 @@ function printCart() {
     `;
   });
 
-  // räkna ut frakt
+  // Måndagsrabatt på 10% innan kl 10
+  if (isMonday && currentHour <= 17) {
+    totalSum *= 0.9;
+    mondayOffer += `<p class="monday_offer">
+      Monday morning shopping gives you an extra 10% off!
+      </p>`;
+  }
+
+  // Räkna ut frakt
   let shippingSumTotal = 0;
   if (totalAmount > 15) {
     shippingSumTotal = 0;
   } else {
     shippingSumTotal = `${Math.round(10 + 0.1 * totalSum)}`;
   }
+  // Totalsumman med frakt
   billedAmount = Number(shippingSumTotal) + totalSum;
 
   // För att skriva ut totalen
   checkoutTotal.innerHTML = '';
   checkoutTotal.innerHTML = `
+  ${mondayOffer}
+  <div class="checkout_total">
   <p>Subtotal:</p>
   <p id="totalSum">$${Math.round(totalSum)}</p>
   <p>Shipping:</p>
   <p id="shippingSum">$${shippingSumTotal}</p>
-  <p>Total inc VAT:</p>
+  <p>Total:</p>
   <p id="billedAmount">$${Math.round(billedAmount)}</p>
+  </div>
   `;
 
   // För att uppdatera numret på varukorgen
@@ -326,6 +373,12 @@ function printCart() {
     cartAmount.innerHTML = `
    ${totalAmount}
   `;
+  }
+  // Ta bort faktura som alternativ om $800 överksrids
+  if (billedAmount > 800) {
+    invoiceRadio.classList.add('visually_hidden');
+  } else {
+    invoiceRadio.classList.remove('visually_hidden');
   }
 
   // Ta bort enskild produkt
@@ -429,6 +482,12 @@ function addToCart(e) {
     ease: 'power3.out',
     duration: 0.4,
   });
+
+  // Starta timer
+  if (!timerRunning) {
+    startTimer(1000 * 60 * 15);
+  }
+
   printCart();
 }
 // En funktion för att printa produkterna
@@ -462,7 +521,7 @@ function printProducts() {
     <div class="product_info">
         <h2>${product.name}</h2>
         <p class="product_description">${product.description}</p>
-        <p>Price: $${Math.round(product.price * priceChange)}</p>
+        <p>$${Math.round(product.price * priceChange)}</p>
         <p>Rating: ${product.rating}/5</p>
         <div class="adjust_amount_container">
         <button class="decrease_btn" data-id="${index}">-</button>

@@ -1,0 +1,55 @@
+.done_container {
+  position: fixed;
+  height: 100vh;
+  max-height: 100%;
+  max-width: 100%;
+  width: 100vw;
+  top: 0;
+  left: 0;
+  background-color: rgba($grey, 0.7);
+  .done_field {
+    z-index: 3000;
+    @include center_center;
+    min-height: 200px;
+    width: 80vw;
+    max-width: 450px;
+    padding: 30px 20px;
+    display: flex;
+    border: 2px solid $black;
+    gap: 10px;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    background-color: rgba($color_secondary, 0.9);
+    color: $color_text;
+    .done_order_summary {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      margin: 30px 0;
+      h3 {
+        font-size: 0.9rem;
+      }
+      .done_total {
+        grid-column: 2;
+        text-align: right;
+        margin-right: 10px;
+      }
+      .product_summary_field {
+        width: 100%;
+        max-width: 350px;
+        margin: auto;
+        display: grid;
+        grid-template-columns: 1fr 3fr 2fr;
+        text-align: left;
+        p {
+          font-size: 0.8rem;
+        }
+        .done_amount {
+          text-align: right;
+          margin-right: 5px;
+        }
+      }
+    }
+  }
+}

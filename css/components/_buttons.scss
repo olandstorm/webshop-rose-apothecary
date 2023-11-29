@@ -96,7 +96,8 @@ button {
 }
 
 .send_order_btn,
-.clear_form_cart_btn {
+.clear_form_cart_btn,
+.slow_btn {
   @include product_buttons($light-theme: true);
   body.dark_mode & {
     @include product_buttons($light-theme: false);

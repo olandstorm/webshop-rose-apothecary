@@ -48,6 +48,32 @@ input::placeholder {
   font-size: 0.8rem;
 }
 
+input[type="text"],
+[type="email"],
+[type="tel"] {
+  border-radius: 3px;
+  border: solid 1px $black;
+  padding: 2px 2px 2px 7px;
+  font-size: 0.9rem;
+  background-color: $light_grey;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+}
+
+input:focus {
+  background-color: $white;
+  outline: 2px solid rgb(94, 128, 0);
+}
+
+input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 1000px $light_grey inset;
+}
+
+input[type="radio"],
+[type="checkbox"] {
+  accent-color: $dark_grey;
+}
+
 .visually_hidden {
   clip: rect(0 0 0 0);
   clip-path: inset(50%);

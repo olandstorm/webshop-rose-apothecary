@@ -1,0 +1,25 @@
+.slow_container {
+  position: fixed;
+  height: 100vh;
+  max-height: 100%;
+  max-width: 100%;
+  width: 100vw;
+  top: 0;
+  left: 0;
+  background-color: rgba($grey, 0.7);
+  .slow_field {
+    z-index: 3000;
+    @include center_center;
+    min-height: 200px;
+    width: 80vw;
+    padding: 30px 20px;
+    display: flex;
+    border: 2px solid $black;
+    gap: 10px;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    background-color: rgba($color_secondary, 0.9);
+    color: $color_text;
+  }
+}
