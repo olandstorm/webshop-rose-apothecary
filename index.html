@@ -99,7 +99,7 @@
         <button id="shoppingCart" class="shopping_btn"><span class="material-symbols-outlined">
                 shopping_cart
             </span></button>
-        <div class="cart_number visually_hidden" id="amountCounter">
+        <div class="cart_number hidden" id="amountCounter">
         </div>
     </header>
 
@@ -121,14 +121,14 @@
                 <img src="assets/img/logo/phrase_b.webp" alt="A sign that says handcrafted with care" width="650"
                     height="50" id="phraseImageBlack">
                 <img src="assets/img/logo/phrase_w.webp" alt="A sign that says handcrafted with care" width="650"
-                    height="50" class="visually_hidden" id="phraseImageWhite">
+                    height="50" class="hidden" id="phraseImageWhite">
             </article>
             <div class="filter_container">
                 <button id="filterBtn" aria-label="Filter and sort products" class="filter_btn"
                     title="Filter and sort products"><span class="material-symbols-outlined">
                         tune
                     </span></button>
-                <div id="sortFilterField" class="filter_field visually_hidden">
+                <div id="sortFilterField" class="filter_field hidden">
                     <div class="filter_option">
                         <span class="filter_type">Name</span>
                         <button class="filter_type_btn" id="sortNameZA"><span class="material-symbols-outlined">
@@ -187,16 +187,16 @@
                 <!-- Här kommer alla produkter upp från JS -->
             </section>
         </section>
-        <section class="cart_page visually_hidden" id="cartPage">
+        <section class="cart_page hidden" id="cartPage">
             <div class="back_btn_container">
                 <button id="backToProducts" class="open_products"><span class="material-symbols-outlined">
                         keyboard_arrow_left</span>Shop more</button>
             </div>
             <section class="order_summary">
                 <h2>Your order</h2>
-                <button id="clearCartBtn" class="summary_btn clear_cart_btn visually_hidden">Clear order</button>
+                <button id="clearCartBtn" class="summary_btn clear_cart_btn hidden">Clear order</button>
                 <button id="codeBtn" class="summary_btn add_code_btn">Add discount code</button>
-                <div id="promoCodeContainer" class="promo_code_container visually_hidden">
+                <div id="promoCodeContainer" class="promo_code_container hidden">
                     <p>Add your code for campains or special offers:</p>
                     <input type="text" id="codeInput"><button id="addCode" class="summary_btn code_btn">Add</button>
                 </div>
@@ -210,7 +210,7 @@
                     <div id="checkoutTotal" class="checkout_field">
                         <!-- Här kommer en rad med rabatt läggas in också om det tillämpas -->
                     </div>
-                    <div class="delete_all_cart visually_hidden" id="popUpDelete">
+                    <div class="delete_all_cart hidden" id="popUpDelete">
                         <article class="delete_all_field">
                             <h2>Are you sure you want to delete all the products?</h2>
                             <button id="sureToDelete" class="summary_btn delete_all_btn">Yes, thank you</button>
@@ -280,7 +280,7 @@
                         <input type="text" size="3" maxlength="3">
                     </label>
                 </div>
-                <div id="invoiceForm" class="visually_hidden">
+                <div id="invoiceForm" class="hidden">
                     <h2>Invoice</h2>
                     <label class="payment_label">
                         <span>Personal number</span>
@@ -302,14 +302,14 @@
                     </div>
                 </div>
             </form>
-            <div class="slow_container visually_hidden" id="slowPopUp">
+            <div class="slow_container hidden" id="slowPopUp">
                 <div class="slow_field">
                     <h2>You were too slow!</h2>
                     <button id="tenMoreMin" class="slow_btn">I need 10 more minutes</button>
                     <button id="clearAllBtn" class="slow_btn slow_clear_btn">Clear my cart</button>
                 </div>
             </div>
-            <div class="done_container" id="orderDone">
+            <div class="done_container hidden" id="orderDone">
                 <div class="done_field">
                     <h2>Your order is sent!</h2>
                     <p>Thank you for choosing Rose Apothecary! We appreciate your recent purchase and look forward to
@@ -348,12 +348,18 @@
                 <span>Canada</span>
                 <a href="mailto:info@roseapothecary.com">info@roseapothecary.com</a>
             </address>
+            <p class="copy_text">&copy; 2023, Oskar Landström, All rights reserved</p>
         </section>
         <div class="flower_img"></div>
     </footer>
 
 
-
+    <noscript>
+        <div class="noscript_container">
+            <h2>This page will not be functional without JavaScript enabled. Please enable JavaScript and reload the
+                page to view all content.</h2>
+        </div>
+    </noscript>
     <script src="https://unpkg.co/gsap@3/dist/gsap.min.js"></script>
     <script type="module" src="js/main.mjs"></script>
 </body>

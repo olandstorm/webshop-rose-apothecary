@@ -1,7 +1,7 @@
 footer {
   background-color: $light_grey;
   color: $black;
-  height: 150px;
+  height: 170px;
   width: 100vw;
   max-width: 100%;
   border-top: $color_text 2px solid;
@@ -39,4 +39,11 @@ footer {
   .flower_img:nth-child(1) {
     transform: scaleX(-1);
   }
+}
+
+.copy_text {
+  text-transform: uppercase;
+  font-size: 0.4rem;
+  margin-top: 15px;
+  color: $grey;
 }

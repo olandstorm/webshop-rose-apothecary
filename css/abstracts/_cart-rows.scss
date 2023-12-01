@@ -1,5 +1,5 @@
 .cart_page .order_summary .summary_container {
   h3 {
-    @include visually_hidden;
+    @include hidden_mixin;
   }
 }

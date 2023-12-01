@@ -74,12 +74,24 @@ input[type="radio"],
   accent-color: $dark_grey;
 }
 
-.visually_hidden {
-  clip: rect(0 0 0 0);
-  clip-path: inset(50%);
-  height: 1px;
-  overflow: hidden;
-  position: absolute;
-  white-space: nowrap;
-  width: 1px;
+.noscript_container {
+  position: fixed;
+  height: 100vh;
+  max-height: 100%;
+  max-width: 100%;
+  width: 100vw;
+  top: 0;
+  left: 0;
+  background-color: rgba($black, 0.9);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  h2 {
+    color: $white;
+    max-width: 300px;
+  }
+}
+
+.hidden {
+  display: none !important;
 }

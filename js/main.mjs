@@ -53,15 +53,16 @@
  *      [] Det ska visas en beställningsöversikt som kommer fram när beställningen läggs
  *
  *      // EXTRA
- *      [] Se över alla klasser (knapparna tex)
+ *      [] Se över alla klasser och namnge dem bättre (knapparna i CSS tex)
  *      [X] Lägga till ruta om försäkran om att man vill tömma varukorg
  *      [] Lägga in fler bilder på varje produkt
- *      [] Lägg till copytext
+ *      [X] Lägg till copytext
  *      [] Fixa en tom varukorgs-vy
- *      [] Sorterings-funktionen
+ *      [X] Sorterings-funktionen
  *      [] Lösa visually_hidden-problemet
- *      [] Fallback-meddelande om användaren inte har JS
+ *      [X] Fallback-meddelande om användaren inte har JS
  *      [] Skriv ut vad rabatten är på
+ *      [] Flytta ut i moduler och förbättra print-funktionerna
  *
  *
  */
@@ -154,7 +155,7 @@ function toggleMenu() {
 
 // Meddelande för seg kund
 function messageToSlow() {
-  slowPopUP.classList.remove('visually_hidden');
+  slowPopUP.classList.remove('hidden');
 }
 function startTimer(duration) {
   setTimeout(messageToSlow, duration);
@@ -165,12 +166,12 @@ function clearAll() {
   // eslint-disable-next-line
   emptyCart();
   document.querySelector('#orderForm').reset();
-  slowPopUP.classList.add('visually_hidden');
+  slowPopUP.classList.add('hidden');
   setTimeout((document.body.scrollTop = 0), 0);
   setTimeout((document.documentElement.scrollTop = 0), 0);
 }
 function addTenMin() {
-  slowPopUP.classList.add('visually_hidden');
+  slowPopUP.classList.add('hidden');
   startTimer(1000 * 60 * 10);
 }
 
@@ -188,12 +189,12 @@ menuBtn.addEventListener('click', toggleMenu);
 
 // Funktioner för att byta bild på framsidan beroende på theme
 function changePhraseToWhite() {
-  phraseImgWhite.classList.remove('visually_hidden');
-  phraseImgBlack.classList.add('visually_hidden');
+  phraseImgWhite.classList.remove('hidden');
+  phraseImgBlack.classList.add('hidden');
 }
 function changePhraseToBlack() {
-  phraseImgWhite.classList.add('visually_hidden');
-  phraseImgBlack.classList.remove('visually_hidden');
+  phraseImgWhite.classList.add('hidden');
+  phraseImgBlack.classList.remove('hidden');
 }
 
 // Toggle för dark/lightmode
@@ -203,17 +204,17 @@ if (
   window.matchMedia('(prefers-color-scheme: dark)').matches
 ) {
   document.body.classList.add('dark_mode');
-  darkMode.classList.toggle('visually_hidden');
+  darkMode.classList.toggle('hidden');
   changePhraseToWhite();
 } else {
-  lightMode.classList.toggle('visually_hidden');
+  lightMode.classList.toggle('hidden');
   changePhraseToBlack();
 }
 // Ändra färgtema
 function toggleTheme() {
   document.body.classList.toggle('dark_mode');
-  lightMode.classList.toggle('visually_hidden');
-  darkMode.classList.toggle('visually_hidden');
+  lightMode.classList.toggle('hidden');
+  darkMode.classList.toggle('hidden');
   const isDark = document.body.classList.contains('dark_mode');
   if (isDark) {
     changePhraseToWhite();
@@ -244,7 +245,7 @@ function increaseCartAmount(e) {
   printCart();
 }
 
-// Ta bort enskild produkt i listan
+// Ta bort enskild produkt i kundvagnen
 function deleteSingleProduct(e) {
   const productId = Number(e.currentTarget.id.replace('delete-', ''));
   console.log(productId);
@@ -254,8 +255,8 @@ function deleteSingleProduct(e) {
   }
   const lastItemDelete = cartArray.length;
   if (lastItemDelete === 0) {
-    clearCart.classList.add('visually_hidden');
-    cartAmount.classList.add('visually_hidden');
+    clearCart.classList.add('hidden');
+    cartAmount.classList.add('hidden');
   }
   // eslint-disable-next-line
   printCart();
@@ -263,7 +264,7 @@ function deleteSingleProduct(e) {
 
 // Pop-up för att tömma kundvagnen
 function closePopUp() {
-  deleteContainer.classList.add('visually_hidden');
+  deleteContainer.classList.add('hidden');
 }
 backToCart.addEventListener('click', closePopUp);
 // eslint-disable-next-line
@@ -367,8 +368,8 @@ function printCart() {
 
   // För att uppdatera numret på varukorgen
   if (totalAmount > 0) {
-    cartAmount.classList.remove('visually_hidden');
-    clearCart.classList.remove('visually_hidden');
+    cartAmount.classList.remove('hidden');
+    clearCart.classList.remove('hidden');
     cartAmount.innerHTML = '';
     cartAmount.innerHTML = `
    ${totalAmount}
@@ -376,9 +377,9 @@ function printCart() {
   }
   // Ta bort faktura som alternativ om $800 överksrids
   if (billedAmount > 800) {
-    invoiceRadio.classList.add('visually_hidden');
+    invoiceRadio.classList.add('hidden');
   } else {
-    invoiceRadio.classList.remove('visually_hidden');
+    invoiceRadio.classList.remove('hidden');
   }
 
   // Ta bort enskild produkt
@@ -400,18 +401,18 @@ function printCart() {
   });
 }
 
-// Tömma varukorgen med knappen
+// Tömma varukorgen
 function emptyCart() {
   cartArray = [];
-  clearCart.classList.add('visually_hidden');
-  cartAmount.classList.add('visually_hidden');
-  deleteContainer.classList.add('visually_hidden');
+  clearCart.classList.add('hidden');
+  cartAmount.classList.add('hidden');
+  deleteContainer.classList.add('hidden');
   printCart();
   console.log(cartArray);
 }
 // Pop-up-fönster för att dubbelkolla att användaren vill ta bort alla varor
 function triggerPopUp() {
-  deleteContainer.classList.remove('visually_hidden');
+  deleteContainer.classList.remove('hidden');
 }
 clearCart.addEventListener('click', triggerPopUp);
 
@@ -561,49 +562,18 @@ printProducts();
 
 // Filter och sortering
 function toggleFilter() {
-  filterField.classList.toggle('visually_hidden');
+  filterField.classList.toggle('hidden');
 }
 
 filterBtn.addEventListener('click', toggleFilter);
 
-// Sortera på pris
-
-function sortListPrice19() {
-  products.sort((product1, product2) => product1.price - product2.price);
-  printProducts();
-}
-
-function sortListPrice91() {
-  products.sort((product1, product2) => product2.price - product1.price);
-  printProducts();
-}
-
-sortPrice19.addEventListener('click', sortListPrice19);
-sortPrice91.addEventListener('click', sortListPrice91);
-
-// Sortera på rating
-
-function sortListRating19() {
-  products.sort((product1, product2) => product1.rating - product2.rating);
-  printProducts();
-}
-
-function sortListRating91() {
-  products.sort((product1, product2) => product2.rating - product1.rating);
-  printProducts();
-}
-
-sortRating19.addEventListener('click', sortListRating19);
-sortRating91.addEventListener('click', sortListRating91);
-
-// Sortera på namn
-
-function sortListNameAZ() {
+// Sorteringsfunktion
+function sortProducts(property) {
   products.sort((product1, product2) => {
-    if (product1.name < product2.name) {
+    if (product1[property] < product2[property]) {
       return -1;
     }
-    if (product1.name > product2.name) {
+    if (product1[property] > product2[property]) {
       return 1;
     }
     return 0;
@@ -611,64 +581,64 @@ function sortListNameAZ() {
   printProducts();
 }
 
-function sortListNameZA() {
+// Sortera baklänges
+function sortProductsReversed(property) {
   products.sort((product1, product2) => {
-    if (product1.name > product2.name) {
+    if (product1[property] > product2[property]) {
       return -1;
     }
-    if (product1.name < product2.name) {
-      return 1;
-    }
-    return 0;
-  });
-
-  printProducts();
-}
-
-sortNameAZ.addEventListener('click', sortListNameAZ);
-sortNameZA.addEventListener('click', sortListNameZA);
-
-// Sortera på kategori
-
-function sortListCategoryAZ() {
-  products.sort((product1, product2) => {
-    if (product1.category < product2.category) {
-      return -1;
-    }
-    if (product1.category > product2.category) {
+    if (product1[property] < product2[property]) {
       return 1;
     }
     return 0;
   });
   printProducts();
 }
-
-function sortListCategoryZA() {
-  products.sort((product1, product2) => {
-    if (product1.category > product2.category) {
-      return -1;
-    }
-    if (product1.category < product2.category) {
-      return 1;
-    }
-    return 0;
-  });
-  printProducts();
+// Funktioner för att få in rätt property
+function sortProductsByName() {
+  sortProducts('name');
 }
-
-sortCategoryAZ.addEventListener('click', sortListCategoryAZ);
-sortCategoryZA.addEventListener('click', sortListCategoryZA);
+function sortProductsByNameReversed() {
+  sortProductsReversed('name');
+}
+function sortProductsByPrice() {
+  sortProducts('price');
+}
+function sortProductsByPriceReversed() {
+  sortProductsReversed('price');
+}
+function sortProductsByCategory() {
+  sortProducts('category');
+}
+function sortProductsByCategoryReversed() {
+  sortProductsReversed('category');
+}
+function sortProductsByRating() {
+  sortProducts('rating');
+}
+function sortProductsByRatingReversed() {
+  sortProductsReversed('rating');
+}
+// Eventlyssnare på sorteringsknapparna
+sortNameAZ.addEventListener('click', sortProductsByName);
+sortNameZA.addEventListener('click', sortProductsByNameReversed);
+sortPrice19.addEventListener('click', sortProductsByPrice);
+sortPrice91.addEventListener('click', sortProductsByPriceReversed);
+sortCategoryAZ.addEventListener('click', sortProductsByCategory);
+sortCategoryZA.addEventListener('click', sortProductsByCategoryReversed);
+sortRating19.addEventListener('click', sortProductsByRating);
+sortRating91.addEventListener('click', sortProductsByRatingReversed);
 
 // Öppna kundkorgen
 
 function openCart() {
-  cartPage.classList.remove('visually_hidden');
-  productPage.classList.add('visually_hidden');
+  cartPage.classList.remove('hidden');
+  productPage.classList.add('hidden');
 
   if (nav.classList.contains('open')) {
     toggleMenu();
   }
-  if (productPage.classList.contains('visually_hidden')) {
+  if (productPage.classList.contains('hidden')) {
     setTimeout((document.body.scrollTop = 0), 0);
     setTimeout((document.documentElement.scrollTop = 0), 0);
   }
@@ -679,23 +649,23 @@ shoppingCart.addEventListener('click', openCart);
 // Gå tillbaka till produktsidan
 
 function shopMore() {
-  cartPage.classList.add('visually_hidden');
-  productPage.classList.remove('visually_hidden');
+  cartPage.classList.add('hidden');
+  productPage.classList.remove('hidden');
 }
 
 backToProducts.addEventListener('click', shopMore);
 
 // Toggle rabattkodsfältet
 function openCodeField() {
-  promoContainer.classList.toggle('visually_hidden');
+  promoContainer.classList.toggle('hidden');
 }
 
 codeBtn.addEventListener('click', openCodeField);
 
 // Välja faktura eller kort
 function changePaymentMethod() {
-  invoiceOption.classList.toggle('visually_hidden');
-  cardOption.classList.toggle('visually_hidden');
+  invoiceOption.classList.toggle('hidden');
+  cardOption.classList.toggle('hidden');
 }
 cardInvoiceRadios.forEach((radioBtn) => {
   radioBtn.addEventListener('change', changePaymentMethod);
