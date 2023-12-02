@@ -59,7 +59,7 @@
  *      [X] Lägg till copytext
  *      [] Fixa en tom varukorgs-vy
  *      [X] Sorterings-funktionen
- *      [] Lösa visually_hidden-problemet
+ *      [X] Lösa visually_hidden-problemet
  *      [X] Fallback-meddelande om användaren inte har JS
  *      [] Skriv ut vad rabatten är på
  *      [] Flytta ut i moduler och förbättra print-funktionerna
@@ -673,3 +673,90 @@ cardInvoiceRadios.forEach((radioBtn) => {
 
 // Rensa formulär och varukorg
 clearCartAndField.addEventListener('click', emptyCart);
+
+/**
+ *
+ * ------------------------------------------------------------------------------
+ *
+ * --------------------------------REGEX-TEST------------------------------------
+ *
+ * ------------------------------------------------------------------------------
+ *
+ */
+
+const lName = document.querySelector('#lName');
+const fName = document.querySelector('#fName');
+const streetName = document.querySelector('#streetName');
+const postalCode = document.querySelector('#postalCode');
+const postalArea = document.querySelector('#postalArea');
+const phoneNumber = document.querySelector('#phoneNumber');
+const emailForm = document.querySelector('#emailForm');
+
+// eslint-disable-next-line
+const nameRegEx = new RegExp(/^[a-zäöå,.'-]+$/i);
+// eslint-disable-next-line
+const addressRegEx = new RegExp(
+  // eslint-disable-next-line
+  /^([A-zäöåÄÖÅ.'-]{2,40}?\s)+([0-9]{1,5}[A-z]{0,3}?)(\s[A-z]{0,2})?$/
+);
+// eslint-disable-next-line
+const postalNrRegEx = new RegExp(/^[1-9]\d{2}\s\d{2}/);
+// eslint-disable-next-line
+const postalAreaRegEx = new RegExp(
+  // eslint-disable-next-line
+  /^([A-zåäöÅÄÖ.'-]{2,})+(\s[A-zåäöÅÄÖ.'-]{0,})?$/
+);
+// eslint-disable-next-line
+const phoneRegEx = new RegExp(/^([+]46)\s*(7[0236])\s*(\d{4})\s*(\d{3})$/);
+// eslint-disable-next-line
+const emailRegEx = new RegExp(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/);
+
+function validateFName() {
+  return nameRegEx.exec(fName.value);
+}
+function validateLName() {
+  return nameRegEx.exec(lName.value);
+}
+function validateAdress() {
+  return addressRegEx.exec(streetName.value);
+}
+function validatePostalCode() {
+  return postalNrRegEx.exec(postalCode.value);
+}
+function validatePostalArea() {
+  return postalAreaRegEx.exec(postalArea.value);
+}
+function validatePhoneNumber() {
+  return phoneRegEx.exec(phoneNumber.value);
+}
+function validateEmail() {
+  return emailRegEx.exec(emailForm.value);
+}
+
+function activateCheckoutBtn() {
+  if (
+    // eslint-disable-next-line
+    validateFName === null ||
+    // eslint-disable-next-line
+    validateLName === null ||
+    // eslint-disable-next-line
+    validateAdress === null ||
+    // eslint-disable-next-line
+    validatePostalCode === null ||
+    // eslint-disable-next-line
+    validatePostalArea === null ||
+    // eslint-disable-next-line
+    validatePhoneNumber === null ||
+    validateEmail === null
+  ) {
+    console.log('Test');
+  }
+}
+
+emailForm.addEventListener('change', activateCheckoutBtn);
+phoneNumber.addEventListener('change', activateCheckoutBtn);
+postalArea.addEventListener('change', activateCheckoutBtn);
+postalCode.addEventListener('change', activateCheckoutBtn);
+streetName.addEventListener('change', activateCheckoutBtn);
+lName.addEventListener('change', activateCheckoutBtn);
+fName.addEventListener('change', activateCheckoutBtn);
