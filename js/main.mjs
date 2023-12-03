@@ -199,7 +199,6 @@ function changePhraseToBlack() {
 
 // Toggle för dark/lightmode
 if (
-  // eslint-disable-next-line
   window.matchMedia &&
   window.matchMedia('(prefers-color-scheme: dark)').matches
 ) {
@@ -701,7 +700,6 @@ const phoneNumber = document.querySelector('#phoneNumber');
 const emailForm = document.querySelector('#emailForm');
 
 const nameRegEx = /^[a-zäöå,.'-]+$/i;
-// eslint-disable-next-line
 const addressRegEx =
   /^([A-zäöåÄÖÅ.'-]{2,40}?\s)+([0-9]{1,5}[A-z]{0,3}?)(\s[A-z]{0,2})?$/;
 const postalNrRegEx = /^[1-9]\d{2}\s\d{2}/;
@@ -733,17 +731,11 @@ function validateEmail() {
 
 function activateCheckoutBtn() {
   if (
-    // eslint-disable-next-line
     validateFName === null ||
-    // eslint-disable-next-line
     validateLName === null ||
-    // eslint-disable-next-line
     validateAdress === null ||
-    // eslint-disable-next-line
     validatePostalCode === null ||
-    // eslint-disable-next-line
     validatePostalArea === null ||
-    // eslint-disable-next-line
     validatePhoneNumber === null ||
     validateEmail === null
   ) {
