@@ -692,24 +692,14 @@ const postalArea = document.querySelector('#postalArea');
 const phoneNumber = document.querySelector('#phoneNumber');
 const emailForm = document.querySelector('#emailForm');
 
+const nameRegEx = /^[a-zäöå,.'-]+$/i;
 // eslint-disable-next-line
-const nameRegEx = new RegExp(/^[a-zäöå,.'-]+$/i);
-// eslint-disable-next-line
-const addressRegEx = new RegExp(
-  // eslint-disable-next-line
-  /^([A-zäöåÄÖÅ.'-]{2,40}?\s)+([0-9]{1,5}[A-z]{0,3}?)(\s[A-z]{0,2})?$/
-);
-// eslint-disable-next-line
-const postalNrRegEx = new RegExp(/^[1-9]\d{2}\s\d{2}/);
-// eslint-disable-next-line
-const postalAreaRegEx = new RegExp(
-  // eslint-disable-next-line
-  /^([A-zåäöÅÄÖ.'-]{2,})+(\s[A-zåäöÅÄÖ.'-]{0,})?$/
-);
-// eslint-disable-next-line
-const phoneRegEx = new RegExp(/^([+]46)\s*(7[0236])\s*(\d{4})\s*(\d{3})$/);
-// eslint-disable-next-line
-const emailRegEx = new RegExp(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/);
+const addressRegEx =
+  /^([A-zäöåÄÖÅ.'-]{2,40}?\s)+([0-9]{1,5}[A-z]{0,3}?)(\s[A-z]{0,2})?$/;
+const postalNrRegEx = /^[1-9]\d{2}\s\d{2}/;
+const postalAreaRegEx = /^([A-zåäöÅÄÖ.'-]{2,})+(\s[A-zåäöÅÄÖ.'-]{0,})?$/;
+const phoneRegEx = /^([+]46)\s*(7[0236])\s*(\d{4})\s*(\d{3})$/;
+const emailRegEx = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/;
 
 function validateFName() {
   return nameRegEx.exec(fName.value);
