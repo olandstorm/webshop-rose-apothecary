@@ -278,13 +278,17 @@ function printCart() {
   let billedAmount = 0;
   let mondayOffer = '';
   const today = new Date();
-  const isFriday = today.getDay() === 6;
-  const isMonday = today.getDay() === 3;
+  const dayOfWeek = today.getDay();
   const currentHour = today.getHours();
 
   cartProducts.innerHTML = '';
   // Helgpåslag av pris 15%
-  if ((isFriday && currentHour >= 15) || (isMonday && currentHour <= 3)) {
+  if (
+    (dayOfWeek === 5 && currentHour >= 15) ||
+    dayOfWeek === 6 ||
+    dayOfWeek === 0 ||
+    (dayOfWeek === 1 && currentHour <= 3)
+  ) {
     priceChange = 1.15;
   }
 
@@ -335,7 +339,7 @@ function printCart() {
   });
 
   // Måndagsrabatt på 10% innan kl 10
-  if (isMonday && currentHour <= 17) {
+  if (dayOfWeek === 1 && currentHour <= 17) {
     totalSum *= 0.9;
     mondayOffer += `<p class="monday_offer">
       Monday morning shopping gives you an extra 10% off!
@@ -495,13 +499,17 @@ function addToCart(e) {
 function printProducts() {
   let priceChange = 1;
   const today = new Date();
-  const isFriday = today.getDay() === 6;
-  const isMonday = today.getDay() === 1;
+  const dayOfWeek = today.getDay();
   const currentHour = today.getHours();
 
   productContainer.innerHTML = '';
 
-  if ((isFriday && currentHour >= 15) || (isMonday && currentHour <= 3)) {
+  if (
+    (dayOfWeek === 5 && currentHour >= 15) ||
+    dayOfWeek === 6 ||
+    dayOfWeek === 0 ||
+    (dayOfWeek === 1 && currentHour <= 3)
+  ) {
     priceChange = 1.15;
   }
 
