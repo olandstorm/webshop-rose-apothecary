@@ -258,11 +258,11 @@
                 <div class="payment_option_container">
                     <label>
                         <span class="payment_option">Card</span>
-                        <input type="radio" value="card" name="payment_method" checked>
+                        <input type="radio" value="card" id="cardRadioButton" name="payment_method" checked>
                     </label>
                     <label id="invoiceRadio">
                         <span class="payment_option">Invoice</span>
-                        <input type="radio" value="invoice" name="payment_method">
+                        <input type="radio" value="invoice" id="invoiceRadioButton" name="payment_method">
                     </label>
                 </div>
                 <div id="cardForm">
@@ -283,8 +283,8 @@
                 <div id="invoiceForm" class="hidden">
                     <h2>Invoice</h2>
                     <label class="payment_label">
-                        <span>Personal number</span>
-                        <input type="text">
+                        <span>Social security number</span>
+                        <input type="text" id="socialNr" placeholder="YYYYMMDD-XXXX">
                     </label>
                 </div>
                 <div class="confirm_container">
@@ -293,11 +293,11 @@
                         <span>Would you like our newsletter and recieve our amazing offers before others?</span>
                     </label>
                     <label>
-                        <input type="checkbox">
+                        <input type="checkbox" id="policyAgreeCheckbox">
                         <span>Do you agree to our privacy policy?</span>
                     </label>
                     <div class="confirm_btn_container">
-                        <button id="checkoutBtn" class="send_order_btn" type="submit" disabled>Checkout</button>
+                        <button id="checkoutBtn" class="send_order_btn disabled_btn" type="submit">Checkout</button>
                         <button id="clearBtn" class="clear_form_cart_btn" type="reset">Clear all</button>
                     </div>
                 </div>

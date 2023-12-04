@@ -103,7 +103,8 @@ const slowPopUP = document.querySelector('#slowPopUp');
 const invoiceRadio = document.querySelector('#invoiceRadio');
 
 // Timer för långsam användare
-const timerRunning = false;
+let timerRunning = false;
+let timerId;
 
 // Variabler för att skifta färgtema
 const themeToggle = document.querySelector('#toggleTheme');
@@ -158,7 +159,16 @@ function messageToSlow() {
   slowPopUP.classList.remove('hidden');
 }
 function startTimer(duration) {
-  setTimeout(messageToSlow, duration);
+  timerId = setTimeout(messageToSlow, duration);
+  timerRunning = true;
+}
+
+// Function för att avbryta timer
+function stopTimer() {
+  if (timerRunning) {
+    clearTimeout(timerId);
+    timerRunning = false;
+  }
 }
 
 // Popup när kunden är för långsam
@@ -256,6 +266,7 @@ function deleteSingleProduct(e) {
   if (lastItemDelete === 0) {
     clearCart.classList.add('hidden');
     cartAmount.classList.add('hidden');
+    stopTimer();
   }
   // eslint-disable-next-line
   printCart();
@@ -410,6 +421,7 @@ function emptyCart() {
   clearCart.classList.add('hidden');
   cartAmount.classList.add('hidden');
   deleteContainer.classList.add('hidden');
+  stopTimer();
   printCart();
   console.log(cartArray);
 }
@@ -489,7 +501,7 @@ function addToCart(e) {
 
   // Starta timer
   if (!timerRunning) {
-    startTimer(1000 * 60 * 15);
+    startTimer(1000 * 50 * 15);
   }
 
   printCart();
@@ -698,6 +710,11 @@ const postalCode = document.querySelector('#postalCode');
 const postalArea = document.querySelector('#postalArea');
 const phoneNumber = document.querySelector('#phoneNumber');
 const emailForm = document.querySelector('#emailForm');
+const socialNr = document.querySelector('#socialNr');
+const checkoutBtn = document.querySelector('#checkoutBtn');
+const policyAgreeCheckbox = document.querySelector('#policyAgreeCheckbox');
+const cardRadioButton = document.querySelector('#cardRadioButton');
+const invoiceRadioButton = document.querySelector('#invoiceRadioButton');
 
 const nameRegEx = /^[a-zäöå,.'-]+$/i;
 const addressRegEx =
@@ -706,47 +723,182 @@ const postalNrRegEx = /^[1-9]\d{2}\s\d{2}/;
 const postalAreaRegEx = /^([A-zåäöÅÄÖ.'-]{2,})+(\s[A-zåäöÅÄÖ.'-]{0,})?$/;
 const phoneRegEx = /^([+]46)\s*(7[0236])\s*(\d{4})\s*(\d{3})$/;
 const emailRegEx = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/;
+const socialRegEx =
+  /^(\d{10}|\d{12}|\d{6}-\d{4}|\d{8}-\d{4}|\d{8} \d{4}|\d{6} \d{4})/;
 
+// Objekt för olika error-meddelanden
+const errorMessageInput = {
+  fName: 'Please check this field again.',
+  lName: 'Please check this field again.',
+  streetName: 'Please enter a valid street address.',
+  postalCode: 'Please enter a valid postal code.',
+  postalArea: 'Please enter a valid postal area.',
+  phoneNumber: 'Please enter a valid phone number.',
+  emailForm: 'Please enter a valid email address.',
+  socialNr: 'Please enter a valid social security number.',
+  policyAgreeCheckbox: 'You need to agree to this',
+};
+
+// Funktioner för att validera all RegEx
 function validateFName() {
-  return nameRegEx.exec(fName.value);
+  return nameRegEx.test(fName.value);
 }
 function validateLName() {
-  return nameRegEx.exec(lName.value);
+  return nameRegEx.test(lName.value);
 }
 function validateAdress() {
-  return addressRegEx.exec(streetName.value);
+  return addressRegEx.test(streetName.value);
 }
 function validatePostalCode() {
-  return postalNrRegEx.exec(postalCode.value);
+  return postalNrRegEx.test(postalCode.value);
 }
 function validatePostalArea() {
-  return postalAreaRegEx.exec(postalArea.value);
+  return postalAreaRegEx.test(postalArea.value);
 }
 function validatePhoneNumber() {
-  return phoneRegEx.exec(phoneNumber.value);
+  return phoneRegEx.test(phoneNumber.value);
 }
 function validateEmail() {
-  return emailRegEx.exec(emailForm.value);
+  return emailRegEx.test(emailForm.value);
+}
+function validateSocialNr() {
+  return socialRegEx.test(socialNr.value);
+}
+function validatePolicy() {
+  return policyAgreeCheckbox.checked;
+}
+function isCardChosen() {
+  return cardRadioButton.checked;
+}
+function isInvoiceChosen() {
+  return invoiceRadioButton.checked;
 }
 
-function activateCheckoutBtn() {
-  if (
-    validateFName === null ||
-    validateLName === null ||
-    validateAdress === null ||
-    validatePostalCode === null ||
-    validatePostalArea === null ||
-    validatePhoneNumber === null ||
-    validateEmail === null
-  ) {
-    console.log('Test');
+// Funktion för att kolla om det finns error-meddelande eller om det ska läggas till
+function displayInputError(inputField, isValid) {
+  const messageElement = document.querySelector(`#${inputField}-error`);
+  if (!isValid) {
+    if (!messageElement) {
+      const errorMessage = errorMessageInput[inputField];
+      const newErrorElement = document.createElement('span');
+      newErrorElement.classList.add('input_error_message', 'hidden');
+      newErrorElement.id = `${inputField}-error`;
+      newErrorElement.innerText = errorMessage;
+      document
+        .getElementById(inputField)
+        .insertAdjacentElement('beforebegin', newErrorElement);
+    }
+  } else if (messageElement) {
+    messageElement.remove();
   }
 }
 
-emailForm.addEventListener('change', activateCheckoutBtn);
-phoneNumber.addEventListener('change', activateCheckoutBtn);
-postalArea.addEventListener('change', activateCheckoutBtn);
-postalCode.addEventListener('change', activateCheckoutBtn);
-streetName.addEventListener('change', activateCheckoutBtn);
-lName.addEventListener('change', activateCheckoutBtn);
-fName.addEventListener('change', activateCheckoutBtn);
+function checkInput() {
+  displayInputError('fName', validateFName());
+  displayInputError('lName', validateLName());
+  displayInputError('streetName', validateAdress());
+  displayInputError('postalCode', validatePostalCode());
+  displayInputError('postalArea', validatePostalArea());
+  displayInputError('phoneNumber', validatePhoneNumber());
+  displayInputError('emailForm', validateEmail());
+  displayInputError('socialNr', validateSocialNr());
+  displayInputError('policyAgreeCheckbox', validatePolicy());
+
+  if (isCardChosen()) {
+    if (
+      validateFName() &&
+      validateLName() &&
+      validateAdress() &&
+      validatePostalCode() &&
+      validatePostalArea() &&
+      validatePhoneNumber() &&
+      validateEmail() &&
+      validatePolicy()
+    ) {
+      checkoutBtn.classList.remove('disabled_btn');
+    } else {
+      checkoutBtn.classList.add('disabled_btn');
+    }
+  } else if (isInvoiceChosen()) {
+    if (
+      validateFName() &&
+      validateLName() &&
+      validateAdress() &&
+      validatePostalCode() &&
+      validatePostalArea() &&
+      validatePhoneNumber() &&
+      validateEmail() &&
+      validatePolicy() &&
+      validateSocialNr()
+    ) {
+      checkoutBtn.classList.remove('disabled_btn');
+    } else {
+      checkoutBtn.classList.add('disabled_btn');
+    }
+  }
+}
+
+cardRadioButton.addEventListener('input', checkInput);
+invoiceRadioButton.addEventListener('input', checkInput);
+policyAgreeCheckbox.addEventListener('input', checkInput);
+socialNr.addEventListener('input', checkInput);
+emailForm.addEventListener('input', checkInput);
+phoneNumber.addEventListener('input', checkInput);
+postalArea.addEventListener('input', checkInput);
+postalCode.addEventListener('input', checkInput);
+streetName.addEventListener('input', checkInput);
+lName.addEventListener('input', checkInput);
+fName.addEventListener('input', checkInput);
+
+// Funktion för att kolla fälten
+function activateCheckoutBtn() {
+  checkInput();
+  const errorMessages = document.querySelectorAll('.input_error_message');
+  errorMessages.forEach((errorMessage) => {
+    errorMessage.classList.remove('hidden');
+  });
+}
+
+// Funktion för skicka-knappen
+function finalCheckout(e) {
+  // Skicka inte in formuläret
+  e.preventDefault();
+  activateCheckoutBtn();
+  console.log(validateFName());
+  checkInput();
+  if (isCardChosen()) {
+    if (
+      validateFName() &&
+      validateLName() &&
+      validateAdress() &&
+      validatePostalCode() &&
+      validatePostalArea() &&
+      validatePhoneNumber() &&
+      validateEmail() &&
+      validatePolicy()
+    ) {
+      console.log('Allt är ifyllt rätt');
+    } else {
+      console.log('Please correct the form errors before submitting.');
+    }
+  } else if (isInvoiceChosen()) {
+    if (
+      validateFName() &&
+      validateLName() &&
+      validateAdress() &&
+      validatePostalCode() &&
+      validatePostalArea() &&
+      validatePhoneNumber() &&
+      validateEmail() &&
+      validatePolicy() &&
+      validateSocialNr()
+    ) {
+      console.log('Allt är ifyllt rätt');
+    } else {
+      console.log('Please correct the form errors before submitting.');
+    }
+  }
+}
+
+// Kallar på skickaknappen
+document.getElementById('orderForm').addEventListener('submit', finalCheckout);
