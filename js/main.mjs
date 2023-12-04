@@ -137,6 +137,50 @@ const cardInvoiceRadios = Array.from(
 const cardOption = document.querySelector('#cardForm');
 const invoiceOption = document.querySelector('#invoiceForm');
 
+// Variabler för RegEx och formulär
+const lName = document.querySelector('#lName');
+const fName = document.querySelector('#fName');
+const streetName = document.querySelector('#streetName');
+const postalCode = document.querySelector('#postalCode');
+const postalArea = document.querySelector('#postalArea');
+const phoneNumber = document.querySelector('#phoneNumber');
+const emailForm = document.querySelector('#emailForm');
+const socialNr = document.querySelector('#socialNr');
+const checkoutBtn = document.querySelector('#checkoutBtn');
+const policyAgreeCheckbox = document.querySelector('#policyAgreeCheckbox');
+const cardRadioButton = document.querySelector('#cardRadioButton');
+const invoiceRadioButton = document.querySelector('#invoiceRadioButton');
+
+// RegEx
+const nameRegEx = /^[a-zäöå,.'-]+$/i;
+const addressRegEx =
+  /^([A-zäöåÄÖÅ.'-]{2,40}?\s)+([0-9]{1,5}[A-z]{0,3}?)(\s[A-z]{0,2})?$/;
+const postalNrRegEx = /^[1-9]\d{2}\s?\d{2}/;
+const postalAreaRegEx = /^([A-zåäöÅÄÖ.'-]{2,})+(\s[A-zåäöÅÄÖ.'-]{0,})?$/;
+const phoneRegEx = /^([+]46)\s*(7[0236])\s*(\d{4})\s*(\d{3})$/;
+const emailRegEx = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/;
+const socialRegEx =
+  /^(\d{10}|\d{12}|\d{6}-\d{4}|\d{8}-\d{4}|\d{8} \d{4}|\d{6} \d{4})/;
+
+// Objekt för olika error-meddelanden
+const errorMessageInput = {
+  fName: 'Please check this field again.',
+  lName: 'Please check this field again.',
+  streetName: 'Please enter a valid street address.',
+  postalCode: 'Please enter a valid postal code.',
+  postalArea: 'Please enter a valid postal area.',
+  phoneNumber: 'Please enter a valid phone number.',
+  emailForm: 'Please enter a valid email address.',
+  socialNr: 'Please enter a valid social security number.',
+  policyAgreeCheckbox: 'You need to agree to this',
+};
+
+// Variabler för bekräftelseformulär
+const orderDone = document.querySelector('#orderDone');
+const fullOrderContainer = document.querySelector('#fullOrderContainer');
+const fullOrderSummary = document.querySelector('#fullOrderSummary');
+const startOver = document.querySelector('#startOver');
+
 // En array för alla produkter som hamnar i varukorgen
 let cartArray = [];
 
@@ -413,6 +457,33 @@ function printCart() {
   increaseCartBtn.forEach((btn) => {
     btn.addEventListener('click', increaseCartAmount);
   });
+
+  fullOrderContainer.innerHTML = '';
+  cartArray.forEach((product) => {
+    let productPrice = product.price;
+    if (product.amount >= 10) {
+      productPrice *= 0.9;
+    }
+    const adjustedProductPrice = productPrice * priceChange;
+
+    totalSum += product.amount * adjustedProductPrice;
+    totalAmount += product.amount;
+
+    fullOrderContainer.innerHTML += `
+    <div class="product_summary_field">
+    <p class="done_amount">${product.amount}x</p>
+    <p>${product.name}</p>
+    <p>$${Math.round(adjustedProductPrice * product.amount)}</p>
+</div>
+    `;
+  });
+
+  // Skriva ut totalen på bekräftelsen
+  fullOrderSummary.innerHTML = '';
+  fullOrderSummary.innerHTML = `
+  <p class="done_total">Total:</p>
+  <p>$${Math.round(billedAmount)}</p>
+  `;
 }
 
 // Tömma varukorgen
@@ -666,7 +737,6 @@ function openCart() {
 shoppingCart.addEventListener('click', openCart);
 
 // Gå tillbaka till produktsidan
-
 function shopMore() {
   cartPage.classList.add('hidden');
   productPage.classList.remove('hidden');
@@ -692,52 +762,6 @@ cardInvoiceRadios.forEach((radioBtn) => {
 
 // Rensa formulär och varukorg
 clearCartAndField.addEventListener('click', emptyCart);
-
-/**
- *
- * ------------------------------------------------------------------------------
- *
- * --------------------------------REGEX-TEST------------------------------------
- *
- * ------------------------------------------------------------------------------
- *
- */
-
-const lName = document.querySelector('#lName');
-const fName = document.querySelector('#fName');
-const streetName = document.querySelector('#streetName');
-const postalCode = document.querySelector('#postalCode');
-const postalArea = document.querySelector('#postalArea');
-const phoneNumber = document.querySelector('#phoneNumber');
-const emailForm = document.querySelector('#emailForm');
-const socialNr = document.querySelector('#socialNr');
-const checkoutBtn = document.querySelector('#checkoutBtn');
-const policyAgreeCheckbox = document.querySelector('#policyAgreeCheckbox');
-const cardRadioButton = document.querySelector('#cardRadioButton');
-const invoiceRadioButton = document.querySelector('#invoiceRadioButton');
-
-const nameRegEx = /^[a-zäöå,.'-]+$/i;
-const addressRegEx =
-  /^([A-zäöåÄÖÅ.'-]{2,40}?\s)+([0-9]{1,5}[A-z]{0,3}?)(\s[A-z]{0,2})?$/;
-const postalNrRegEx = /^[1-9]\d{2}\s\d{2}/;
-const postalAreaRegEx = /^([A-zåäöÅÄÖ.'-]{2,})+(\s[A-zåäöÅÄÖ.'-]{0,})?$/;
-const phoneRegEx = /^([+]46)\s*(7[0236])\s*(\d{4})\s*(\d{3})$/;
-const emailRegEx = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/;
-const socialRegEx =
-  /^(\d{10}|\d{12}|\d{6}-\d{4}|\d{8}-\d{4}|\d{8} \d{4}|\d{6} \d{4})/;
-
-// Objekt för olika error-meddelanden
-const errorMessageInput = {
-  fName: 'Please check this field again.',
-  lName: 'Please check this field again.',
-  streetName: 'Please enter a valid street address.',
-  postalCode: 'Please enter a valid postal code.',
-  postalArea: 'Please enter a valid postal area.',
-  phoneNumber: 'Please enter a valid phone number.',
-  emailForm: 'Please enter a valid email address.',
-  socialNr: 'Please enter a valid social security number.',
-  policyAgreeCheckbox: 'You need to agree to this',
-};
 
 // Funktioner för att validera all RegEx
 function validateFName() {
@@ -864,7 +888,7 @@ function finalCheckout(e) {
   // Skicka inte in formuläret
   e.preventDefault();
   activateCheckoutBtn();
-  console.log(validateFName());
+  console.log(validatePostalCode());
   checkInput();
   if (isCardChosen()) {
     if (
@@ -878,6 +902,7 @@ function finalCheckout(e) {
       validatePolicy()
     ) {
       console.log('Allt är ifyllt rätt');
+      orderDone.classList.remove('hidden');
     } else {
       console.log('Please correct the form errors before submitting.');
     }
@@ -894,6 +919,7 @@ function finalCheckout(e) {
       validateSocialNr()
     ) {
       console.log('Allt är ifyllt rätt');
+      orderDone.classList.remove('hidden');
     } else {
       console.log('Please correct the form errors before submitting.');
     }
@@ -902,3 +928,17 @@ function finalCheckout(e) {
 
 // Kallar på skickaknappen
 document.getElementById('orderForm').addEventListener('submit', finalCheckout);
+
+// Start over när beställning är lagd
+
+function backToStart() {
+  emptyCart();
+  document.querySelector('#orderForm').reset();
+  stopTimer();
+  shopMore();
+  orderDone.classList.add('hidden');
+  setTimeout((document.body.scrollTop = 0), 0);
+  setTimeout((document.documentElement.scrollTop = 0), 0);
+}
+
+startOver.addEventListener('click', backToStart);

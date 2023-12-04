@@ -236,7 +236,8 @@
                     </label>
                     <label>
                         <span>Postal code</span>
-                        <input type="text" id="postalCode" placeholder="111 22" size="6" autocomplete="postal-code">
+                        <input type="text" id="postalCode" placeholder="111 22" size="6" maxlength="6"
+                            autocomplete="postal-code">
                     </label>
                     <label>
                         <span>Postal area</span>
@@ -317,19 +318,9 @@
                     <p>Estimated days before arrival: <span id="arrivalDays">3</span> days.</p>
                     <div class="done_order_summary">
                         <h3>Your order:</h3>
-                        <div class="product_summary_field">
-                            <p class="done_amount">1x</p>
-                            <p>Dear rose</p>
-                            <p>$24</p>
+                        <div id="fullOrderContainer">
                         </div>
-                        <div class="product_summary_field">
-                            <p class="done_amount">5x</p>
-                            <p>Cloudy mood</p>
-                            <p>$25</p>
-                        </div>
-                        <div class="product_summary_field">
-                            <p class="done_total">Total:</p>
-                            <p>$49</p>
+                        <div class="product_summary_field" id="fullOrderSummary">
                         </div>
                     </div>
                     <button id="startOver" class="start_over_btn">Thank you</button>
