@@ -47,10 +47,10 @@
  *      // formuläret
  *      [X] Man kan välja betalsätt vilket öppnar två olika formulär
  *      [X] Har man beställt för mer än 800 kr kan man inte välja faktura
- *      [] Alla fält, förutom kort-fälten, valideras
+ *      [X] Alla fält, förutom kort-fälten, valideras
  *      [] Felen som finns markeras tydligt
- *      [] Knappen skicka är inte möjlig att klicka förrän alla fält är validerade
- *      [] Det ska visas en beställningsöversikt som kommer fram när beställningen läggs
+ *      [X] Knappen skicka är inte möjlig att klicka förrän alla fält är validerade
+ *      [X] Det ska visas en beställningsöversikt som kommer fram när beställningen läggs
  *
  *      // EXTRA
  *      [] Se över alla klasser och namnge dem bättre (knapparna i CSS tex)
@@ -63,6 +63,7 @@
  *      [X] Fallback-meddelande om användaren inte har JS
  *      [] Skriv ut vad rabatten är på
  *      [] Flytta ut i moduler och förbättra print-funktionerna
+ *      [] Gömma formuläret om varukorgen är tom
  *
  *
  */
@@ -801,10 +802,12 @@ function isInvoiceChosen() {
 // Funktion för att kolla om det finns error-meddelande eller om det ska läggas till
 function displayInputError(inputField, isValid) {
   const messageElement = document.querySelector(`#${inputField}-error`);
+  const inputErrorField = document.querySelector(`#${inputField}`);
   if (!isValid) {
     if (!messageElement) {
       const errorMessage = errorMessageInput[inputField];
       const newErrorElement = document.createElement('span');
+      inputErrorField.classList.add('input_error_field');
       newErrorElement.classList.add('input_error_message', 'hidden');
       newErrorElement.id = `${inputField}-error`;
       newErrorElement.innerText = errorMessage;
@@ -814,6 +817,8 @@ function displayInputError(inputField, isValid) {
     }
   } else if (messageElement) {
     messageElement.remove();
+    document.getElementById(inputField).classList.remove('error_field');
+    document.getElementById(inputField).classList.remove('input_error_field');
   }
 }
 
@@ -881,6 +886,10 @@ function activateCheckoutBtn() {
   errorMessages.forEach((errorMessage) => {
     errorMessage.classList.remove('hidden');
   });
+  const allErrorInputs = document.querySelectorAll('.input_error_field');
+  allErrorInputs.forEach((errorInput) => {
+    errorInput.classList.add('error_field');
+  });
 }
 
 // Funktion för skicka-knappen
@@ -888,7 +897,6 @@ function finalCheckout(e) {
   // Skicka inte in formuläret
   e.preventDefault();
   activateCheckoutBtn();
-  console.log(validatePostalCode());
   checkInput();
   if (isCardChosen()) {
     if (

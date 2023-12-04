@@ -336,5 +336,9 @@
         }
       }
     }
+
+    .error_field {
+      border: solid 2px $color_accent;
+    }
   }
 }
