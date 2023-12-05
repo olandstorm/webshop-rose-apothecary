@@ -293,6 +293,7 @@
       padding: 30px 5vw;
     }
     .payment_option_container {
+      padding-bottom: 0;
       display: flex;
       column-gap: 15px;
       label {
@@ -300,13 +301,33 @@
         column-gap: 10px;
       }
     }
+    .long_input {
+      max-width: 200px;
+      min-width: 170px;
+    }
+    .fit_content_input {
+      width: fit-content;
+    }
+    .full_width_field {
+      width: 100%;
+    }
+    .half_width_field {
+      width: 45%;
+      min-width: 115px;
+    }
     .general_info {
       display: flex;
       flex-wrap: wrap;
       align-items: center;
-      row-gap: 20px;
+      row-gap: 10px;
+      h2 {
+        margin-bottom: 15px;
+      }
       label {
-        width: 100%;
+        width: 80%;
+        margin-left: 10px;
+        display: flex;
+        flex-direction: column;
         span {
           display: block;
           margin-bottom: 3px;
@@ -314,6 +335,15 @@
         .payment_option {
           display: inline-block;
         }
+      }
+    }
+    .payment_group {
+      margin-left: 10px;
+      width: 80%;
+      display: flex;
+      flex-wrap: wrap;
+      h2 {
+        width: 100%;
       }
     }
     .payment_label span {
@@ -338,7 +368,44 @@
     }
 
     .error_field {
-      border: solid 2px $color_accent;
+      @include error_field_border($light-theme: true);
+      body.dark_mode & {
+        @include error_field_border($light-theme: false);
+      }
+      &[type="checkbox"] {
+        @include error_field_outline($light-theme: true);
+        body.dark_mode & {
+          @include error_field_outline($light-theme: false);
+        }
+      }
+      background-color: $red_background;
+      &:focus {
+        @include error_field_outline($light-theme: true);
+        body.dark_mode & {
+          @include error_field_outline($light-theme: false);
+        }
+      }
+    }
+    .error_container {
+      padding: 0;
+      height: 0.6rem;
+      display: block;
+      margin-top: 2px;
+      margin-bottom: 3px;
+      width: 100%;
+
+      .input_error_message {
+        font-size: 0.6rem;
+        @include error_message($light-theme: true);
+        body.dark_mode & {
+          @include error_message($light-theme: false);
+        }
+      }
+    }
+    .social_nr_error {
+      p {
+        margin-top: 0;
+      }
     }
   }
 }

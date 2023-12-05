@@ -13,13 +13,8 @@ nav.open ul li a:hover {
   }
 }
 
-.decrease_btn:hover,
-.increase_btn:hover,
-.total_btn:hover,
-.summary_btn:hover,
-.decrease_cart_btn:hover,
-.increase_cart_btn:hover,
-.slow_btn:hover {
+.primary_btn:hover,
+.product_btn:hover {
   @include btn_hover($light-theme: true);
   body.dark_mode & {
     @include btn_hover($light-theme: false);

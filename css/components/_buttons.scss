@@ -6,11 +6,7 @@ button {
   text-transform: uppercase;
 }
 
-.decrease_btn,
-.increase_btn,
-.total_btn,
-.decrease_cart_btn,
-.increase_cart_btn {
+.product_btn {
   @include product_buttons($light-theme: true);
   body.dark_mode & {
     @include product_buttons($light-theme: false);
@@ -56,7 +52,7 @@ button {
   font-size: 0.9rem;
 }
 
-.summary_btn {
+.primary_btn {
   @include product_buttons($light-theme: true);
   body.dark_mode & {
     @include product_buttons($light-theme: false);
@@ -93,18 +89,6 @@ button {
 
 .clear_cart_btn {
   font-size: 0.9rem;
-}
-
-.send_order_btn,
-.clear_form_cart_btn,
-.slow_btn {
-  @include product_buttons($light-theme: true);
-  body.dark_mode & {
-    @include product_buttons($light-theme: false);
-  }
-  border: none;
-  border-radius: 2px;
-  padding: 0 10px;
 }
 
 button:disabled {

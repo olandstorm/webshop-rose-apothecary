@@ -48,12 +48,12 @@
  *      [X] Man kan välja betalsätt vilket öppnar två olika formulär
  *      [X] Har man beställt för mer än 800 kr kan man inte välja faktura
  *      [X] Alla fält, förutom kort-fälten, valideras
- *      [] Felen som finns markeras tydligt
+ *      [X] Felen som finns markeras tydligt
  *      [X] Knappen skicka är inte möjlig att klicka förrän alla fält är validerade
  *      [X] Det ska visas en beställningsöversikt som kommer fram när beställningen läggs
  *
  *      // EXTRA
- *      [] Se över alla klasser och namnge dem bättre (knapparna i CSS tex)
+ *      [X] Se över alla klasser och namnge dem bättre (knapparna i CSS tex)
  *      [X] Lägga till ruta om försäkran om att man vill tömma varukorg
  *      [] Lägga in fler bilder på varje produkt
  *      [X] Lägg till copytext
@@ -185,6 +185,15 @@ const startOver = document.querySelector('#startOver');
 // En array för alla produkter som hamnar i varukorgen
 let cartArray = [];
 
+// Tom varukorg
+function cartIsEmpty() {
+  cartProducts.innerHTML = `
+  <p>Your cart is empty.</p>  
+  `;
+  checkoutTotal.innerHTML = '';
+}
+cartIsEmpty();
+
 // Funktion för att öppna och stänga navigationsmenyn, även med länkarna
 function toggleMenu() {
   const isOpen = nav.classList.toggle('open');
@@ -306,15 +315,14 @@ function deleteSingleProduct(e) {
   const index = cartArray.findIndex((product) => product.id === productId);
   if (index > -1) {
     cartArray.splice(index, 1);
+    // eslint-disable-next-line
+    printCart();
   }
   const lastItemDelete = cartArray.length;
   if (lastItemDelete === 0) {
-    clearCart.classList.add('hidden');
-    cartAmount.classList.add('hidden');
-    stopTimer();
+    // eslint-disable-next-line
+    emptyCart();
   }
-  // eslint-disable-next-line
-  printCart();
 }
 
 // Pop-up för att tömma kundvagnen
@@ -374,9 +382,9 @@ function printCart() {
     </div>
     <div class="cart_amount_container">
         <div class="adjust_btn_container">
-            <button class="decrease_cart_btn cart_adjust_btn" data-id="${index}">-</button><span
+            <button class="decrease_cart_btn cart_adjust_btn product_btn" data-id="${index}">-</button><span
                 class="product_amount">${product.amount}</span><button
-                class="increase_cart_btn cart_adjust_btn" data-id="${index}">+</button>
+                class="increase_cart_btn cart_adjust_btn product_btn" data-id="${index}">+</button>
         </div>
     </div>
     <div class="cart_total_container">
@@ -495,6 +503,7 @@ function emptyCart() {
   deleteContainer.classList.add('hidden');
   stopTimer();
   printCart();
+  cartIsEmpty();
   console.log(cartArray);
 }
 // Pop-up-fönster för att dubbelkolla att användaren vill ta bort alla varor
@@ -573,7 +582,7 @@ function addToCart(e) {
 
   // Starta timer
   if (!timerRunning) {
-    startTimer(1000 * 50 * 15);
+    startTimer(1000 * 60 * 15);
   }
 
   printCart();
@@ -616,11 +625,11 @@ function printProducts() {
         <p>$${Math.round(product.price * priceChange)}</p>
         <p>Rating: ${product.rating}/5</p>
         <div class="adjust_amount_container">
-        <button class="decrease_btn" data-id="${index}">-</button>
+        <button class="decrease_btn product_btn" data-id="${index}">-</button>
         <p class="amount_number" id="amount-${index}">${product.amount}</p>
-        <button class="increase_btn" data-id="${index}">+</button>
+        <button class="increase_btn product_btn" data-id="${index}">+</button>
         </div>
-        <button class="total_btn" id="total-${index}">
+        <button class="total_btn product_btn" id="total-${index}">
         Buy $${Math.round(adjustedProductPrice * product.amount)}
         </button>
     </div>
@@ -806,14 +815,14 @@ function displayInputError(inputField, isValid) {
   if (!isValid) {
     if (!messageElement) {
       const errorMessage = errorMessageInput[inputField];
-      const newErrorElement = document.createElement('span');
+      const newErrorElement = document.createElement('p');
       inputErrorField.classList.add('input_error_field');
       newErrorElement.classList.add('input_error_message', 'hidden');
       newErrorElement.id = `${inputField}-error`;
       newErrorElement.innerText = errorMessage;
       document
-        .getElementById(inputField)
-        .insertAdjacentElement('beforebegin', newErrorElement);
+        .getElementById(`${inputField}-errorContainer`)
+        .append(newErrorElement);
     }
   } else if (messageElement) {
     messageElement.remove();
@@ -911,6 +920,7 @@ function finalCheckout(e) {
     ) {
       console.log('Allt är ifyllt rätt');
       orderDone.classList.remove('hidden');
+      window.scrollTo(0, 0);
     } else {
       console.log('Please correct the form errors before submitting.');
     }
@@ -928,6 +938,7 @@ function finalCheckout(e) {
     ) {
       console.log('Allt är ifyllt rätt');
       orderDone.classList.remove('hidden');
+      window.scrollTo(0, 0);
     } else {
       console.log('Please correct the form errors before submitting.');
     }
@@ -940,13 +951,11 @@ document.getElementById('orderForm').addEventListener('submit', finalCheckout);
 // Start over när beställning är lagd
 
 function backToStart() {
+  orderDone.classList.add('hidden');
   emptyCart();
   document.querySelector('#orderForm').reset();
   stopTimer();
-  shopMore();
-  orderDone.classList.add('hidden');
-  setTimeout((document.body.scrollTop = 0), 0);
-  setTimeout((document.documentElement.scrollTop = 0), 0);
+  window.location.reload();
 }
 
 startOver.addEventListener('click', backToStart);

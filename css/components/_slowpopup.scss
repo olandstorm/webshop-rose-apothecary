@@ -1,11 +1,5 @@
 .slow_container {
-  position: fixed;
-  height: 100vh;
-  max-height: 100%;
-  max-width: 100%;
-  width: 100vw;
-  top: 0;
-  left: 0;
+  @include overlay_background;
   background-color: rgba($grey, 0.7);
   .slow_field {
     z-index: 3000;

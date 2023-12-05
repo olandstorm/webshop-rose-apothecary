@@ -17,6 +17,16 @@
   transform: translate(-50%, -50%);
 }
 
+@mixin overlay_background {
+  position: fixed;
+  height: 100vh;
+  max-height: 100%;
+  max-width: 100%;
+  width: 100vw;
+  top: 0;
+  left: 0;
+}
+
 @mixin header_btn {
   height: 35px;
   width: 35px;
@@ -242,5 +252,28 @@
   } @else {
     background-color: $color_text;
     color: $color_primary_dark;
+  }
+}
+
+@mixin error_message($light-theme: true) {
+  @if $light-theme {
+    color: $dark_red;
+  } @else {
+    color: $light_red;
+  }
+}
+
+@mixin error_field_outline($light-theme: true) {
+  @if $light-theme {
+    outline: 1.5px solid $dark_red;
+  } @else {
+    outline: 1.5px solid $light_red;
+  }
+}
+@mixin error_field_border($light-theme: true) {
+  @if $light-theme {
+    border: 1px solid $dark_red;
+  } @else {
+    border: 1px solid $light_red;
   }
 }

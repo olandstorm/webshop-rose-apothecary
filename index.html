@@ -194,11 +194,11 @@
             </div>
             <section class="order_summary">
                 <h2>Your order</h2>
-                <button id="clearCartBtn" class="summary_btn clear_cart_btn hidden">Clear order</button>
-                <button id="codeBtn" class="summary_btn add_code_btn">Add discount code</button>
+                <button id="clearCartBtn" class="primary_btn clear_cart_btn hidden">Clear order</button>
+                <button id="codeBtn" class="primary_btn add_code_btn">Add discount code</button>
                 <div id="promoCodeContainer" class="promo_code_container hidden">
                     <p>Add your code for campains or special offers:</p>
-                    <input type="text" id="codeInput"><button id="addCode" class="summary_btn code_btn">Add</button>
+                    <input type="text" id="codeInput"><button id="addCode" class="primary_btn code_btn">Add</button>
                 </div>
                 <section class="summary_container">
                     <h3>Product</h3>
@@ -213,8 +213,8 @@
                     <div class="delete_all_cart hidden" id="popUpDelete">
                         <article class="delete_all_field">
                             <h2>Are you sure you want to delete all the products?</h2>
-                            <button id="sureToDelete" class="summary_btn delete_all_btn">Yes, thank you</button>
-                            <button id="backToCart" class="summary_btn">No, take me back</button>
+                            <button id="sureToDelete" class="primary_btn delete_all_btn">Yes, thank you</button>
+                            <button id="backToCart" class="primary_btn">No, take me back</button>
                         </article>
                     </div>
                 </section>
@@ -224,36 +224,50 @@
                     <h2>Customer information</h2>
                     <label>
                         <span>First name</span>
-                        <input type="text" id="fName" placeholder="First Name" autocomplete="given-name">
+                        <input type="text" id="fName" class="long_input" placeholder="First Name"
+                            autocomplete="given-name">
+                        <div id="fName-errorContainer" class="error_container"></div>
                     </label>
                     <label>
                         <span>Second name</span>
-                        <input type="text" id="lName" placeholder="Second Name" autocomplete="family-name">
+                        <input type="text" id="lName" class="long_input" placeholder="Second Name"
+                            autocomplete="family-name">
+                        <div id="lName-errorContainer" class="error_container"></div>
                     </label>
                     <label>
                         <span>Street</span>
-                        <input type="text" id="streetName" placeholder="Street" autocomplete="street-address">
+                        <input type="text" id="streetName" class="long_input" placeholder="Street"
+                            autocomplete="street-address">
+                        <div id="streetName-errorContainer" class="error_container"></div>
                     </label>
                     <label>
                         <span>Postal code</span>
-                        <input type="text" id="postalCode" placeholder="111 22" size="6" maxlength="6"
-                            autocomplete="postal-code">
+                        <input type="text" id="postalCode" class="fit_content_input" placeholder="111 22" size="6"
+                            maxlength="6" autocomplete="postal-code">
+                        <div id="postalCode-errorContainer" class="error_container"></div>
                     </label>
                     <label>
                         <span>Postal area</span>
-                        <input type="text" id="postalArea" placeholder="Postal Area" autocomplete="address-level1">
+                        <input type="text" id="postalArea" class="long_input" placeholder="Postal Area"
+                            autocomplete="address-level1">
+                        <div id="postalArea-errorContainer" class="error_container"></div>
                     </label>
                     <label>
                         <span>Door code, if needed</span>
-                        <input type="text" size="6">
+                        <input type="text" size="6" class="fit_content_input">
+                        <div class="error_container"></div>
                     </label>
                     <label>
                         <span>Phone number</span>
-                        <input type="tel" id="phoneNumber" placeholder="Phone Number" autocomplete="tel">
+                        <input type="tel" id="phoneNumber" class="long_input" placeholder="Phone Number"
+                            autocomplete="tel">
+                        <div id="phoneNumber-errorContainer" class="error_container"></div>
                     </label>
                     <label>
                         <span>Email</span>
-                        <input type="email" id="emailForm" placeholder="Your Email" autocomplete="email">
+                        <input type="email" id="emailForm" class="long_input" placeholder="Your Email"
+                            autocomplete="email">
+                        <div id="emailForm-errorContainer" class="error_container"></div>
                     </label>
                 </div>
                 <div class="payment_option_container">
@@ -266,26 +280,27 @@
                         <input type="radio" value="invoice" id="invoiceRadioButton" name="payment_method">
                     </label>
                 </div>
-                <div id="cardForm">
+                <div id="cardForm" class="payment_group">
                     <h2>Card</h2>
-                    <label class="payment_label">
+                    <label class="payment_label full_width_field">
                         <span>Card number</span>
-                        <input type="text" autocomplete="cc-number">
+                        <input type="text" class="long_input" autocomplete="cc-number">
                     </label>
-                    <label class="payment_label">
+                    <label class="payment_label half_width_field">
                         <span>Expiration date</span>
                         <input type="text" size="6" maxlength="5" placeholder="MM/YY" autocomplete="cc-exp">
                     </label>
-                    <label class="payment_label">
+                    <label class="payment_label half_width_field">
                         <span>CVC</span>
                         <input type="text" size="3" maxlength="3">
                     </label>
                 </div>
-                <div id="invoiceForm" class="hidden">
+                <div id="invoiceForm" class="payment_group hidden">
                     <h2>Invoice</h2>
                     <label class="payment_label">
                         <span>Social security number</span>
-                        <input type="text" id="socialNr" placeholder="YYYYMMDD-XXXX">
+                        <input type="text" id="socialNr" placeholder="YYYYMMDD-XXXX" maxlength="13" size="15">
+                        <div id="socialNr-errorContainer" class="error_container social_nr_error"></div>
                     </label>
                 </div>
                 <div class="confirm_container">
@@ -297,19 +312,14 @@
                         <input type="checkbox" id="policyAgreeCheckbox">
                         <span>Do you agree to our privacy policy?</span>
                     </label>
+                    <div id="policyAgreeCheckbox-errorContainer" class="error_container"></div>
                     <div class="confirm_btn_container">
-                        <button id="checkoutBtn" class="send_order_btn disabled_btn" type="submit">Checkout</button>
-                        <button id="clearBtn" class="clear_form_cart_btn" type="reset">Clear all</button>
+                        <button id="checkoutBtn" class="send_order_btn primary_btn disabled_btn"
+                            type="submit">Checkout</button>
+                        <button id="clearBtn" class="clear_form_cart_btn primary_btn" type="reset">Clear all</button>
                     </div>
                 </div>
             </form>
-            <div class="slow_container hidden" id="slowPopUp">
-                <div class="slow_field">
-                    <h2>You were too slow!</h2>
-                    <button id="tenMoreMin" class="slow_btn">I need 10 more minutes</button>
-                    <button id="clearAllBtn" class="slow_btn slow_clear_btn">Clear my cart</button>
-                </div>
-            </div>
             <div class="done_container hidden" id="orderDone">
                 <div class="done_field">
                     <h2>Your order is sent!</h2>
@@ -323,10 +333,17 @@
                         <div class="product_summary_field" id="fullOrderSummary">
                         </div>
                     </div>
-                    <button id="startOver" class="start_over_btn">Thank you</button>
+                    <button id="startOver" class="primary_btn start_over_btn">Thank you</button>
                 </div>
             </div>
         </section>
+        <div class="slow_container hidden" id="slowPopUp">
+            <div class="slow_field">
+                <h2>You were too slow!</h2>
+                <button id="tenMoreMin" class="primary_btn">I need 10 more minutes</button>
+                <button id="clearAllBtn" class="primary_btn slow_clear_btn">Clear my cart</button>
+            </div>
+        </div>
     </main>
     <footer>
         <div class="flower_img"></div>

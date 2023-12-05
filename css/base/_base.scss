@@ -62,7 +62,7 @@ input[type="text"],
 
 input:focus {
   background-color: $white;
-  outline: 2px solid rgb(94, 128, 0);
+  outline: 2px solid $yellow;
 }
 
 input:-webkit-autofill {
