@@ -219,7 +219,7 @@
                     </div>
                 </section>
             </section>
-            <form class="order_form" id="orderForm">
+            <form class="order_form hidden" id="orderForm">
                 <div class="general_info">
                     <h2>Customer information</h2>
                     <label>
@@ -316,10 +316,13 @@
                     <div class="confirm_btn_container">
                         <button id="checkoutBtn" class="send_order_btn primary_btn disabled_btn"
                             type="submit">Checkout</button>
-                        <button id="clearBtn" class="clear_form_cart_btn primary_btn" type="reset">Clear all</button>
+                        <button id="clearBtn" class="clear_form_cart_btn primary_btn" type="reset">Delete order</button>
                     </div>
                 </div>
             </form>
+            <div class="error_popup hidden" id="wrongInputPopUp">
+                <p>Something in the form is wrong, please check again and make sure all the information is correct.</p>
+            </div>
             <div class="done_container hidden" id="orderDone">
                 <div class="done_field">
                     <h2>Your order is sent!</h2>

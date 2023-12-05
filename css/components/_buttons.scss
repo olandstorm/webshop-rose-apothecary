@@ -91,7 +91,7 @@ button {
   font-size: 0.9rem;
 }
 
-button:disabled {
+.disabled_btn {
   @include disabled_btn($light-theme: true);
   body.dark_mode & {
     @include disabled_btn($light-theme: false);

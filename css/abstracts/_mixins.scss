@@ -255,6 +255,16 @@
   }
 }
 
+@mixin disabled_btn_hover($light-theme: true) {
+  @if $light-theme {
+    background-color: $color_primary_dark;
+    color: $color_canvas;
+  } @else {
+    background-color: $color_text;
+    color: $color_secondary;
+  }
+}
+
 @mixin error_message($light-theme: true) {
   @if $light-theme {
     color: $dark_red;

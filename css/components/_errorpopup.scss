@@ -1,0 +1,19 @@
+.error_popup {
+  z-index: 2500;
+  min-height: 140px;
+  width: 100vw;
+  max-width: 100%;
+  padding: 30px 20px;
+  display: flex;
+  border: 2px solid $black;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background-color: rgba($color_secondary, 0.9);
+  color: $color_text;
+  position: fixed;
+  bottom: 0;
+  p {
+    max-width: 400px;
+  }
+}

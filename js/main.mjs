@@ -93,6 +93,9 @@ const promoContainer = document.querySelector('#promoCodeContainer');
 const codeBtn = document.querySelector('#codeBtn');
 const checkoutTotal = document.querySelector('#checkoutTotal');
 
+const orderForm = document.querySelector('#orderForm');
+const wrongInputPopUp = document.querySelector('#wrongInputPopUp');
+
 const sureToDelete = document.querySelector('#sureToDelete');
 const backToCart = document.querySelector('#backToCart');
 const deleteContainer = document.querySelector('#popUpDelete');
@@ -187,8 +190,11 @@ let cartArray = [];
 
 // Tom varukorg
 function cartIsEmpty() {
+  orderForm.classList.add('hidden');
   cartProducts.innerHTML = `
-  <p>Your cart is empty.</p>  
+  <div class="empty_cart">
+  <p>Your cart is empty.</p>
+  </div>
   `;
   checkoutTotal.innerHTML = '';
 }
@@ -202,6 +208,8 @@ function toggleMenu() {
   shoppingCart.classList.toggle('shopping_black');
   cartAmount.classList.toggle('amount_color');
   if (isOpen) {
+    // eslint-disable-next-line
+    gsap.fromTo(nav, { opacity: 0 }, { opacity: 1, duration: 0.4 });
     menuBtn.setAttribute('aria-label', 'Close meny');
   } else {
     menuBtn.setAttribute('aria-label', 'Open meny');
@@ -210,6 +218,8 @@ function toggleMenu() {
 
 // Meddelande för seg kund
 function messageToSlow() {
+  // eslint-disable-next-line
+  gsap.fromTo(slowPopUP, { opacity: 0 }, { opacity: 1, duration: 0.3 });
   slowPopUP.classList.remove('hidden');
 }
 function startTimer(duration) {
@@ -229,10 +239,9 @@ function stopTimer() {
 function clearAll() {
   // eslint-disable-next-line
   emptyCart();
-  document.querySelector('#orderForm').reset();
+  orderForm.reset();
   slowPopUP.classList.add('hidden');
-  setTimeout((document.body.scrollTop = 0), 0);
-  setTimeout((document.documentElement.scrollTop = 0), 0);
+  window.scrollTo(0, 0);
 }
 function addTenMin() {
   slowPopUP.classList.add('hidden');
@@ -508,6 +517,8 @@ function emptyCart() {
 }
 // Pop-up-fönster för att dubbelkolla att användaren vill ta bort alla varor
 function triggerPopUp() {
+  // eslint-disable-next-line
+  gsap.fromTo(deleteContainer, { opacity: 0 }, { opacity: 1, duration: 0.3 });
   deleteContainer.classList.remove('hidden');
 }
 clearCart.addEventListener('click', triggerPopUp);
@@ -535,6 +546,7 @@ function increaseAmount(e) {
 function addToCart(e) {
   const index = e.currentTarget.id.split('-')[1];
   console.log(e.currentTarget.id);
+  orderForm.classList.remove('hidden');
 
   // Välja ut rätt produkt
   const productToAdd = {
@@ -662,6 +674,13 @@ printProducts();
 
 // Filter och sortering
 function toggleFilter() {
+  // eslint-disable-next-line
+  gsap.fromTo(
+    filterField,
+    { height: 0, overflow: 'hidden', opacity: 0 },
+    // eslint-disable-next-line
+    { height: 'auto', opacity: 1, duration: 0.7, ease: 'sine.out' }
+  );
   filterField.classList.toggle('hidden');
 }
 
@@ -739,8 +758,7 @@ function openCart() {
     toggleMenu();
   }
   if (productPage.classList.contains('hidden')) {
-    setTimeout((document.body.scrollTop = 0), 0);
-    setTimeout((document.documentElement.scrollTop = 0), 0);
+    window.scrollTo(0, 0);
   }
 }
 
@@ -756,6 +774,8 @@ backToProducts.addEventListener('click', shopMore);
 
 // Toggle rabattkodsfältet
 function openCodeField() {
+  // eslint-disable-next-line
+  gsap.fromTo(promoContainer, { opacity: 0 }, { opacity: 1, duration: 0.7 });
   promoContainer.classList.toggle('hidden');
 }
 
@@ -901,6 +921,26 @@ function activateCheckoutBtn() {
   });
 }
 
+// Funktion och animation för popup om att något är fel i formuläret
+function hidePopUp() {
+  wrongInputPopUp.classList.add('hidden');
+}
+function showPopUp() {
+  wrongInputPopUp.classList.remove('hidden');
+}
+// eslint-disable-next-line
+const wrongInputAnimation = gsap.timeline();
+
+function wrongInput() {
+  wrongInputAnimation
+    .call(showPopUp)
+    .from(wrongInputPopUp, { opacity: 0 })
+    .to(wrongInputPopUp, { opacity: 1, duration: 0.7 }, '<')
+    .from(wrongInputPopUp, { y: 140, duration: 0.6, ease: 'power2.out' }, '<')
+    .to(wrongInputPopUp, { opacity: 0, duration: 0.5 }, '>3')
+    .call(hidePopUp);
+}
+
 // Funktion för skicka-knappen
 function finalCheckout(e) {
   // Skicka inte in formuläret
@@ -920,8 +960,11 @@ function finalCheckout(e) {
     ) {
       console.log('Allt är ifyllt rätt');
       orderDone.classList.remove('hidden');
+      // eslint-disable-next-line
+      gsap.fromTo(orderDone, { opacity: 0 }, { opacity: 1, duration: 0.3 });
       window.scrollTo(0, 0);
     } else {
+      wrongInput();
       console.log('Please correct the form errors before submitting.');
     }
   } else if (isInvoiceChosen()) {
@@ -938,22 +981,25 @@ function finalCheckout(e) {
     ) {
       console.log('Allt är ifyllt rätt');
       orderDone.classList.remove('hidden');
+      // eslint-disable-next-line
+      gsap.fromTo(orderDone, { opacity: 0 }, { opacity: 1, duration: 0.3 });
       window.scrollTo(0, 0);
     } else {
+      wrongInput();
       console.log('Please correct the form errors before submitting.');
     }
   }
 }
 
 // Kallar på skickaknappen
-document.getElementById('orderForm').addEventListener('submit', finalCheckout);
+orderForm.addEventListener('submit', finalCheckout);
 
 // Start over när beställning är lagd
 
 function backToStart() {
   orderDone.classList.add('hidden');
   emptyCart();
-  document.querySelector('#orderForm').reset();
+  orderForm.reset();
   stopTimer();
   window.location.reload();
 }

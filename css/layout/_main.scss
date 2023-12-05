@@ -1,3 +1,6 @@
+main {
+  min-height: calc(90vh - 250px);
+}
 .product_page {
   @include theme_colors($light-theme: true);
   body.dark_mode & {
@@ -181,6 +184,12 @@
     flex-wrap: wrap;
     row-gap: 40px;
 
+    .empty_cart {
+      margin-top: 50px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
     .cart_products {
       display: flex;
       flex-wrap: wrap;
@@ -361,6 +370,7 @@
         display: flex;
         justify-content: space-around;
         flex-wrap: wrap;
+        row-gap: 15px;
         button {
           width: fit-content;
         }
