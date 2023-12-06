@@ -23,6 +23,14 @@
   @import "abstracts/product-rows";
 }
 
-@media screen and (max-width: 700px) {
-  @import "abstracts/cart-rows";
+@media screen and (min-width: 550px) {
+  @import "abstracts/cart-products";
+}
+
+@media screen and (min-width: 768px) {
+  @import "abstracts/tablet";
+}
+
+@media screen and (min-width: 1024px) {
+  @import "abstracts/desktop";
 }

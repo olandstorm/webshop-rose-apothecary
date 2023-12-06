@@ -5,12 +5,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rose Apothecary</title>
-    <link rel="stylesheet" href="css/style.css" type="text/css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,700;1,300;1,400&display=swap"
         rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css" type="text/css">
     <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
@@ -222,55 +222,57 @@
             <form class="order_form hidden" id="orderForm">
                 <div class="general_info">
                     <h2>Customer information</h2>
-                    <label>
-                        <span>First name</span>
-                        <input type="text" id="fName" class="long_input" placeholder="First Name"
-                            autocomplete="given-name">
-                        <div id="fName-errorContainer" class="error_container"></div>
-                    </label>
-                    <label>
-                        <span>Second name</span>
-                        <input type="text" id="lName" class="long_input" placeholder="Second Name"
-                            autocomplete="family-name">
-                        <div id="lName-errorContainer" class="error_container"></div>
-                    </label>
-                    <label>
-                        <span>Street</span>
-                        <input type="text" id="streetName" class="long_input" placeholder="Street"
-                            autocomplete="street-address">
-                        <div id="streetName-errorContainer" class="error_container"></div>
-                    </label>
-                    <label>
-                        <span>Postal code</span>
-                        <input type="text" id="postalCode" class="fit_content_input" placeholder="111 22" size="6"
-                            maxlength="6" autocomplete="postal-code">
-                        <div id="postalCode-errorContainer" class="error_container"></div>
-                    </label>
-                    <label>
-                        <span>Postal area</span>
-                        <input type="text" id="postalArea" class="long_input" placeholder="Postal Area"
-                            autocomplete="address-level1">
-                        <div id="postalArea-errorContainer" class="error_container"></div>
-                    </label>
-                    <label>
-                        <span>Door code, if needed</span>
-                        <input type="text" size="6" class="fit_content_input">
-                        <div class="error_container"></div>
-                    </label>
-                    <label>
-                        <span>Phone number</span>
-                        <input type="tel" id="phoneNumber" class="long_input" placeholder="Phone Number"
-                            autocomplete="tel">
-                        <div id="phoneNumber-errorContainer" class="error_container"></div>
-                    </label>
-                    <label>
-                        <span>Email</span>
-                        <input type="email" id="emailForm" class="long_input" placeholder="Your Email"
-                            autocomplete="email">
-                        <div id="emailForm-errorContainer" class="error_container"></div>
-                    </label>
+                    <div class="general_form form_container">
+                        <label class="half_label">
+                            <span>First name</span>
+                            <input type="text" id="fName" class="long_input" placeholder="First Name"
+                                autocomplete="given-name">
+                            <div id="fName-errorContainer" class="error_container"></div>
+                        </label>
+                        <label class="half_label">
+                            <span>Second name</span>
+                            <input type="text" id="lName" class="long_input" placeholder="Second Name"
+                                autocomplete="family-name">
+                            <div id="lName-errorContainer" class="error_container"></div>
+                        </label>
+                        <label>
+                            <span>Street</span>
+                            <input type="text" id="streetName" class="long_input" placeholder="Street"
+                                autocomplete="street-address">
+                            <div id="streetName-errorContainer" class="error_container"></div>
+                        </label>
+                        <label class="half_label">
+                            <span>Postal code</span>
+                            <input type="text" id="postalCode" class="fit_content_input" placeholder="111 22" size="6"
+                                maxlength="6" autocomplete="postal-code">
+                            <div id="postalCode-errorContainer" class="error_container"></div>
+                        </label>
+                        <label class="half_label">
+                            <span>Postal area</span>
+                            <input type="text" id="postalArea" class="long_input" placeholder="Postal Area"
+                                autocomplete="address-level1">
+                            <div id="postalArea-errorContainer" class="error_container"></div>
+                        </label>
+                        <label>
+                            <span>Door code, if needed</span>
+                            <input type="text" size="6" class="fit_content_input">
+                            <div class="error_container"></div>
+                        </label>
+                        <label>
+                            <span>Phone number</span>
+                            <input type="tel" id="phoneNumber" class="long_input" placeholder="Phone Number"
+                                autocomplete="tel">
+                            <div id="phoneNumber-errorContainer" class="error_container"></div>
+                        </label>
+                        <label>
+                            <span>Email</span>
+                            <input type="email" id="emailForm" class="long_input" placeholder="Your Email"
+                                autocomplete="email">
+                            <div id="emailForm-errorContainer" class="error_container"></div>
+                        </label>
+                    </div>
                 </div>
-                <div class="payment_option_container">
+                <div class="payment_option_container form_container">
                     <label>
                         <span class="payment_option">Card</span>
                         <input type="radio" value="card" id="cardRadioButton" name="payment_method" checked>
@@ -280,13 +282,13 @@
                         <input type="radio" value="invoice" id="invoiceRadioButton" name="payment_method">
                     </label>
                 </div>
-                <div id="cardForm" class="payment_group">
+                <div id="cardForm" class="payment_group form_container">
                     <h2>Card</h2>
                     <label class="payment_label full_width_field">
                         <span>Card number</span>
                         <input type="text" class="long_input" autocomplete="cc-number">
                     </label>
-                    <label class="payment_label half_width_field">
+                    <label class="payment_label self_width_field">
                         <span>Expiration date</span>
                         <input type="text" size="6" maxlength="5" placeholder="MM/YY" autocomplete="cc-exp">
                     </label>
@@ -295,7 +297,7 @@
                         <input type="text" size="3" maxlength="3">
                     </label>
                 </div>
-                <div id="invoiceForm" class="payment_group hidden">
+                <div id="invoiceForm" class="payment_group hidden form_container">
                     <h2>Invoice</h2>
                     <label class="payment_label">
                         <span>Social security number</span>
@@ -303,7 +305,7 @@
                         <div id="socialNr-errorContainer" class="error_container social_nr_error"></div>
                     </label>
                 </div>
-                <div class="confirm_container">
+                <div class="confirm_container form_container">
                     <label>
                         <input type="checkbox" checked>
                         <span>Would you like our newsletter and recieve our amazing offers before others?</span>

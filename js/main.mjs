@@ -57,13 +57,13 @@
  *      [X] Lägga till ruta om försäkran om att man vill tömma varukorg
  *      [] Lägga in fler bilder på varje produkt
  *      [X] Lägg till copytext
- *      [] Fixa en tom varukorgs-vy
+ *      [X] Fixa en tom varukorgs-vy
  *      [X] Sorterings-funktionen
  *      [X] Lösa visually_hidden-problemet
  *      [X] Fallback-meddelande om användaren inte har JS
  *      [] Skriv ut vad rabatten är på
  *      [] Flytta ut i moduler och förbättra print-funktionerna
- *      [] Gömma formuläret om varukorgen är tom
+ *      [X] Gömma formuläret om varukorgen är tom
  *
  *
  */
@@ -105,6 +105,8 @@ const clearAllBtn = document.querySelector('#clearAllBtn');
 const slowPopUP = document.querySelector('#slowPopUp');
 
 const invoiceRadio = document.querySelector('#invoiceRadio');
+
+// Variabler för knappar för att byta bilder
 
 // Timer för långsam användare
 let timerRunning = false;
@@ -373,6 +375,7 @@ function printCart() {
 
     totalSum += product.amount * adjustedProductPrice;
     totalAmount += product.amount;
+
     cartProducts.innerHTML += `
     <article class="product_in_cart" id="cartItem_${[index]}">
     <div class="cart_pic_name">
@@ -599,6 +602,126 @@ function addToCart(e) {
 
   printCart();
 }
+
+// Byta bilder på produkterna
+function toggleImage(imageType, productId) {
+  const firstImage = document.getElementById(`firstImage-${productId}`);
+  const secondImage = document.getElementById(`secondImage-${productId}`);
+  const thirdImage = document.getElementById(`thirdImage-${productId}`);
+  const firstIcon = document.getElementById(`firstIcon-${productId}`);
+  const secondIcon = document.getElementById(`secondIcon-${productId}`);
+  const thirdIcon = document.getElementById(`thirdIcon-${productId}`);
+  const fourthIcon = document.getElementById(`fourthIcon-${productId}`);
+  const fifthIcon = document.getElementById(`fifthIcon-${productId}`);
+  const sixthIcon = document.getElementById(`sixthIcon-${productId}`);
+
+  if (firstImage && secondImage && thirdImage) {
+    switch (imageType) {
+      case 'firstImage':
+        firstImage.classList.remove('hidden');
+        secondImage.classList.add('hidden');
+        thirdImage.classList.add('hidden');
+        firstIcon.classList.add('hidden');
+        secondIcon.classList.remove('hidden');
+        thirdIcon.classList.remove('hidden');
+        fourthIcon.classList.add('hidden');
+        fifthIcon.classList.remove('hidden');
+        sixthIcon.classList.add('hidden');
+        console.log('1');
+        break;
+      case 'secondImage':
+        firstImage.classList.add('hidden');
+        secondImage.classList.remove('hidden');
+        thirdImage.classList.add('hidden');
+        firstIcon.classList.remove('hidden');
+        secondIcon.classList.add('hidden');
+        thirdIcon.classList.add('hidden');
+        fourthIcon.classList.remove('hidden');
+        fifthIcon.classList.remove('hidden');
+        sixthIcon.classList.add('hidden');
+        console.log('2');
+        break;
+      case 'thirdImage':
+        firstImage.classList.add('hidden');
+        secondImage.classList.add('hidden');
+        thirdImage.classList.remove('hidden');
+        firstIcon.classList.remove('hidden');
+        secondIcon.classList.add('hidden');
+        thirdIcon.classList.remove('hidden');
+        fourthIcon.classList.add('hidden');
+        fifthIcon.classList.add('hidden');
+        sixthIcon.classList.remove('hidden');
+        console.log('3');
+        break;
+      default:
+        break;
+    }
+  } else if (firstImage && secondImage && !thirdImage) {
+    switch (imageType) {
+      case 'firstImage':
+        firstImage.classList.remove('hidden');
+        secondImage.classList.add('hidden');
+        firstIcon.classList.add('hidden');
+        secondIcon.classList.remove('hidden');
+        thirdIcon.classList.remove('hidden');
+        fourthIcon.classList.add('hidden');
+        console.log('1');
+        break;
+      case 'secondImage':
+        firstImage.classList.add('hidden');
+        secondImage.classList.remove('hidden');
+        firstIcon.classList.remove('hidden');
+        secondIcon.classList.add('hidden');
+        thirdIcon.classList.add('hidden');
+        fourthIcon.classList.remove('hidden');
+        console.log('2');
+        break;
+      default:
+        break;
+    }
+  }
+}
+
+// Eventlyssnare på knapparna
+function addEventListeners(product) {
+  const firstImageBtn = document.getElementById(`firstImageBtn-${product.id}`);
+  const secondImageBtn = document.getElementById(
+    // eslint-disable-next-line
+    `secondImageBtn-${product.id}`
+  );
+  const thirdImageBtn = document.getElementById(`thirdImageBtn-${product.id}`);
+
+  if (firstImageBtn) {
+    firstImageBtn.addEventListener(
+      'click',
+      () =>
+        // eslint-disable-next-line
+        toggleImage('firstImage', product.id)
+      // eslint-disable-next-line
+    );
+  }
+
+  if (secondImageBtn) {
+    secondImageBtn.addEventListener(
+      'click',
+      () =>
+        // eslint-disable-next-line
+        toggleImage('secondImage', product.id)
+      // eslint-disable-next-line
+    );
+  }
+
+  if (thirdImageBtn) {
+    thirdImageBtn.addEventListener(
+      'click',
+      () =>
+        // eslint-disable-next-line
+        toggleImage('thirdImage', product.id)
+      // eslint-disable-next-line
+    );
+  }
+}
+
 // En funktion för att printa produkterna
 function printProducts() {
   let priceChange = 1;
@@ -624,12 +747,78 @@ function printProducts() {
     }
     const adjustedProductPrice = productPrice * priceChange;
 
+    // Lägger till en bild och knappar om det finns mer än en
+    const secondImage =
+      product.images.length >= 2
+        ? `<img 
+    src="${product.images[1].src}" 
+    alt="${product.images[1].alt}" 
+    height="${product.images[1].height}" 
+    width="${product.images[1].width}"
+    class="product_img hidden"
+    id="secondImage-${product.id}"
+    >`
+        : '';
+    // Lägger till knappar om det finns fler bilder
+    const imageBtns =
+      product.images.length >= 2
+        ? `
+  <button class="change_image" id="firstImageBtn-${product.id}">
+  <span class="material-symbols-outlined image_icon hidden" aria-label="First image" id="firstIcon-${product.id}">
+radio_button_unchecked
+</span>
+<span class="material-symbols-outlined image_icon" aria-label="Image showing" id="secondIcon-${product.id}">
+radio_button_checked
+</span>
+</button>
+  <button class="change_image" id="secondImageBtn-${product.id}">
+  <span class="material-symbols-outlined image_icon" aria-label="Second image" id="thirdIcon-${product.id}">
+radio_button_unchecked
+</span>
+<span class="material-symbols-outlined image_icon hidden" aria-label="Image showing" id="fourthIcon-${product.id}">
+radio_button_checked
+</span>
+  </button>`
+        : '';
+    // Lägger till en tredje bild och knapp om det finns mer än en
+    const thirdImage =
+      product.images.length === 3
+        ? `<img 
+      src="${product.images[2].src}" 
+      alt="${product.images[2].alt}" 
+      height="${product.images[2].height}" 
+      width="${product.images[2].width}"
+      class="product_img hidden"
+      id="thirdImage-${product.id}"
+      >`
+        : '';
+    // Lägger till en till knapp om det finns tre bilder
+    const imageBtnsThird =
+      product.images.length === 3
+        ? `
+      <button class="change_image" id="thirdImageBtn-${product.id}">
+      <span class="material-symbols-outlined image_icon" aria-label="Third image" id="fifthIcon-${product.id}">
+radio_button_unchecked
+</span>
+<span class="material-symbols-outlined image_icon hidden" aria-label="Image showing" id="sixthIcon-${product.id}">
+radio_button_checked
+</span>
+</button>`
+        : '';
+
     productContainer.innerHTML += `
     <article class="product_card" id="product_card__${[index]}">
     <figure class="product_img_container">
       <img src="${product.images[0].src}" alt="${product.images[0].alt}" 
       height="${product.images[0].height}" width="${product.images[0].width}"
-      class="product_img">
+      class="product_img"
+      id="firstImage-${product.id}">
+      ${secondImage}
+      ${thirdImage}
+      <div class="button_container">
+      ${imageBtns}
+      ${imageBtnsThird}
+      </div>
     </figure>
     <div class="product_info">
         <h2>${product.name}</h2>
@@ -647,6 +836,10 @@ function printProducts() {
     </div>
 </article>
     `;
+  });
+  // Loop för att få alla eventlyssnare
+  products.forEach((product) => {
+    addEventListeners(product);
   });
 
   // Funktioner för att minska och öka antal produkter

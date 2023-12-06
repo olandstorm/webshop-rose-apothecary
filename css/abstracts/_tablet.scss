@@ -1,0 +1,48 @@
+button {
+  min-width: 40px;
+  min-height: 40px;
+}
+
+.material-symbols-outlined {
+  font-size: 1.7rem;
+}
+
+.menu_btn {
+  span {
+    width: 27px;
+  }
+}
+
+header {
+  max-height: 110px;
+  padding: 2vw 0 3vw 0;
+
+  .cart_number {
+    top: 25px;
+    right: 31px;
+  }
+}
+
+main {
+  .product_page {
+    margin: auto;
+    max-width: 1024px;
+    .description_card {
+      width: 90%;
+      h1 {
+        font-size: clamp(1rem, 2vw, 1.4em);
+        margin-bottom: 1.2vw;
+      }
+    }
+    .filter_container {
+      width: 90%;
+    }
+    .product_container {
+      width: 90%;
+      justify-content: space-between;
+      .product_card {
+        width: 32%;
+      }
+    }
+  }
+}

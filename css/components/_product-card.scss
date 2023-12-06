@@ -18,6 +18,21 @@
       height: 100%;
       object-fit: cover;
     }
+
+    .button_container {
+      position: relative;
+      bottom: 35px;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      background-color: rgba($grey, 0.2);
+
+      button {
+        background: transparent;
+        border: none;
+        color: rgba($almost_white, 0.8);
+      }
+    }
   }
   .product_info {
     margin: 10px;
