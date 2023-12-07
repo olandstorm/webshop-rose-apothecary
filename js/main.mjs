@@ -442,7 +442,7 @@ function printCart() {
   }
 
   // Måndagsrabatt på 10% innan kl 10
-  if (dayOfWeek === 4 && currentHour <= 11) {
+  if (dayOfWeek === 1 && currentHour < 10) {
     totalSum *= 0.9;
     if (Math.round(fullSum) - Math.round(totalSum) > 0) {
       mondayAmount += `<p class="discount_text">- $${
@@ -585,8 +585,7 @@ function increaseAmount(e) {
 function addToCart(e) {
   const index = e.currentTarget.id.split('-')[1];
   console.log(e.currentTarget.id);
-  orderForm.classList.add('hidden');
-  console.log(products[index].id);
+  orderForm.classList.remove('hidden');
 
   // Välja ut rätt produkt
   const productToAdd = {
