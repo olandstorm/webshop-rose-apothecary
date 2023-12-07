@@ -36,6 +36,10 @@
   }
   .product_info {
     margin: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex-grow: 1;
 
     p {
       margin-bottom: 10px;
@@ -45,12 +49,22 @@
       display: flex;
       align-items: center;
       column-gap: 15px;
-
       .amount_number {
         margin: 0;
       }
     }
-
+    button {
+      margin-top: 10px;
+      margin-bottom: 0;
+    }
+    .offer_spacer {
+      height: 1rem;
+      .ten_off_text {
+        font-size: 0.7rem;
+        opacity: 0.7;
+        font-style: italic;
+      }
+    }
     .product_description {
       font-weight: 300;
       font-size: 0.8rem;

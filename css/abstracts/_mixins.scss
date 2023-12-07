@@ -280,10 +280,25 @@
     outline: 1.5px solid $light_red;
   }
 }
+
 @mixin error_field_border($light-theme: true) {
   @if $light-theme {
     border: 1px solid $dark_red;
   } @else {
     border: 1px solid $light_red;
+  }
+}
+
+@mixin offer_container($light-theme: true) {
+  @if $light-theme {
+    color: $color_text;
+    background-color: $color_secondary;
+    border-top: 2px solid rgba($color_primary_dark, 0.7);
+    border-bottom: 2px solid rgba($color_primary_dark, 0.7);
+  } @else {
+    color: $color_text_dark;
+    background-color: rgba($color_secondary, 0.3);
+    border-top: 2px solid $color_primary_dark;
+    border-bottom: 2px solid $color_primary_dark;
   }
 }

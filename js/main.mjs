@@ -55,13 +55,13 @@
  *      // EXTRA
  *      [X] Se över alla klasser och namnge dem bättre (knapparna i CSS tex)
  *      [X] Lägga till ruta om försäkran om att man vill tömma varukorg
- *      [] Lägga in fler bilder på varje produkt
+ *      [X] Lägga in fler bilder på varje produkt
  *      [X] Lägg till copytext
  *      [X] Fixa en tom varukorgs-vy
  *      [X] Sorterings-funktionen
  *      [X] Lösa visually_hidden-problemet
  *      [X] Fallback-meddelande om användaren inte har JS
- *      [] Skriv ut vad rabatten är på
+ *      [X] Skriv ut vad rabatten är på
  *      [] Flytta ut i moduler och förbättra print-funktionerna
  *      [X] Gömma formuläret om varukorgen är tom
  *
@@ -105,8 +105,6 @@ const clearAllBtn = document.querySelector('#clearAllBtn');
 const slowPopUP = document.querySelector('#slowPopUp');
 
 const invoiceRadio = document.querySelector('#invoiceRadio');
-
-// Variabler för knappar för att byta bilder
 
 // Timer för långsam användare
 let timerRunning = false;
@@ -348,9 +346,15 @@ sureToDelete.addEventListener('click', emptyCart);
 function printCart() {
   let priceChange = 1;
   let totalSum = 0;
+  let fullSum = 0;
   let totalAmount = 0;
   let billedAmount = 0;
   let mondayOffer = '';
+  let mondayAmount = '';
+  let mondayMessage = '';
+  let shippingMessage = '';
+  let onlyCardMessage = '';
+  let tenProcentMessage = '';
   const today = new Date();
   const dayOfWeek = today.getDay();
   const currentHour = today.getHours();
@@ -367,13 +371,23 @@ function printCart() {
   }
 
   cartArray.forEach((product, index) => {
+    let tenProcentAmount = '';
+    let tenProcentSpec = '';
     let productPrice = product.price;
     if (product.amount >= 10) {
       productPrice *= 0.9;
+      tenProcentMessage =
+        '<p class="discount_display_text">10% off if you buy ten items or more of the same product!</p>';
+      tenProcentAmount = `<p class="ten_off_text">- $${
+        Math.round(product.price * product.amount) -
+        Math.round(productPrice * product.amount)
+      }</p>`;
+      tenProcentSpec = '<p class="ten_off_text">10 gives 10%</p>';
     }
     const adjustedProductPrice = productPrice * priceChange;
 
     totalSum += product.amount * adjustedProductPrice;
+    fullSum += product.amount * adjustedProductPrice;
     totalAmount += product.amount;
 
     cartProducts.innerHTML += `
@@ -400,9 +414,13 @@ function printCart() {
         </div>
     </div>
     <div class="cart_total_container">
+      <div class="center_total_amounts">
+        ${tenProcentSpec}
+        ${tenProcentAmount}
         <p>Total: 
         $${Math.round(adjustedProductPrice * product.amount)}
         </p>
+      </div>
     </div>
     <button class="delete_product" 
     id="delete-${product.id}">
@@ -413,35 +431,59 @@ function printCart() {
     `;
   });
 
-  // Måndagsrabatt på 10% innan kl 10
-  if (dayOfWeek === 1 && currentHour <= 17) {
-    totalSum *= 0.9;
-    mondayOffer += `<p class="monday_offer">
-      Monday morning shopping gives you an extra 10% off!
-      </p>`;
-  }
-
   // Räkna ut frakt
   let shippingSumTotal = 0;
   if (totalAmount > 15) {
     shippingSumTotal = 0;
+    shippingMessage =
+      '<p class="discount_display_text">More than 15 items gives you free shipping!</p>';
   } else {
     shippingSumTotal = `${Math.round(10 + 0.1 * totalSum)}`;
   }
+
+  // Måndagsrabatt på 10% innan kl 10
+  if (dayOfWeek === 4 && currentHour <= 11) {
+    totalSum *= 0.9;
+    if (Math.round(fullSum) - Math.round(totalSum) > 0) {
+      mondayAmount += `<p class="discount_text">- $${
+        Math.round(fullSum) - Math.round(totalSum)
+      }</p>`;
+      mondayOffer += `<p class="discount_display_text">
+        Monday morning shopping gives you an extra 10% off!
+        </p>`;
+      mondayMessage += `
+      <p class="discount_text">Monday offer</p>`;
+    }
+  }
+
   // Totalsumman med frakt
   billedAmount = Number(shippingSumTotal) + totalSum;
+
+  // Ta bort faktura som alternativ om $800 överksrids
+  if (billedAmount > 800) {
+    onlyCardMessage +=
+      '<p class="discount_display_text">Amounts over $800 can only be payed with card.</p>';
+    invoiceRadio.classList.add('hidden');
+  } else {
+    invoiceRadio.classList.remove('hidden');
+  }
 
   // För att skriva ut totalen
   checkoutTotal.innerHTML = '';
   checkoutTotal.innerHTML = `
   ${mondayOffer}
+  ${tenProcentMessage}
+  ${shippingMessage}
+  ${onlyCardMessage}
   <div class="checkout_total">
   <p>Subtotal:</p>
-  <p id="totalSum">$${Math.round(totalSum)}</p>
+  <p id="totalSum">$${Math.round(fullSum)}</p>
   <p>Shipping:</p>
   <p id="shippingSum">$${shippingSumTotal}</p>
-  <p>Total:</p>
-  <p id="billedAmount">$${Math.round(billedAmount)}</p>
+  ${mondayMessage}
+  ${mondayAmount}
+  <p class="total_text">Total:</p>
+  <p id="billedAmount" class="total_text">$${Math.round(billedAmount)}</p>
   </div>
   `;
 
@@ -453,12 +495,6 @@ function printCart() {
     cartAmount.innerHTML = `
    ${totalAmount}
   `;
-  }
-  // Ta bort faktura som alternativ om $800 överksrids
-  if (billedAmount > 800) {
-    invoiceRadio.classList.add('hidden');
-  } else {
-    invoiceRadio.classList.remove('hidden');
   }
 
   // Ta bort enskild produkt
@@ -549,7 +585,8 @@ function increaseAmount(e) {
 function addToCart(e) {
   const index = e.currentTarget.id.split('-')[1];
   console.log(e.currentTarget.id);
-  orderForm.classList.remove('hidden');
+  orderForm.classList.add('hidden');
+  console.log(products[index].id);
 
   // Välja ut rätt produkt
   const productToAdd = {
@@ -562,6 +599,12 @@ function addToCart(e) {
     (product) => product.id === productToAdd.id
   );
 
+  if (productToAdd.amount > 10) {
+    // Ta bort rabatt-text när man klickar
+    const offerText = document.getElementById(`offer-${index}`);
+    console.log(offerText);
+    offerText.classList.add('hidden');
+  }
   // Om den finns adderas amounten istället för att lägga till ny produkt
   if (existingProduct) {
     existingProduct.amount += productToAdd.amount;
@@ -742,7 +785,9 @@ function printProducts() {
 
   products.forEach((product, index) => {
     let productPrice = product.price;
+    let tenProcentSpec = '';
     if (product.amount >= 10) {
+      tenProcentSpec = `<p class="ten_off_text offer_text" id="offer-${index}">10 gives 10%!</p>`;
       productPrice *= 0.9;
     }
     const adjustedProductPrice = productPrice * priceChange;
@@ -821,10 +866,16 @@ radio_button_checked
       </div>
     </figure>
     <div class="product_info">
+      <div>
         <h2>${product.name}</h2>
         <p class="product_description">${product.description}</p>
         <p>$${Math.round(product.price * priceChange)}</p>
         <p>Rating: ${product.rating}/5</p>
+      </div>
+      <div>
+        <div class="offer_spacer">
+          ${tenProcentSpec}
+        </div>
         <div class="adjust_amount_container">
         <button class="decrease_btn product_btn" data-id="${index}">-</button>
         <p class="amount_number" id="amount-${index}">${product.amount}</p>
@@ -833,6 +884,7 @@ radio_button_checked
         <button class="total_btn product_btn" id="total-${index}">
         Buy $${Math.round(adjustedProductPrice * product.amount)}
         </button>
+      </div>
     </div>
 </article>
     `;
