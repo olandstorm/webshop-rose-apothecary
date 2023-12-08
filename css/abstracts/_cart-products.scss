@@ -1,18 +1,27 @@
 main .cart_page .summary_container .product_in_cart {
   flex-direction: row;
   justify-content: space-between;
+  height: 250px;
+
   .cart_amount_container {
     width: 30%;
+    height: 100%;
     align-self: center;
+    justify-content: center;
+    row-gap: 10px;
   }
   .cart_total_container {
     width: 25%;
     padding-bottom: 20px;
     align-self: flex-end;
   }
-  .cart_pic_name {
+  .cart_pic_container {
     width: 35%;
+    max-height: 100%;
+    text-align: left;
+    align-items: flex-start;
     figure {
+      height: 100%;
       max-width: 500px;
     }
   }

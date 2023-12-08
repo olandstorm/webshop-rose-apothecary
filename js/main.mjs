@@ -380,6 +380,9 @@ function checkCode() {
     printCart();
   } else if (codeInput.value === 'JENNIPULLI') {
     cartArray.push(dealProduct);
+    codeTextField.innerHTML = `
+    <p>Enjoy your tomatoes!</p>
+    `;
     codeInput.value = '';
     // eslint-disable-next-line
     printCart();
@@ -437,7 +440,7 @@ function printCart() {
 
     cartProducts.innerHTML += `
       <article class="product_in_cart" id="cartItem_${[index]}">
-        <div class="cart_pic_name">
+        <div class="cart_pic_container">
           <figure>
             <img
               src="${product.images[0].src}"
@@ -446,12 +449,14 @@ function printCart() {
               width="${product.images[0].width}"
             />
           </figure>
-          <h2>${product.name}</h2>
-          <p class="product_unit_price">
-            $${Math.round(product.price * priceChange)}
-          </p>
         </div>
         <div class="cart_amount_container">
+        <div class="cart_name_price">
+        <h2>${product.name}</h2>
+        <p class="product_unit_price">
+          $${Math.round(product.price * priceChange)}
+        </p>
+        </div>
           <div class="adjust_btn_container">
             <button
               class="decrease_cart_btn cart_adjust_btn product_btn"
