@@ -16,6 +16,22 @@
     text-align: center;
     background-color: rgba($color_secondary, 0.9);
     color: $color_text;
+
+    .done_logo {
+      background-image: url("../assets/img/logo/rose_apothecary_logo_b.webp");
+      height: 12vh;
+      min-height: 100px;
+      width: 100%;
+      background-position: center;
+      background-size: contain;
+      background-repeat: no-repeat;
+      margin-bottom: 40px;
+    }
+
+    .delivery_text {
+      margin-top: 20px;
+      font-size: 0.9rem;
+    }
     .done_order_summary {
       display: flex;
       flex-direction: column;

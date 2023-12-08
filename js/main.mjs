@@ -353,10 +353,33 @@ sureToDelete.addEventListener('click', emptyCart);
 
 // Rabattkoder
 let deal = 1;
+const dealProduct = {
+  name: 'Tomato Tango Symphony by Jenni',
+  price: 1337,
+  images: [
+    {
+      src: './assets/img/products/deal_img.webp',
+      alt: 'A brown shampoo bottle with a brown label on it',
+      width: 672,
+      height: 600,
+    },
+  ],
+  amount: 1,
+  id: 99,
+};
+
 function checkCode() {
   console.log(codeInput.value);
   if (codeInput.value === 'Hello') {
     deal = 0;
+    codeTextField.innerHTML = `
+    <p>You got access to free items! Enjoy!</p>
+    `;
+    codeInput.value = '';
+    // eslint-disable-next-line
+    printCart();
+  } else if (codeInput.value === 'JENNIPULLI') {
+    cartArray.push(dealProduct);
     codeInput.value = '';
     // eslint-disable-next-line
     printCart();
@@ -887,13 +910,13 @@ function printProducts(filter) {
                 class="material-symbols-outlined image_icon hidden"
                 aria-label="First image"
                 id="firstIcon-${product.id}">
-                radio_button_unchecked
+                crop_16_9
               </span>
               <span
-                class="material-symbols-outlined image_icon"
+                class="material-symbols-outlined image_icon filled_icon"
                 aria-label="Image showing"
                 id="secondIcon-${product.id}">
-                radio_button_checked
+                crop_16_9
               </span>
             </button>
             <button class="change_image" id="secondImageBtn-${product.id}">
@@ -901,13 +924,13 @@ function printProducts(filter) {
                 class="material-symbols-outlined image_icon"
                 aria-label="Second image"
                 id="thirdIcon-${product.id}">
-                radio_button_unchecked
+                crop_16_9
               </span>
               <span
-                class="material-symbols-outlined image_icon hidden"
+                class="material-symbols-outlined image_icon filled_icon hidden"
                 aria-label="Image showing"
                 id="fourthIcon-${product.id}">
-                radio_button_checked
+                crop_16_9
               </span>
             </button>`
         : '';
@@ -933,13 +956,13 @@ function printProducts(filter) {
               class="material-symbols-outlined image_icon"
               aria-label="Third image"
               id="fifthIcon-${product.id}">
-              radio_button_unchecked
+              crop_16_9
             </span>
             <span
-              class="material-symbols-outlined image_icon hidden"
+              class="material-symbols-outlined image_icon filled_icon hidden"
               aria-label="Image showing"
               id="sixthIcon-${product.id}">
-              radio_button_checked
+              crop_16_9
             </span>
           </button>`
         : '';
@@ -1349,6 +1372,7 @@ function finalCheckout(e) {
 }
 
 // Kallar på skickaknappen
+checkoutBtn.addEventListener('click', finalCheckout);
 orderForm.addEventListener('submit', finalCheckout);
 
 // Start over när beställning är lagd
