@@ -44,6 +44,11 @@ main {
     .product_container {
       width: 90%;
       justify-content: space-between;
+      &::after {
+        content: "";
+        width: 32%;
+        flex: auto;
+      }
       .product_card {
         width: 32%;
       }

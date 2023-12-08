@@ -1,7 +1,11 @@
 .product_card {
   width: 48%;
 }
-
+.product_page .product_container {
+  &::after {
+    width: 48%;
+  }
+}
 .product_page .filter_container .filter_field .filter_option {
   width: calc(50% - 1.5px);
 }

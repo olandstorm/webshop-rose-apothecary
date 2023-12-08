@@ -93,6 +93,10 @@ const promoContainer = document.querySelector('#promoCodeContainer');
 const codeBtn = document.querySelector('#codeBtn');
 const checkoutTotal = document.querySelector('#checkoutTotal');
 
+const codeInput = document.querySelector('#codeInput');
+const addCode = document.querySelector('#addCode');
+const codeTextField = document.querySelector('#codeTextField');
+
 const orderForm = document.querySelector('#orderForm');
 const formSection = document.querySelector('#formSection');
 const wrongInputPopUp = document.querySelector('#wrongInputPopUp');
@@ -196,9 +200,9 @@ let cartArray = [];
 function cartIsEmpty() {
   formSection.classList.add('hidden');
   cartProducts.innerHTML = `
-  <div class="empty_cart">
-  <p>Your cart is empty.</p>
-  </div>
+    <div class="empty_cart">
+      <p>Your cart is empty.</p>
+    </div>
   `;
   checkoutTotal.innerHTML = '';
 }
@@ -347,6 +351,19 @@ backToCart.addEventListener('click', closePopUp);
 // eslint-disable-next-line
 sureToDelete.addEventListener('click', emptyCart);
 
+// Rabattkoder
+let deal = 1;
+function checkCode() {
+  console.log(codeInput.value);
+  if (codeInput.value === 'Hello') {
+    deal = 0;
+    codeInput.value = '';
+    // eslint-disable-next-line
+    printCart();
+  }
+}
+addCode.addEventListener('click', checkCode);
+
 // En funktion för att printa varukorgen
 function printCart() {
   let priceChange = 1;
@@ -396,45 +413,42 @@ function printCart() {
     totalAmount += product.amount;
 
     cartProducts.innerHTML += `
-    <article class="product_in_cart" id="cartItem_${[index]}">
-    <div class="cart_pic_name">
-        <figure>
-            <img 
-            src="${product.images[0].src}" 
-            alt="${product.images[0].alt}" 
-            height="${product.images[0].height}" 
-            width="${product.images[0].width}"
-            >
-        </figure>
-        <h2>${product.name}</h2>
-        <p class="product_unit_price">
-        $${Math.round(product.price * priceChange)}
-        </p>
-    </div>
-    <div class="cart_amount_container">
-        <div class="adjust_btn_container">
-            <button class="decrease_cart_btn cart_adjust_btn product_btn" 
-            data-id="${product.id}">-</button><span
-                class="product_amount">${product.amount}</span><button
-                class="increase_cart_btn cart_adjust_btn product_btn" 
-                data-id="${product.id}">+</button>
+      <article class="product_in_cart" id="cartItem_${[index]}">
+        <div class="cart_pic_name">
+          <figure>
+            <img
+              src="${product.images[0].src}"
+              alt="${product.images[0].alt}"
+              height="${product.images[0].height}"
+              width="${product.images[0].width}"
+            />
+          </figure>
+          <h2>${product.name}</h2>
+          <p class="product_unit_price">
+            $${Math.round(product.price * priceChange)}
+          </p>
         </div>
-    </div>
-    <div class="cart_total_container">
-      <div class="center_total_amounts">
-        ${tenProcentSpec}
-        ${tenProcentAmount}
-        <p>Total: 
-        $${Math.round(adjustedProductPrice * product.amount)}
-        </p>
-      </div>
-    </div>
-    <button class="delete_product" 
-    id="delete-${product.id}">
-    <span class="material-symbols-outlined">
-            delete
-        </span></button>
-    </article>
+        <div class="cart_amount_container">
+          <div class="adjust_btn_container">
+            <button
+              class="decrease_cart_btn cart_adjust_btn product_btn"
+              data-id="${product.id}">-</button>
+            <span class="product_amount">${product.amount}</span>
+            <button
+              class="increase_cart_btn cart_adjust_btn product_btn"
+              data-id="${product.id}">+</button>
+          </div>
+        </div>
+        <div class="cart_total_container">
+          <div class="center_total_amounts">
+            ${tenProcentSpec} ${tenProcentAmount}
+            <p>Total: $${Math.round(adjustedProductPrice * product.amount)}</p>
+          </div>
+        </div>
+        <button class="delete_product" id="delete-${product.id}">
+          <span class="material-symbols-outlined"> delete </span>
+        </button>
+      </article>
     `;
   });
 
@@ -478,20 +492,17 @@ function printCart() {
   // För att skriva ut totalen
   checkoutTotal.innerHTML = '';
   checkoutTotal.innerHTML = `
-  ${mondayOffer}
-  ${tenProcentMessage}
-  ${shippingMessage}
-  ${onlyCardMessage}
-  <div class="checkout_total">
-  <p>Subtotal:</p>
-  <p id="totalSum">$${Math.round(fullSum)}</p>
-  <p>Shipping:</p>
-  <p id="shippingSum">$${shippingSumTotal}</p>
-  ${mondayMessage}
-  ${mondayAmount}
-  <p class="total_text">Total:</p>
-  <p id="billedAmount" class="total_text">$${Math.round(billedAmount)}</p>
-  </div>
+    ${mondayOffer} ${tenProcentMessage} ${shippingMessage} ${onlyCardMessage}
+    <div class="checkout_total">
+      <p>Subtotal:</p>
+      <p id="totalSum">$${Math.round(fullSum)}</p>
+      <p>Shipping:</p>
+      <p id="shippingSum">$${shippingSumTotal}</p>
+      ${mondayMessage} ${mondayAmount}
+      <p class="total_text">Total:</p>
+      <p id="billedAmount" class="total_text">
+      $${Math.round(billedAmount * deal)}</p>
+    </div>
   `;
 
   // För att uppdatera numret på varukorgen
@@ -534,19 +545,19 @@ function printCart() {
     totalAmount += product.amount;
 
     fullOrderContainer.innerHTML += `
-    <div class="product_summary_field">
-    <p class="done_amount">${product.amount}x</p>
-    <p>${product.name}</p>
-    <p>$${Math.round(adjustedProductPrice * product.amount)}</p>
-</div>
+      <div class="product_summary_field">
+        <p class="done_amount">${product.amount}x</p>
+        <p>${product.name}</p>
+        <p>$${Math.round(adjustedProductPrice * product.amount)}</p>
+      </div>
     `;
   });
 
   // Skriva ut totalen på bekräftelsen
   fullOrderSummary.innerHTML = '';
   fullOrderSummary.innerHTML = `
-  <p class="done_total">Total:</p>
-  <p>$${Math.round(billedAmount)}</p>
+    <p class="done_total">Total:</p>
+    <p>$${Math.round(billedAmount * deal)}</p>
   `;
 }
 
@@ -857,101 +868,126 @@ function printProducts(filter) {
     // Lägger till en bild och knappar om det finns mer än en
     const secondImage =
       product.images.length >= 2
-        ? `<img 
-    src="${product.images[1].src}" 
-    alt="${product.images[1].alt}" 
-    height="${product.images[1].height}" 
-    width="${product.images[1].width}"
-    class="product_img hidden"
-    id="secondImage-${product.id}"
-    >`
+        ? `<img
+            src="${product.images[1].src}"
+            alt="${product.images[1].alt}"
+            height="${product.images[1].height}"
+            width="${product.images[1].width}"
+            class="product_img hidden"
+            id="secondImage-${product.id}"
+          />`
         : '';
     // Lägger till knappar om det finns fler bilder
     const imageBtns =
       product.images.length >= 2
-        ? `
-  <button class="change_image" id="firstImageBtn-${product.id}">
-  <span class="material-symbols-outlined image_icon hidden" aria-label="First image" id="firstIcon-${product.id}">
-radio_button_unchecked
-</span>
-<span class="material-symbols-outlined image_icon" aria-label="Image showing" id="secondIcon-${product.id}">
-radio_button_checked
-</span>
-</button>
-  <button class="change_image" id="secondImageBtn-${product.id}">
-  <span class="material-symbols-outlined image_icon" aria-label="Second image" id="thirdIcon-${product.id}">
-radio_button_unchecked
-</span>
-<span class="material-symbols-outlined image_icon hidden" aria-label="Image showing" id="fourthIcon-${product.id}">
-radio_button_checked
-</span>
-  </button>`
+        ? ` <button
+              class="change_image"
+              id="firstImageBtn-${product.id}">
+              <span
+                class="material-symbols-outlined image_icon hidden"
+                aria-label="First image"
+                id="firstIcon-${product.id}">
+                radio_button_unchecked
+              </span>
+              <span
+                class="material-symbols-outlined image_icon"
+                aria-label="Image showing"
+                id="secondIcon-${product.id}">
+                radio_button_checked
+              </span>
+            </button>
+            <button class="change_image" id="secondImageBtn-${product.id}">
+              <span
+                class="material-symbols-outlined image_icon"
+                aria-label="Second image"
+                id="thirdIcon-${product.id}">
+                radio_button_unchecked
+              </span>
+              <span
+                class="material-symbols-outlined image_icon hidden"
+                aria-label="Image showing"
+                id="fourthIcon-${product.id}">
+                radio_button_checked
+              </span>
+            </button>`
         : '';
     // Lägger till en tredje bild och knapp om det finns mer än en
     const thirdImage =
       product.images.length === 3
-        ? `<img 
-      src="${product.images[2].src}" 
-      alt="${product.images[2].alt}" 
-      height="${product.images[2].height}" 
-      width="${product.images[2].width}"
-      class="product_img hidden"
-      id="thirdImage-${product.id}"
-      >`
+        ? `<img
+            src="${product.images[2].src}"
+            alt="${product.images[2].alt}"
+            height="${product.images[2].height}"
+            width="${product.images[2].width}"
+            class="product_img hidden"
+            id="thirdImage-${product.id}"
+          />`
         : '';
     // Lägger till en till knapp om det finns tre bilder
     const imageBtnsThird =
       product.images.length === 3
-        ? `
-      <button class="change_image" id="thirdImageBtn-${product.id}">
-      <span class="material-symbols-outlined image_icon" aria-label="Third image" id="fifthIcon-${product.id}">
-radio_button_unchecked
-</span>
-<span class="material-symbols-outlined image_icon hidden" aria-label="Image showing" id="sixthIcon-${product.id}">
-radio_button_checked
-</span>
-</button>`
+        ? `<button
+            class="change_image"
+            id="thirdImageBtn-${product.id}">
+            <span
+              class="material-symbols-outlined image_icon"
+              aria-label="Third image"
+              id="fifthIcon-${product.id}">
+              radio_button_unchecked
+            </span>
+            <span
+              class="material-symbols-outlined image_icon hidden"
+              aria-label="Image showing"
+              id="sixthIcon-${product.id}">
+              radio_button_checked
+            </span>
+          </button>`
         : '';
 
     productContainer.innerHTML += `
-    <article class="product_card" id="product_card__${product.id}">
-    <figure class="product_img_container">
-      <img src="${product.images[0].src}" alt="${product.images[0].alt}" 
-      height="${product.images[0].height}" width="${product.images[0].width}"
-      class="product_img"
-      id="firstImage-${product.id}">
-      ${secondImage}
-      ${thirdImage}
-      <div class="button_container">
-      ${imageBtns}
-      ${imageBtnsThird}
-      </div>
-    </figure>
-    <div class="product_info">
-      <div>
-        <h2>${product.name}</h2>
-        <p class="product_description">${product.description}</p>
-        <p>$${Math.round(product.price * priceChange)}</p>
-        <p>Rating: ${product.rating}/5</p>
-      </div>
-      <div>
-        <div class="offer_spacer">
-          ${tenProcentSpec}
+      <article class="product_card" id="product_card__${product.id}">
+        <figure class="product_img_container">
+          <img
+            src="${product.images[0].src}"
+            alt="${product.images[0].alt}"
+            height="${product.images[0].height}"
+            width="${product.images[0].width}"
+            class="product_img"
+            id="firstImage-${product.id}"
+          />
+          ${secondImage} ${thirdImage}
+          <div class="button_container">${imageBtns} ${imageBtnsThird}</div>
+        </figure>
+        <div class="product_info">
+          <div>
+            <h2>${product.name}</h2>
+            <p class="product_description">${product.description}</p>
+            <p>$${Math.round(product.price * priceChange)}</p>
+            <p>Rating: ${product.rating}/5</p>
+          </div>
+          <div>
+            <div class="offer_spacer">${tenProcentSpec}</div>
+            <div class="adjust_amount_container">
+              <button class="decrease_btn product_btn" data-id="${product.id}">
+                -
+              </button>
+              <p class="amount_number" id="amount-${product.id}">
+                ${product.amount}
+              </p>
+              <button class="increase_btn product_btn" data-id="${product.id}">
+                +
+              </button>
+            </div>
+            <button
+              class="total_btn product_btn"
+              id="total-${product.id}"
+              data-id="${product.id}"
+            >
+              Buy $${Math.round(adjustedProductPrice * product.amount)}
+            </button>
+          </div>
         </div>
-        <div class="adjust_amount_container">
-        <button class="decrease_btn product_btn" 
-        data-id="${product.id}">-</button>
-        <p class="amount_number" id="amount-${product.id}">${product.amount}</p>
-        <button class="increase_btn product_btn" 
-        data-id="${product.id}">+</button>
-        </div>
-        <button class="total_btn product_btn" 
-        id="total-${product.id}" data-id="${product.id}">
-        Buy $${Math.round(adjustedProductPrice * product.amount)}
-        </button>
-      </div>
-    </div>
-</article>
+      </article>
     `;
   });
   // Loop för att få alla eventlyssnare

@@ -40,6 +40,12 @@ main {
     justify-content: space-around;
     align-items: stretch;
     row-gap: 20px;
+    &::after {
+      content: "";
+      width: 90%;
+      flex-grow: 0;
+      flex-shrink: 1;
+    }
   }
 
   .recent_offer {
@@ -169,6 +175,9 @@ main {
       }
       p {
         margin-bottom: 10px;
+      }
+      .promo_code_field {
+        height: 1rem;
       }
     }
     .delete_all_cart {

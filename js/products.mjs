@@ -1,33 +1,33 @@
 const products = [
   {
-    name: 'Dear Rose',
+    name: 'Rejuvenating Hand Oil',
     description:
-      'Indulge your senses in the intoxicating allure of our bestselling rose-scented soap, where every lather unveils a symphony of delicate floral notes that transport you to a blooming garden of unparalleled elegance and timeless sophistication.',
-    price: 6,
+      'Elevate your hand care routine with our rejuvenating hand oil, a luxurious elixir infused with nourishing botanicals and revitalizing extracts that effortlessly absorbs, leaving your hands deeply moisturized, silky-smooth, and delicately scented, as it works to renew and restore the natural beauty of your skin.',
+    price: 31,
     images: [
       {
-        src: './assets/img/products/soap_pink_1.webp',
-        alt: 'Two bars of pink soap',
+        src: './assets/img/products/bottle_hand_oil_1.webp',
+        alt: 'A brown glass jars staged with wood, a dried white flower and beige set up',
+        width: 900,
+        height: 600,
+      },
+      {
+        src: './assets/img/products/bottle_hand_oil_2.webp',
+        alt: 'A brown glass jars staged with wood, a dried white flower and beige set up',
         width: 600,
         height: 900,
       },
       {
-        src: './assets/img/products/soap_pink_2.webp',
-        alt: 'Three bars of pink soap',
-        width: 600,
-        height: 848,
-      },
-      {
-        src: './assets/img/products/soap_pink_3.webp',
-        alt: 'Three bars of pink soap',
+        src: './assets/img/products/bottle_fluid_soap_hand_oil_serum.webp',
+        alt: 'Brown glass jars staged with wood and beige set up',
         width: 600,
         height: 900,
       },
     ],
-    rating: 5,
-    category: 'soap',
+    rating: 4.5,
+    category: 'skincare',
     amount: 0,
-    id: 0,
+    id: 10,
   },
   {
     name: 'Latte Love',
@@ -58,6 +58,30 @@ const products = [
     category: 'soap',
     amount: 0,
     id: 1,
+  },
+  {
+    name: 'Dreamy Linen',
+    description:
+      'Indulge in the epitome of luxury and comfort with our expensive linen bedsheets, meticulously woven from the finest threads to caress your skin with a sumptuously smooth texture, elevating your sleep experience to a level of opulence that transcends the ordinary.',
+    price: 89,
+    images: [
+      {
+        src: './assets/img/products/bed_linen_1.webp',
+        alt: 'A brown wooden bed with white linen bed sheets',
+        width: 783,
+        height: 600,
+      },
+      {
+        src: './assets/img/products/bed_linen_2.webp',
+        alt: 'A brown wooden bed with white linen bed sheets',
+        width: 600,
+        height: 901,
+      },
+    ],
+    rating: 4.5,
+    category: 'linen',
+    amount: 0,
+    id: 6,
   },
   {
     name: 'Cloudy Mood',
@@ -162,30 +186,6 @@ const products = [
     id: 5,
   },
   {
-    name: 'Dreamy Linen',
-    description:
-      'Indulge in the epitome of luxury and comfort with our expensive linen bedsheets, meticulously woven from the finest threads to caress your skin with a sumptuously smooth texture, elevating your sleep experience to a level of opulence that transcends the ordinary.',
-    price: 89,
-    images: [
-      {
-        src: './assets/img/products/bed_linen_1.webp',
-        alt: 'A brown wooden bed with white linen bed sheets',
-        width: 783,
-        height: 600,
-      },
-      {
-        src: './assets/img/products/bed_linen_2.webp',
-        alt: 'A brown wooden bed with white linen bed sheets',
-        width: 600,
-        height: 901,
-      },
-    ],
-    rating: 4.5,
-    category: 'linen',
-    amount: 0,
-    id: 6,
-  },
-  {
     name: 'New Faces',
     description:
       'Immerse your skin in the transformative luxury of our face serum, a sublime elixir infused with potent antioxidants and nourishing extracts that glide effortlessly, working in harmony to reveal a radiant complexion, as fine lines fade away, leaving your skin embraced in a velvety softness and youthful luminosity.',
@@ -262,6 +262,96 @@ const products = [
     category: 'soap',
     amount: 0,
     id: 9,
+  },
+  {
+    name: 'Dear Rose',
+    description:
+      'Indulge your senses in the intoxicating allure of our bestselling rose-scented soap, where every lather unveils a symphony of delicate floral notes that transport you to a blooming garden of unparalleled elegance and timeless sophistication.',
+    price: 6,
+    images: [
+      {
+        src: './assets/img/products/soap_pink_1.webp',
+        alt: 'Two bars of pink soap',
+        width: 600,
+        height: 900,
+      },
+      {
+        src: './assets/img/products/soap_pink_2.webp',
+        alt: 'Three bars of pink soap',
+        width: 600,
+        height: 848,
+      },
+      {
+        src: './assets/img/products/soap_pink_3.webp',
+        alt: 'Three bars of pink soap',
+        width: 600,
+        height: 900,
+      },
+    ],
+    rating: 5,
+    category: 'soap',
+    amount: 0,
+    id: 0,
+  },
+  {
+    name: 'Serene Scalp Elixir',
+    description:
+      'Unwind with Serene Scalp Elixir, a calming blend of botanicals and soothing oils that effortlessly soothe your scalp, leaving your hair feeling refreshed and your mind at ease.',
+    price: 42,
+    images: [
+      {
+        src: './assets/img/products/bottle_scalp_1.webp',
+        alt: 'A brown glass pipette bottle with a brown label on it',
+        width: 899,
+        height: 600,
+      },
+      {
+        src: './assets/img/products/bottle_shampoo_scalp_2.webp',
+        alt: 'A brown glass pipette bottle in front of a brown shampoo bottle with a brown labels on both',
+        width: 899,
+        height: 600,
+      },
+      {
+        src: './assets/img/products/bottle_shampoo_scalp_3.webp',
+        alt: 'A brown glass pipette bottle next to a brown shampoo bottle with a brown labels on both',
+        width: 899,
+        height: 600,
+      },
+    ],
+    rating: 5,
+    category: 'haircare',
+    amount: 0,
+    id: 11,
+  },
+  {
+    name: 'Tranquil Tresses Shampoo',
+    description:
+      'Elevate your shower experience with Tranquil Tresses Shampoo, a gentle formula infused with calming herbs for a serene cleansing ritual that leaves your hair nourished and your senses harmonized.',
+    price: 45,
+    images: [
+      {
+        src: './assets/img/products/bottle_shampoo_1.webp',
+        alt: 'A brown shampoo bottle with a brown label on it',
+        width: 900,
+        height: 600,
+      },
+      {
+        src: './assets/img/products/bottle_shampoo_scalp_2.webp',
+        alt: 'A brown glass pipette bottle in front of a brown shampoo bottle with a brown labels on both',
+        width: 899,
+        height: 600,
+      },
+      {
+        src: './assets/img/products/bottle_shampoo_scalp_3.webp',
+        alt: 'A brown glass pipette bottle next to a brown shampoo bottle with a brown labels on both',
+        width: 899,
+        height: 600,
+      },
+    ],
+    rating: 4,
+    category: 'haircare',
+    amount: 0,
+    id: 12,
   },
 ];
 
