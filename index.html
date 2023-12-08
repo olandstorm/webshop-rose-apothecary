@@ -21,16 +21,16 @@
     <meta property="og:description"
         content="It's a general store, but it's also a very specific store. It's also not just a store, it's like a place where people can come and get coffee or drinks, but it's not a coffee shop, nor is it a bar. Yeah, it's an environment. And yes, we will be selling things, but it's more like a branded immersive experience.">
     <meta property="og:image"
-        content="https://images.unsplash.com/photo-1607006411601-775c8cc632dc?q=80&w=2187&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D">
-    <meta property="og:image:width" content="3456">
-    <meta property="og:image:height" content="5184">
+        content="https://github.com/Medieinstitutet/fed23d-js-grundkurs-webshop-olandstorm/blob/main/assets/img/products/bed_linen_1.webp">
+    <meta property="og:image:width" content="783">
+    <meta property="og:image:height" content="600">
     <meta name="theme-color" content="#f8f8f8">
     <script type="application/ld+json">
     {
       "@context": "https://schema.org/",
       "@type": "Store",
       "url": "https://medieinstitutet.github.io/fed23d-js-grundkurs-webshop-olandstorm/",
-      "image": "https://images.unsplash.com/photo-1607006411601-775c8cc632dc?q=80&w=2187&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "image": "https://github.com/Medieinstitutet/fed23d-js-grundkurs-webshop-olandstorm/blob/main/assets/img/products/bed_linen_1.webp",
       "name": "Rose Apothecary",
       "telephone": "+46 8 123 45 67",
       "address": {
@@ -172,7 +172,7 @@
                             <span class="price_range_text">$0-10</span>
                         </label>
                         <label>
-                            <input type="radio" name="priceRange" id="elevenTo30" value="tentothirty">
+                            <input type="radio" name="priceRange" id="elevenTo30" value="eleventothirty">
                             <span class="price_range_text">$11-30</span>
                         </label>
                         <label>
@@ -189,6 +189,9 @@
             <section class="product_container" id="productContainer">
                 <!-- Här kommer alla produkter upp från JS -->
             </section>
+            <div class="added_popup hidden" id="addPopUp">
+                <p>Item(s) added to cart</p>
+            </div>
         </section>
         <section class="cart_page hidden" id="cartPage">
             <div class="back_btn_container">
@@ -222,112 +225,116 @@
                     </div>
                 </section>
             </section>
-            <form class="order_form hidden" id="orderForm">
-                <div class="general_info">
-                    <h2>Customer information</h2>
-                    <div class="general_form form_container">
-                        <label class="half_label">
-                            <span>First name</span>
-                            <input type="text" id="fName" class="long_input" placeholder="First Name"
-                                autocomplete="given-name">
-                            <div id="fName-errorContainer" class="error_container"></div>
-                        </label>
-                        <label class="half_label">
-                            <span>Second name</span>
-                            <input type="text" id="lName" class="long_input" placeholder="Second Name"
-                                autocomplete="family-name">
-                            <div id="lName-errorContainer" class="error_container"></div>
-                        </label>
+            <section class="form_section hidden" id="formSection">
+                <h2>Customer information</h2>
+                <form class="order_form" id="orderForm">
+                    <div class="general_info">
+                        <div class="general_form form_container">
+                            <label class="half_label">
+                                <span>First name</span>
+                                <input type="text" id="fName" class="long_input" placeholder="First Name"
+                                    autocomplete="given-name">
+                                <span id="fName-errorContainer" class="error_container"></span>
+                            </label>
+                            <label class="half_label">
+                                <span>Second name</span>
+                                <input type="text" id="lName" class="long_input" placeholder="Second Name"
+                                    autocomplete="family-name">
+                                <span id="lName-errorContainer" class="error_container"></span>
+                            </label>
+                            <label>
+                                <span>Street</span>
+                                <input type="text" id="streetName" class="long_input" placeholder="Street"
+                                    autocomplete="address-line1">
+                                <span id="streetName-errorContainer" class="error_container"></span>
+                            </label>
+                            <label class="half_label">
+                                <span>Postal code</span>
+                                <input type="text" id="postalCode" class="fit_content_input" placeholder="111 22"
+                                    size="6" maxlength="6" autocomplete="postal-code">
+                                <span id="postalCode-errorContainer" class="error_container"></span>
+                            </label>
+                            <label class="half_label">
+                                <span>Postal area</span>
+                                <input type="text" id="postalArea" class="long_input" placeholder="Postal Area"
+                                    autocomplete="address-level1">
+                                <span id="postalArea-errorContainer" class="error_container"></span>
+                            </label>
+                            <label>
+                                <span>Door code, if needed</span>
+                                <input type="text" size="6" class="fit_content_input">
+                                <span class="error_container"></span>
+                            </label>
+                            <label>
+                                <span>Phone number</span>
+                                <input type="tel" id="phoneNumber" class="long_input" placeholder="Phone Number"
+                                    autocomplete="tel">
+                                <span id="phoneNumber-errorContainer" class="error_container"></span>
+                            </label>
+                            <label>
+                                <span>Email</span>
+                                <input type="email" id="emailForm" class="long_input" placeholder="Your Email"
+                                    autocomplete="email">
+                                <span id="emailForm-errorContainer" class="error_container"></span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="payment_option_container form_container">
                         <label>
-                            <span>Street</span>
-                            <input type="text" id="streetName" class="long_input" placeholder="Street"
-                                autocomplete="street-address">
-                            <div id="streetName-errorContainer" class="error_container"></div>
+                            <span class="payment_option">Card</span>
+                            <input type="radio" value="card" id="cardRadioButton" name="payment_method" checked>
                         </label>
-                        <label class="half_label">
-                            <span>Postal code</span>
-                            <input type="text" id="postalCode" class="fit_content_input" placeholder="111 22" size="6"
-                                maxlength="6" autocomplete="postal-code">
-                            <div id="postalCode-errorContainer" class="error_container"></div>
-                        </label>
-                        <label class="half_label">
-                            <span>Postal area</span>
-                            <input type="text" id="postalArea" class="long_input" placeholder="Postal Area"
-                                autocomplete="address-level1">
-                            <div id="postalArea-errorContainer" class="error_container"></div>
-                        </label>
-                        <label>
-                            <span>Door code, if needed</span>
-                            <input type="text" size="6" class="fit_content_input">
-                            <div class="error_container"></div>
-                        </label>
-                        <label>
-                            <span>Phone number</span>
-                            <input type="tel" id="phoneNumber" class="long_input" placeholder="Phone Number"
-                                autocomplete="tel">
-                            <div id="phoneNumber-errorContainer" class="error_container"></div>
-                        </label>
-                        <label>
-                            <span>Email</span>
-                            <input type="email" id="emailForm" class="long_input" placeholder="Your Email"
-                                autocomplete="email">
-                            <div id="emailForm-errorContainer" class="error_container"></div>
+                        <label id="invoiceRadio">
+                            <span class="payment_option">Invoice</span>
+                            <input type="radio" value="invoice" id="invoiceRadioButton" name="payment_method">
                         </label>
                     </div>
-                </div>
-                <div class="payment_option_container form_container">
-                    <label>
-                        <span class="payment_option">Card</span>
-                        <input type="radio" value="card" id="cardRadioButton" name="payment_method" checked>
-                    </label>
-                    <label id="invoiceRadio">
-                        <span class="payment_option">Invoice</span>
-                        <input type="radio" value="invoice" id="invoiceRadioButton" name="payment_method">
-                    </label>
-                </div>
-                <div id="cardForm" class="payment_group form_container">
-                    <h2>Card</h2>
-                    <label class="payment_label full_width_field">
-                        <span>Card number</span>
-                        <input type="text" class="long_input" autocomplete="cc-number">
-                    </label>
-                    <label class="payment_label self_width_field">
-                        <span>Expiration date</span>
-                        <input type="text" size="6" maxlength="5" placeholder="MM/YY" autocomplete="cc-exp">
-                    </label>
-                    <label class="payment_label half_width_field">
-                        <span>CVC</span>
-                        <input type="text" size="3" maxlength="3">
-                    </label>
-                </div>
-                <div id="invoiceForm" class="payment_group hidden form_container">
-                    <h2>Invoice</h2>
-                    <label class="payment_label">
-                        <span>Social security number</span>
-                        <input type="text" id="socialNr" placeholder="YYYYMMDD-XXXX" maxlength="13" size="15">
-                        <div id="socialNr-errorContainer" class="error_container social_nr_error"></div>
-                    </label>
-                </div>
-                <div class="confirm_container form_container">
-                    <label>
-                        <input type="checkbox" checked>
-                        <span>Would you like our newsletter and recieve our amazing offers before others?</span>
-                    </label>
-                    <label>
-                        <input type="checkbox" id="policyAgreeCheckbox">
-                        <span>Do you agree to our privacy policy?</span>
-                    </label>
-                    <div id="policyAgreeCheckbox-errorContainer" class="error_container"></div>
-                    <div class="confirm_btn_container">
-                        <button id="checkoutBtn" class="send_order_btn primary_btn disabled_btn"
-                            type="submit">Checkout</button>
-                        <button id="clearBtn" class="clear_form_cart_btn primary_btn" type="reset">Delete order</button>
+                    <div id="cardForm" class="payment_group form_container">
+                        <h2>Card</h2>
+                        <label class="payment_label full_width_field">
+                            <span>Card number</span>
+                            <input type="text" class="long_input" autocomplete="cc-number">
+                        </label>
+                        <label class="payment_label self_width_field">
+                            <span>Expiration date</span>
+                            <input type="text" size="6" maxlength="5" placeholder="MM/YY" autocomplete="cc-exp">
+                        </label>
+                        <label class="payment_label half_width_field">
+                            <span>CVC</span>
+                            <input type="text" size="3" maxlength="3">
+                        </label>
                     </div>
+                    <div id="invoiceForm" class="payment_group hidden form_container">
+                        <h2>Invoice</h2>
+                        <label class="payment_label">
+                            <span>Social security number</span>
+                            <input type="text" id="socialNr" placeholder="YYYYMMDD-XXXX" maxlength="13" size="15">
+                            <span id="socialNr-errorContainer" class="error_container social_nr_error"></span>
+                        </label>
+                    </div>
+                    <div class="confirm_container form_container">
+                        <label>
+                            <input type="checkbox" checked>
+                            <span>Would you like our newsletter and recieve our amazing offers before others?</span>
+                        </label>
+                        <label>
+                            <input type="checkbox" id="policyAgreeCheckbox">
+                            <span>Do you agree to our privacy policy?</span>
+                        </label>
+                        <div id="policyAgreeCheckbox-errorContainer" class="error_container"></div>
+                        <div class="confirm_btn_container">
+                            <button id="checkoutBtn" class="send_order_btn primary_btn disabled_btn"
+                                type="submit">Checkout</button>
+                            <button id="clearBtn" class="clear_form_cart_btn primary_btn" type="reset">Delete
+                                order</button>
+                        </div>
+                    </div>
+                </form>
+                <div class="error_popup hidden" id="wrongInputPopUp">
+                    <p>Something in the form is wrong, please check again and make sure all the information is correct.
+                    </p>
                 </div>
-            </form>
-            <div class="error_popup hidden" id="wrongInputPopUp">
-                <p>Something in the form is wrong, please check again and make sure all the information is correct.</p>
-            </div>
+            </section>
             <div class="done_container hidden" id="orderDone">
                 <div class="done_field">
                     <h2>Your order is sent!</h2>
@@ -354,19 +361,21 @@
         </div>
     </main>
     <footer>
-        <div class="flower_img"></div>
-        <section>
-            <h4>Rose Apothecary</h4>
-            <address>
-                <span>Main road 4,</span>
-                <span>Schitt's Creek,</span>
-                <span>Elmdale County, Ontario,</span>
-                <span>Canada</span>
-                <a href="mailto:info@roseapothecary.com">info@roseapothecary.com</a>
-            </address>
-            <p class="copy_text">&copy; 2023, Oskar Landström, All rights reserved</p>
-        </section>
-        <div class="flower_img"></div>
+        <div class="footer_spacer">
+            <div class="flower_img"></div>
+            <section>
+                <h4>Rose Apothecary</h4>
+                <address>
+                    <span>Main road 4,</span>
+                    <span>Schitt's Creek,</span>
+                    <span>Elmdale County, Ontario,</span>
+                    <span>Canada</span>
+                    <a href="mailto:info@roseapothecary.com">info@roseapothecary.com</a>
+                </address>
+                <p class="copy_text">&copy; 2023, Oskar Landström, All rights reserved</p>
+            </section>
+            <div class="flower_img"></div>
+        </div>
     </footer>
 
 

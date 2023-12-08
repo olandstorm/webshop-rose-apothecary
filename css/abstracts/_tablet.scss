@@ -17,6 +17,10 @@ header {
   max-height: 110px;
   padding: 2vw 0 3vw 0;
 
+  .header_logo {
+    max-height: 50px;
+    width: auto;
+  }
   .cart_number {
     top: 25px;
     right: 31px;

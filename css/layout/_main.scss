@@ -296,6 +296,7 @@ main {
         display: flex;
         justify-content: flex-end;
         flex-wrap: wrap;
+        margin-top: 10px;
 
         p {
           width: 50%;
@@ -332,9 +333,10 @@ main {
     }
   }
 
-  .order_form {
+  .form_section {
+    margin: 20px auto 90px auto;
     width: 90vw;
-    margin: auto;
+    padding: 30px 5vw;
     @include product_card_color($light-theme: true);
     body.dark_mode & {
       @include product_card_color($light-theme: false);

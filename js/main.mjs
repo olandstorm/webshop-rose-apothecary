@@ -23,7 +23,7 @@
  *      [X] En knapp för filtrering och sortering öppnar fält med alternativ
  *      [X] Man kan sortera på namn, pris, kategori och rating åt båda håll
  *      [X] Det finns knappar för alla dessa alternativ
- *      [] ! OPTIONAL ! Olika radiobuttons kan filtrera på olika spann av pris
+ *      [X] ! OPTIONAL ! Olika radiobuttons kan filtrera på olika spann av pris
  *
  *      // varukorgen
  *      [X] Uppdateras /VISUELLT/ när man klickar på beställningsknapparna
@@ -94,6 +94,7 @@ const codeBtn = document.querySelector('#codeBtn');
 const checkoutTotal = document.querySelector('#checkoutTotal');
 
 const orderForm = document.querySelector('#orderForm');
+const formSection = document.querySelector('#formSection');
 const wrongInputPopUp = document.querySelector('#wrongInputPopUp');
 
 const sureToDelete = document.querySelector('#sureToDelete');
@@ -119,9 +120,12 @@ const darkMode = document.querySelector('#darkModeIcon');
 const phraseImgBlack = document.querySelector('#phraseImageBlack');
 const phraseImgWhite = document.querySelector('#phraseImageWhite');
 
+const addPopUp = document.querySelector('#addPopUp');
+
 // Variabler för filter
 const filterBtn = document.querySelector('#filterBtn');
 const filterField = document.querySelector('#sortFilterField');
+let currentFilter = 'all';
 
 const sortNameAZ = document.querySelector('#sortNameAZ');
 const sortNameZA = document.querySelector('#sortNameZA');
@@ -190,7 +194,7 @@ let cartArray = [];
 
 // Tom varukorg
 function cartIsEmpty() {
-  orderForm.classList.add('hidden');
+  formSection.classList.add('hidden');
   cartProducts.innerHTML = `
   <div class="empty_cart">
   <p>Your cart is empty.</p>
@@ -299,11 +303,12 @@ themeToggle.addEventListener('click', toggleTheme);
 
 // Minska antal i kundvagn
 function decreaseCartAmount(e) {
-  const index = e.currentTarget.dataset.id;
-  if (cartArray[index].amount <= 1) {
-    cartArray[index].amount = 1;
+  const index = Number(e.currentTarget.dataset.id);
+  const product = cartArray.find((p) => p.id === index);
+  if (product.amount <= 1) {
+    product.amount = 1;
   } else {
-    cartArray[index].amount -= 1;
+    product.amount -= 1;
   }
   // eslint-disable-next-line
   printCart();
@@ -311,19 +316,19 @@ function decreaseCartAmount(e) {
 
 // Öka antal i kundvagn
 function increaseCartAmount(e) {
-  const index = e.currentTarget.dataset.id;
-  cartArray[index].amount += 1;
+  const index = Number(e.currentTarget.dataset.id);
+  const product = cartArray.find((p) => p.id === index);
+  product.amount += 1;
   // eslint-disable-next-line
   printCart();
 }
 
 // Ta bort enskild produkt i kundvagnen
 function deleteSingleProduct(e) {
-  const productId = Number(e.currentTarget.id.replace('delete-', ''));
-  console.log(productId);
-  const index = cartArray.findIndex((product) => product.id === productId);
-  if (index > -1) {
-    cartArray.splice(index, 1);
+  const index = Number(e.currentTarget.id.replace('delete-', ''));
+  const product = cartArray.findIndex((p) => p.id === index);
+  if (product > -1) {
+    cartArray.splice(product, 1);
     // eslint-disable-next-line
     printCart();
   }
@@ -408,9 +413,11 @@ function printCart() {
     </div>
     <div class="cart_amount_container">
         <div class="adjust_btn_container">
-            <button class="decrease_cart_btn cart_adjust_btn product_btn" data-id="${index}">-</button><span
+            <button class="decrease_cart_btn cart_adjust_btn product_btn" 
+            data-id="${product.id}">-</button><span
                 class="product_amount">${product.amount}</span><button
-                class="increase_cart_btn cart_adjust_btn product_btn" data-id="${index}">+</button>
+                class="increase_cart_btn cart_adjust_btn product_btn" 
+                data-id="${product.id}">+</button>
         </div>
     </div>
     <div class="cart_total_container">
@@ -564,38 +571,72 @@ clearCart.addEventListener('click', triggerPopUp);
 
 // Knapparna för att öka och minska antalet
 function decreaseAmount(e) {
-  const index = e.currentTarget.dataset.id;
-  if (products[index].amount <= 0) {
-    products[index].amount = 0;
+  const index = Number(e.currentTarget.dataset.id);
+  const product = products.find((p) => p.id === index);
+  if (product.amount <= 0) {
+    product.amount = 0;
   } else {
-    products[index].amount -= 1;
+    product.amount -= 1;
   }
+  console.log(index);
   // eslint-disable-next-line
-  printProducts();
+  printProducts(currentFilter);
 }
 
 function increaseAmount(e) {
-  const index = e.currentTarget.dataset.id;
-  products[index].amount += 1;
+  const index = Number(e.currentTarget.dataset.id);
+  const product = products.find((p) => p.id === index);
+  product.amount += 1;
+  console.log(index);
   // eslint-disable-next-line
-  printProducts();
+  printProducts(currentFilter);
+}
+
+// Animering för att lägga till vara i varukorgen
+function hideAddPopUp() {
+  addPopUp.classList.add('hidden');
+}
+function showAddPopUp() {
+  addPopUp.classList.remove('hidden');
+}
+// eslint-disable-next-line
+const addAnimation = gsap.timeline();
+
+function addProductPopUp() {
+  addAnimation
+    .call(showAddPopUp)
+    .from(addPopUp, { opacity: 0 })
+    .to(addPopUp, { opacity: 1, duration: 0.7 }, '<')
+    .from(addPopUp, { y: 140, duration: 0.6, ease: 'power2.out' }, '<')
+    .to(addPopUp, { opacity: 0, duration: 0.5 }, '>1')
+    .call(hideAddPopUp);
 }
 
 // Funktion för att lägga till produkter i kundvagnen
 function addToCart(e) {
-  const index = e.currentTarget.id.split('-')[1];
-  console.log(e.currentTarget.id);
-  orderForm.classList.remove('hidden');
+  const index = Number(e.currentTarget.dataset.id);
+  console.log(e.currentTarget.dataset.id);
+  formSection.classList.remove('hidden');
 
   // Välja ut rätt produkt
-  const productToAdd = {
-    ...products[index],
+  const productToAdd = products.find((p) => p.id === index);
+  console.log(productToAdd);
+
+  const cartProduct = {
+    id: productToAdd.id,
+    name: productToAdd.name,
+    description: productToAdd.description,
+    price: productToAdd.price,
+    images: [...productToAdd.images],
+    rating: productToAdd.rating,
+    category: productToAdd.category,
+    amount: productToAdd.amount,
   };
 
   // Kolla om produkten finns i varukorgen
   const existingProduct = cartArray.find(
     // eslint-disable-next-line
-    (product) => product.id === productToAdd.id
+    (product) => product.id === cartProduct.id
   );
 
   if (productToAdd.amount > 10) {
@@ -606,43 +647,46 @@ function addToCart(e) {
   }
   // Om den finns adderas amounten istället för att lägga till ny produkt
   if (existingProduct) {
-    existingProduct.amount += productToAdd.amount;
+    existingProduct.amount += cartProduct.amount;
     // Annars läggs den till som ny produkt
   } else {
-    cartArray.push(productToAdd);
+    cartArray.push(JSON.parse(JSON.stringify(cartProduct)));
   }
 
+  if (productToAdd.amount > 0) {
+    // eslint-disable-next-line
+    gsap.to('#amountCounter', {
+      scale: 1.3,
+      yoyo: true,
+      repeat: 1,
+      ease: 'power3.out',
+      duration: 0.4,
+    });
+
+    // Starta timer
+    if (!timerRunning) {
+      startTimer(1000 * 60 * 15);
+    }
+
+    addProductPopUp();
+  }
+
+  printCart();
   // Nollställa antalet i product-arrayen
-  products[index].amount = 0;
+  productToAdd.amount = 0;
 
   // Nollställa antalet i HTML-strukturen
-  const amountNumber = document.getElementById(`amount-${index}`);
   const totalBtn = document.getElementById(`total-${index}`);
+  const amountNumber = document.getElementById(`amount-${index}`);
 
-  // Om summan är mer än noll ändras den till noll
   if (amountNumber) {
-    amountNumber.textContent = products[index].amount;
+    amountNumber.textContent = productToAdd.amount;
   }
 
   if (totalBtn) {
     totalBtn.textContent = 'Buy $0';
   }
   console.log(cartArray);
-  // eslint-disable-next-line
-  gsap.to('#amountCounter', {
-    scale: 1.3,
-    yoyo: true,
-    repeat: 1,
-    ease: 'power3.out',
-    duration: 0.4,
-  });
-
-  // Starta timer
-  if (!timerRunning) {
-    startTimer(1000 * 60 * 15);
-  }
-
-  printCart();
 }
 
 // Byta bilder på produkterna
@@ -765,12 +809,11 @@ function addEventListeners(product) {
 }
 
 // En funktion för att printa produkterna
-function printProducts() {
+function printProducts(filter) {
   let priceChange = 1;
   const today = new Date();
   const dayOfWeek = today.getDay();
   const currentHour = today.getHours();
-
   productContainer.innerHTML = '';
 
   if (
@@ -782,11 +825,31 @@ function printProducts() {
     priceChange = 1.15;
   }
 
-  products.forEach((product, index) => {
+  let filteredProducts;
+  switch (filter) {
+    case 'ten':
+      filteredProducts = products.filter((product) => product.price <= 10);
+      break;
+    case 'eleventothirty':
+      filteredProducts = products.filter(
+        // eslint-disable-next-line
+        (product) => product.price > 10 && product.price <= 30
+      );
+      break;
+    case 'abovethirty':
+      filteredProducts = products.filter((product) => product.price > 30);
+      break;
+    case 'all':
+    default:
+      filteredProducts = products;
+      break;
+  }
+
+  filteredProducts.forEach((product) => {
     let productPrice = product.price;
     let tenProcentSpec = '';
     if (product.amount >= 10) {
-      tenProcentSpec = `<p class="ten_off_text offer_text" id="offer-${index}">10 gives 10%!</p>`;
+      tenProcentSpec = `<p class="ten_off_text offer_text" id="offer-${product.id}">10 gives 10%!</p>`;
       productPrice *= 0.9;
     }
     const adjustedProductPrice = productPrice * priceChange;
@@ -851,7 +914,7 @@ radio_button_checked
         : '';
 
     productContainer.innerHTML += `
-    <article class="product_card" id="product_card__${[index]}">
+    <article class="product_card" id="product_card__${product.id}">
     <figure class="product_img_container">
       <img src="${product.images[0].src}" alt="${product.images[0].alt}" 
       height="${product.images[0].height}" width="${product.images[0].width}"
@@ -876,11 +939,14 @@ radio_button_checked
           ${tenProcentSpec}
         </div>
         <div class="adjust_amount_container">
-        <button class="decrease_btn product_btn" data-id="${index}">-</button>
-        <p class="amount_number" id="amount-${index}">${product.amount}</p>
-        <button class="increase_btn product_btn" data-id="${index}">+</button>
+        <button class="decrease_btn product_btn" 
+        data-id="${product.id}">-</button>
+        <p class="amount_number" id="amount-${product.id}">${product.amount}</p>
+        <button class="increase_btn product_btn" 
+        data-id="${product.id}">+</button>
         </div>
-        <button class="total_btn product_btn" id="total-${index}">
+        <button class="total_btn product_btn" 
+        id="total-${product.id}" data-id="${product.id}">
         Buy $${Math.round(adjustedProductPrice * product.amount)}
         </button>
       </div>
@@ -914,7 +980,7 @@ radio_button_checked
   });
 }
 
-printProducts();
+printProducts(currentFilter);
 
 // Filter och sortering
 function toggleFilter() {
@@ -941,7 +1007,7 @@ function sortProducts(property) {
     }
     return 0;
   });
-  printProducts();
+  printProducts(currentFilter);
 }
 
 // Sortera baklänges
@@ -955,7 +1021,7 @@ function sortProductsReversed(property) {
     }
     return 0;
   });
-  printProducts();
+  printProducts(currentFilter);
 }
 // Funktioner för att få in rätt property
 function sortProductsByName() {
@@ -991,6 +1057,17 @@ sortCategoryAZ.addEventListener('click', sortProductsByCategory);
 sortCategoryZA.addEventListener('click', sortProductsByCategoryReversed);
 sortRating19.addEventListener('click', sortProductsByRating);
 sortRating91.addEventListener('click', sortProductsByRatingReversed);
+
+// Filtrering
+function filterPrice(e) {
+  const selectedRange = e.target.value;
+  currentFilter = selectedRange;
+  printProducts(currentFilter);
+}
+
+document.querySelectorAll('input[name="priceRange"]').forEach((radioButton) => {
+  radioButton.addEventListener('change', filterPrice);
+});
 
 // Öppna kundkorgen
 
@@ -1079,7 +1156,7 @@ function displayInputError(inputField, isValid) {
   if (!isValid) {
     if (!messageElement) {
       const errorMessage = errorMessageInput[inputField];
-      const newErrorElement = document.createElement('p');
+      const newErrorElement = document.createElement('span');
       inputErrorField.classList.add('input_error_field');
       newErrorElement.classList.add('input_error_message', 'hidden');
       newErrorElement.id = `${inputField}-error`;
@@ -1166,10 +1243,10 @@ function activateCheckoutBtn() {
 }
 
 // Funktion och animation för popup om att något är fel i formuläret
-function hidePopUp() {
+function hideErrorPopUp() {
   wrongInputPopUp.classList.add('hidden');
 }
-function showPopUp() {
+function showErrorPopUp() {
   wrongInputPopUp.classList.remove('hidden');
 }
 // eslint-disable-next-line
@@ -1177,12 +1254,12 @@ const wrongInputAnimation = gsap.timeline();
 
 function wrongInput() {
   wrongInputAnimation
-    .call(showPopUp)
+    .call(showErrorPopUp)
     .from(wrongInputPopUp, { opacity: 0 })
     .to(wrongInputPopUp, { opacity: 1, duration: 0.7 }, '<')
     .from(wrongInputPopUp, { y: 140, duration: 0.6, ease: 'power2.out' }, '<')
     .to(wrongInputPopUp, { opacity: 0, duration: 0.5 }, '>3')
-    .call(hidePopUp);
+    .call(hideErrorPopUp);
 }
 
 // Funktion för skicka-knappen

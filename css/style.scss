@@ -14,6 +14,7 @@
 @import "components/slowpopup";
 @import "components/donepopup";
 @import "components/errorpopup";
+@import "components/addedpopup";
 
 @media (hover: hover) {
   @import "abstracts/hover";
@@ -29,8 +30,4 @@
 
 @media screen and (min-width: 768px) {
   @import "abstracts/tablet";
-}
-
-@media screen and (min-width: 1024px) {
-  @import "abstracts/desktop";
 }
