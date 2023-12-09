@@ -68,65 +68,41 @@
  *
  */
 
-// Importera produkterna från products.mjs
+/**
+ * --------------------------------------------------
+ *            Importing product list
+ * --------------------------------------------------
+ */
 // eslint-disable-next-line
 import products from './products.mjs';
 
-// Variabler för menyn
+/**
+ * --------------------------------------------------
+ *              //// Variables ////
+ * --------------------------------------------------
+ */
+
+// Body tag
+const bodyTag = document.body;
+
+// For the navigation menu
 const menuBtn = document.querySelector('#toggleNav');
 const nav = document.querySelector('#fullNav');
 const menuLinks = document.querySelectorAll('.menuLink');
 
-// Variabel för body
-const bodyTag = document.body;
-
-// Variabler för kundvagnen
-const shoppingCart = document.querySelector('#shoppingCart');
-const cartAmount = document.querySelector('#amountCounter');
-const productPage = document.querySelector('#productPage');
-const cartPage = document.querySelector('#cartPage');
-const backToProducts = document.querySelector('#backToProducts');
-const productContainer = document.querySelector('#productContainer');
-const cartProducts = document.querySelector('#cartProducts');
-const clearCart = document.querySelector('#clearCartBtn');
-const promoContainer = document.querySelector('#promoCodeContainer');
-const codeBtn = document.querySelector('#codeBtn');
-const checkoutTotal = document.querySelector('#checkoutTotal');
-
-const codeInput = document.querySelector('#codeInput');
-const addCode = document.querySelector('#addCode');
-const codeTextField = document.querySelector('#codeTextField');
-
-const orderForm = document.querySelector('#orderForm');
-const formSection = document.querySelector('#formSection');
-const wrongInputPopUp = document.querySelector('#wrongInputPopUp');
-
-const sureToDelete = document.querySelector('#sureToDelete');
-const backToCart = document.querySelector('#backToCart');
-const deleteContainer = document.querySelector('#popUpDelete');
-
-const tenMoreMin = document.querySelector('#tenMoreMin');
-const clearAllBtn = document.querySelector('#clearAllBtn');
-const slowPopUP = document.querySelector('#slowPopUp');
-
-const invoiceRadio = document.querySelector('#invoiceRadio');
-
-// Timer för långsam användare
-let timerRunning = false;
-let timerId;
-
-// Variabler för att skifta färgtema
+// For shifting color scheme
 const themeToggle = document.querySelector('#toggleTheme');
 const lightMode = document.querySelector('#lightModeIcon');
 const darkMode = document.querySelector('#darkModeIcon');
 
-// Variabler för att byta bild i beskrivningen
+// For the product page
+const productPage = document.querySelector('#productPage');
+
+// For shifting image in introduction field
 const phraseImgBlack = document.querySelector('#phraseImageBlack');
 const phraseImgWhite = document.querySelector('#phraseImageWhite');
 
-const addPopUp = document.querySelector('#addPopUp');
-
-// Variabler för filter
+// Filter choices
 const filterBtn = document.querySelector('#filterBtn');
 const filterField = document.querySelector('#sortFilterField');
 let currentFilter = 'all';
@@ -140,8 +116,43 @@ const sortCategoryZA = document.querySelector('#sortCategoryZA');
 const sortRating19 = document.querySelector('#sortRating19');
 const sortRating91 = document.querySelector('#sortRating91');
 
-// Variabler för formuläret
+// For adding product to cart-popup
+const addPopUp = document.querySelector('#addPopUp');
+
+// For the cart page
+const shoppingCart = document.querySelector('#shoppingCart');
+const cartAmount = document.querySelector('#amountCounter');
+const cartPage = document.querySelector('#cartPage');
+const backToProducts = document.querySelector('#backToProducts');
+const productContainer = document.querySelector('#productContainer');
+const cartProducts = document.querySelector('#cartProducts');
+const clearCart = document.querySelector('#clearCartBtn');
+const checkoutTotal = document.querySelector('#checkoutTotal');
+
+// Array for the cart
+let cartArray = [];
+
+// For the promo code field
+const codeBtn = document.querySelector('#codeBtn');
+const promoContainer = document.querySelector('#promoCodeContainer');
+const codeInput = document.querySelector('#codeInput');
+const addCode = document.querySelector('#addCode');
+const codeTextField = document.querySelector('#codeTextField');
+
+// For the promo code price adjustment
+let deal = 1;
+
+// For the form
+const orderForm = document.querySelector('#orderForm');
+const formSection = document.querySelector('#formSection');
+const wrongInputPopUp = document.querySelector('#wrongInputPopUp');
 const clearCartAndField = document.querySelector('#clearBtn');
+const checkoutBtn = document.querySelector('#checkoutBtn');
+
+// For payment choices
+const cardRadioButton = document.querySelector('#cardRadioButton');
+const invoiceRadio = document.querySelector('#invoiceRadio');
+const invoiceRadioButton = document.querySelector('#invoiceRadioButton');
 const cardInvoiceRadios = Array.from(
   // eslint-disable-next-line
   document.querySelectorAll('input[name="payment_method"]')
@@ -149,7 +160,21 @@ const cardInvoiceRadios = Array.from(
 const cardOption = document.querySelector('#cardForm');
 const invoiceOption = document.querySelector('#invoiceForm');
 
-// Variabler för RegEx och formulär
+// For delete all-popup
+const sureToDelete = document.querySelector('#sureToDelete');
+const backToCart = document.querySelector('#backToCart');
+const deleteContainer = document.querySelector('#popUpDelete');
+
+// For time out-popup
+const tenMoreMin = document.querySelector('#tenMoreMin');
+const clearAllBtn = document.querySelector('#clearAllBtn');
+const slowPopUP = document.querySelector('#slowPopUp');
+
+// Timer for time limit of products in cart
+let timerRunning = false;
+let timerId;
+
+// For RegEx and inputs
 const lName = document.querySelector('#lName');
 const fName = document.querySelector('#fName');
 const streetName = document.querySelector('#streetName');
@@ -158,10 +183,7 @@ const postalArea = document.querySelector('#postalArea');
 const phoneNumber = document.querySelector('#phoneNumber');
 const emailForm = document.querySelector('#emailForm');
 const socialNr = document.querySelector('#socialNr');
-const checkoutBtn = document.querySelector('#checkoutBtn');
 const policyAgreeCheckbox = document.querySelector('#policyAgreeCheckbox');
-const cardRadioButton = document.querySelector('#cardRadioButton');
-const invoiceRadioButton = document.querySelector('#invoiceRadioButton');
 const cardNumberInput = document.querySelector('#cardNumberInput');
 const cardExpireInput = document.querySelector('#cardExpireInput');
 const cardCVCInput = document.querySelector('#cardCVCInput');
@@ -177,7 +199,7 @@ const emailRegEx = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/;
 const socialRegEx =
   /^(\d{10}|\d{12}|\d{6}-\d{4}|\d{8}-\d{4}|\d{8} \d{4}|\d{6} \d{4})/;
 
-// Objekt för olika error-meddelanden
+// Error messages
 const errorMessageInput = {
   fName: 'Please check this field again.',
   lName: 'Please check this field again.',
@@ -190,28 +212,24 @@ const errorMessageInput = {
   policyAgreeCheckbox: 'You need to agree to this',
 };
 
-// Variabler för bekräftelseformulär
+// For confirmation-popup
 const orderDone = document.querySelector('#orderDone');
 const fullOrderContainer = document.querySelector('#fullOrderContainer');
 const fullOrderSummary = document.querySelector('#fullOrderSummary');
 const startOver = document.querySelector('#startOver');
 
-// En array för alla produkter som hamnar i varukorgen
-let cartArray = [];
+/**
+ * --------------------------------------------------
+ *                //// Functions ////
+ * --------------------------------------------------
+ */
 
-// Tom varukorg
-function cartIsEmpty() {
-  formSection.classList.add('hidden');
-  cartProducts.innerHTML = `
-    <div class="empty_cart">
-      <p>Your cart is empty.</p>
-    </div>
-  `;
-  checkoutTotal.innerHTML = '';
-}
-cartIsEmpty();
-
-// Funktion för att öppna och stänga navigationsmenyn, även med länkarna
+/**
+ * --------------------------------------------------
+ *                   Menu and theme
+ * --------------------------------------------------
+ */
+// Toggles the menu and close the menu with the links
 function toggleMenu() {
   const isOpen = nav.classList.toggle('open');
   menuBtn.classList.toggle('open');
@@ -227,51 +245,15 @@ function toggleMenu() {
   }
 }
 
-// Meddelande för seg kund
-function messageToSlow() {
-  // eslint-disable-next-line
-  gsap.fromTo(slowPopUP, { opacity: 0 }, { opacity: 1, duration: 0.3 });
-  slowPopUP.classList.remove('hidden');
-}
-function startTimer(duration) {
-  timerId = setTimeout(messageToSlow, duration);
-  timerRunning = true;
-}
+// For the menubutton
+menuBtn.addEventListener('click', toggleMenu);
 
-// Function för att avbryta timer
-function stopTimer() {
-  if (timerRunning) {
-    clearTimeout(timerId);
-    timerRunning = false;
-  }
-}
-
-// Popup när kunden är för långsam
-function clearAll() {
-  // eslint-disable-next-line
-  emptyCart();
-  orderForm.reset();
-  slowPopUP.classList.add('hidden');
-  window.scrollTo(0, 0);
-}
-function addTenMin() {
-  slowPopUP.classList.add('hidden');
-  startTimer(1000 * 60 * 10);
-}
-
-tenMoreMin.addEventListener('click', addTenMin);
-clearAllBtn.addEventListener('click', clearAll);
-
-// Loop med event för länkarna i navigationsmenyn
-// ! Medveten anonym funktion !
+// For the links in the menu
 menuLinks.forEach((item) => {
   item.addEventListener('click', toggleMenu);
 });
 
-// Event för menyknapp
-menuBtn.addEventListener('click', toggleMenu);
-
-// Funktioner för att byta bild på framsidan beroende på theme
+// Shift image in description field depending on color theme
 function changePhraseToWhite() {
   phraseImgWhite.classList.remove('hidden');
   phraseImgBlack.classList.add('hidden');
@@ -281,7 +263,7 @@ function changePhraseToBlack() {
   phraseImgBlack.classList.remove('hidden');
 }
 
-// Toggle för dark/lightmode
+// Check user default theme and add dark theme if prefered
 if (
   window.matchMedia &&
   window.matchMedia('(prefers-color-scheme: dark)').matches
@@ -293,7 +275,9 @@ if (
   lightMode.classList.toggle('hidden');
   changePhraseToBlack();
 }
-// Ändra färgtema
+
+// Toggle the color theme between dark and light and
+// change image in description field depending on theme
 function toggleTheme() {
   document.body.classList.toggle('dark_mode');
   lightMode.classList.toggle('hidden');
@@ -306,9 +290,74 @@ function toggleTheme() {
   }
 }
 
+// Event listener for the button that toggles color theme
 themeToggle.addEventListener('click', toggleTheme);
 
-// Minska antal i kundvagn
+/**
+ * --------------------------------------------------
+ *                   Timer
+ * --------------------------------------------------
+ */
+
+// Popup when timer runs out
+function messageToSlow() {
+  // eslint-disable-next-line
+  gsap.fromTo(slowPopUP, { opacity: 0 }, { opacity: 1, duration: 0.3 });
+  slowPopUP.classList.remove('hidden');
+}
+
+// To start the timer with a set duration
+function startTimer(duration) {
+  timerId = setTimeout(messageToSlow, duration);
+  timerRunning = true;
+}
+
+// To stop the timer
+function stopTimer() {
+  if (timerRunning) {
+    clearTimeout(timerId);
+    timerRunning = false;
+  }
+}
+
+// Empty the cart and reset the form
+function clearAll() {
+  // eslint-disable-next-line
+  emptyCart();
+  orderForm.reset();
+  slowPopUP.classList.add('hidden');
+  window.scrollTo(0, 0);
+}
+
+// Restart timer with 10 minutes to timer time
+function addTenMin() {
+  slowPopUP.classList.add('hidden');
+  startTimer(1000 * 60 * 10);
+}
+
+// Event listener for the popup when timer runs out
+tenMoreMin.addEventListener('click', addTenMin);
+clearAllBtn.addEventListener('click', clearAll);
+
+/**
+ * --------------------------------------------------
+ *              Adjust amounts in cart
+ * --------------------------------------------------
+ */
+
+// Render empty cart when theres no item in cart
+function cartIsEmpty() {
+  formSection.classList.add('hidden');
+  cartProducts.innerHTML = `
+    <div class="empty_cart">
+      <p>Your cart is empty.</p>
+    </div>
+  `;
+  checkoutTotal.innerHTML = '';
+}
+cartIsEmpty();
+
+// Decrease the amount on the item in the cart array and then reprint the cart
 function decreaseCartAmount(e) {
   const index = Number(e.currentTarget.dataset.id);
   const product = cartArray.find((p) => p.id === index);
@@ -321,7 +370,7 @@ function decreaseCartAmount(e) {
   printCart();
 }
 
-// Öka antal i kundvagn
+// Increase the amount on the item in the cart array and then reprint the cart
 function increaseCartAmount(e) {
   const index = Number(e.currentTarget.dataset.id);
   const product = cartArray.find((p) => p.id === index);
@@ -330,7 +379,7 @@ function increaseCartAmount(e) {
   printCart();
 }
 
-// Ta bort enskild produkt i kundvagnen
+// Delete single product and check if its the last product in cart to render empty cart
 function deleteSingleProduct(e) {
   const index = Number(e.currentTarget.id.replace('delete-', ''));
   const product = cartArray.findIndex((p) => p.id === index);
@@ -346,16 +395,49 @@ function deleteSingleProduct(e) {
   }
 }
 
-// Pop-up för att tömma kundvagnen
+// Empties the cart on products and renders an empty cart
+function emptyCart() {
+  cartArray = [];
+  clearCart.classList.add('hidden');
+  cartAmount.classList.add('hidden');
+  deleteContainer.classList.add('hidden');
+  stopTimer();
+  cartIsEmpty();
+  console.log(cartArray);
+}
+
+/**
+ * --------------------------------------------------
+ *                Empty cart popups
+ * --------------------------------------------------
+ */
+
+// Pop up that checks if user wants to empty cart
+function triggerPopUp() {
+  // eslint-disable-next-line
+  gsap.fromTo(deleteContainer, { opacity: 0 }, { opacity: 1, duration: 0.3 });
+  deleteContainer.classList.remove('hidden');
+}
+
+// Event listener to trigger pop up to check if user wants to empty cart
+clearCart.addEventListener('click', triggerPopUp);
+
+// Close pop up that checks if user wants to empty cart
 function closePopUp() {
   deleteContainer.classList.add('hidden');
 }
+
+// Event listeners for buttons in "sure to empty cart"-pop up
 backToCart.addEventListener('click', closePopUp);
-// eslint-disable-next-line
 sureToDelete.addEventListener('click', emptyCart);
 
-// Rabattkoder
-let deal = 1;
+/**
+ * --------------------------------------------------
+ *              Deals and promo codes
+ * --------------------------------------------------
+ */
+
+// Adding product if user writes in the right code
 const dealProduct = {
   name: 'Tomato Tango Symphony by Jenni',
   price: 1337,
@@ -371,9 +453,9 @@ const dealProduct = {
   id: 99,
 };
 
+// Checks the input of the promo code input and renders different results depending on input
 function checkCode() {
-  console.log(codeInput.value);
-  if (codeInput.value === 'Hello') {
+  if (codeInput.value === 'a_damn_fine-cup_of-coffee') {
     deal = 0;
     codeTextField.innerHTML = `
     <p>You got access to free items! Enjoy!</p>
@@ -391,8 +473,18 @@ function checkCode() {
     printCart();
   }
 }
+
+// Event listener for the button to add the promo code
 addCode.addEventListener('click', checkCode);
 
+/**
+ * --------------------------------------------------
+ *                  Render cart
+ * --------------------------------------------------
+ */
+
+/* function renderCartIten(product, index) {}
+ */
 // En funktion för att printa varukorgen
 function printCart() {
   let priceChange = 1;
@@ -411,6 +503,7 @@ function printCart() {
   const currentHour = today.getHours();
 
   cartProducts.innerHTML = '';
+
   // Helgpåslag av pris 15%
   if (
     (dayOfWeek === 5 && currentHour >= 15) ||
@@ -424,18 +517,20 @@ function printCart() {
   cartArray.forEach((product, index) => {
     let tenProcentAmount = '';
     let tenProcentSpec = '';
-    let productPrice = product.price;
+    let adjustedProductPrice = Math.round(product.price * priceChange);
+
     if (product.amount >= 10) {
-      productPrice *= 0.9;
+      const priceDiffer = Math.round(
+        // eslint-disable-next-line
+        adjustedProductPrice * product.amount * 0.1
+      );
+      adjustedProductPrice *= 0.9;
+
       tenProcentMessage =
         '<p class="discount_display_text">10% off if you buy ten items or more of the same product!</p>';
-      tenProcentAmount = `<p class="ten_off_text">- $${
-        Math.round(product.price * product.amount) -
-        Math.round(productPrice * product.amount)
-      }</p>`;
+      tenProcentAmount = `<p class="ten_off_text">- $${priceDiffer}</p>`;
       tenProcentSpec = '<p class="ten_off_text">10 gives 10%</p>';
     }
-    const adjustedProductPrice = productPrice * priceChange;
 
     totalSum += product.amount * adjustedProductPrice;
     fullSum += product.amount * adjustedProductPrice;
@@ -592,25 +687,6 @@ function printCart() {
   `;
 }
 
-// Tömma varukorgen
-function emptyCart() {
-  cartArray = [];
-  clearCart.classList.add('hidden');
-  cartAmount.classList.add('hidden');
-  deleteContainer.classList.add('hidden');
-  stopTimer();
-  printCart();
-  cartIsEmpty();
-  console.log(cartArray);
-}
-// Pop-up-fönster för att dubbelkolla att användaren vill ta bort alla varor
-function triggerPopUp() {
-  // eslint-disable-next-line
-  gsap.fromTo(deleteContainer, { opacity: 0 }, { opacity: 1, duration: 0.3 });
-  deleteContainer.classList.remove('hidden');
-}
-clearCart.addEventListener('click', triggerPopUp);
-
 // Knapparna för att öka och minska antalet
 function decreaseAmount(e) {
   const index = Number(e.currentTarget.dataset.id);
@@ -702,7 +778,7 @@ function addToCart(e) {
     (product) => product.id === cartProduct.id
   );
 
-  if (productToAdd.amount > 10) {
+  if (productToAdd.amount >= 10) {
     // Ta bort rabatt-text när man klickar
     const offerText = document.getElementById(`offer-${index}`);
     console.log(offerText);
@@ -909,13 +985,13 @@ function printProducts(filter) {
   }
 
   filteredProducts.forEach((product) => {
-    let productPrice = product.price;
     let tenProcentSpec = '';
+    let adjustedProductPrice = Math.round(product.price * priceChange);
+
     if (product.amount >= 10) {
       tenProcentSpec = `<p class="ten_off_text offer_text" id="offer-${product.id}">10 gives 10%!</p>`;
-      productPrice *= 0.9;
+      adjustedProductPrice *= 0.9;
     }
-    const adjustedProductPrice = productPrice * priceChange;
 
     // Lägger till en bild och knappar om det finns mer än en
     const secondImage =
