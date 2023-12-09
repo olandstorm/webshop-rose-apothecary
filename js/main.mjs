@@ -477,6 +477,21 @@ function checkCode() {
 // Event listener for the button to add the promo code
 addCode.addEventListener('click', checkCode);
 
+// Weekend increased price
+
+function ifAddOn(dayOfWeek, currentHour) {
+  // Helgpåslag av pris 15%
+  if (
+    (dayOfWeek === 5 && currentHour >= 15) ||
+    dayOfWeek === 6 ||
+    dayOfWeek === 0 ||
+    (dayOfWeek === 1 && currentHour <= 3)
+  ) {
+    return 1.15;
+  }
+  return 1;
+}
+
 /**
  * --------------------------------------------------
  *              Render cart item
@@ -538,13 +553,37 @@ function renderCartItem(
 
 /**
  * --------------------------------------------------
- *              Render cart item
+ *               Render cart
  * --------------------------------------------------
  */
 
+function updateCartIcon(totalAmount) {
+  // För att uppdatera numret på varukorgen
+  if (totalAmount > 0) {
+    cartAmount.classList.remove('hidden');
+    clearCart.classList.remove('hidden');
+    cartAmount.innerHTML = '';
+    cartAmount.innerHTML = `
+   ${totalAmount}
+  `;
+  }
+}
+
+function removeInvoiceOption(billedAmount) {
+  let onlyCardMessage = '';
+  // Ta bort faktura som alternativ om $800 överksrids
+  if (billedAmount > 800) {
+    onlyCardMessage =
+      '<p class="discount_display_text">Amounts over $800 can only be payed with card.</p>';
+    invoiceRadio.classList.add('hidden');
+  } else {
+    invoiceRadio.classList.remove('hidden');
+  }
+  return onlyCardMessage;
+}
+
 // En funktion för att printa varukorgen
 function printCart() {
-  let priceChange = 1;
   let totalSum = 0;
   let fullSum = 0;
   let totalAmount = 0;
@@ -553,23 +592,13 @@ function printCart() {
   let mondayAmount = '';
   let mondayMessage = '';
   let shippingMessage = '';
-  let onlyCardMessage = '';
   let tenProcentMessage = '';
   const today = new Date();
   const dayOfWeek = today.getDay();
   const currentHour = today.getHours();
+  const priceChange = ifAddOn(dayOfWeek, currentHour);
 
   cartProducts.innerHTML = '';
-
-  // Helgpåslag av pris 15%
-  if (
-    (dayOfWeek === 5 && currentHour >= 15) ||
-    dayOfWeek === 6 ||
-    dayOfWeek === 0 ||
-    (dayOfWeek === 1 && currentHour <= 3)
-  ) {
-    priceChange = 1.15;
-  }
 
   cartArray.forEach((product, index) => {
     let tenProcentAmount = '';
@@ -636,14 +665,7 @@ function printCart() {
   // Totalsumman med frakt
   billedAmount = Number(shippingSumTotal) + totalSum;
 
-  // Ta bort faktura som alternativ om $800 överksrids
-  if (billedAmount > 800) {
-    onlyCardMessage +=
-      '<p class="discount_display_text">Amounts over $800 can only be payed with card.</p>';
-    invoiceRadio.classList.add('hidden');
-  } else {
-    invoiceRadio.classList.remove('hidden');
-  }
+  const onlyCardMessage = removeInvoiceOption(billedAmount);
 
   // För att skriva ut totalen
   checkoutTotal.innerHTML = '';
@@ -661,15 +683,7 @@ function printCart() {
     </div>
   `;
 
-  // För att uppdatera numret på varukorgen
-  if (totalAmount > 0) {
-    cartAmount.classList.remove('hidden');
-    clearCart.classList.remove('hidden');
-    cartAmount.innerHTML = '';
-    cartAmount.innerHTML = `
-   ${totalAmount}
-  `;
-  }
+  updateCartIcon(totalAmount);
 
   // Ta bort enskild produkt
   Array.from(document.querySelectorAll('.delete_product')).forEach((btn) => {
@@ -979,20 +993,11 @@ function addEventListeners(product) {
 
 // En funktion för att printa produkterna
 function printProducts(filter) {
-  let priceChange = 1;
   const today = new Date();
   const dayOfWeek = today.getDay();
   const currentHour = today.getHours();
+  const priceChange = ifAddOn(dayOfWeek, currentHour);
   productContainer.innerHTML = '';
-
-  if (
-    (dayOfWeek === 5 && currentHour >= 15) ||
-    dayOfWeek === 6 ||
-    dayOfWeek === 0 ||
-    (dayOfWeek === 1 && currentHour <= 3)
-  ) {
-    priceChange = 1.15;
-  }
 
   let filteredProducts;
   switch (filter) {
