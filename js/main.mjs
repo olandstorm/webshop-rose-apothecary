@@ -162,6 +162,9 @@ const checkoutBtn = document.querySelector('#checkoutBtn');
 const policyAgreeCheckbox = document.querySelector('#policyAgreeCheckbox');
 const cardRadioButton = document.querySelector('#cardRadioButton');
 const invoiceRadioButton = document.querySelector('#invoiceRadioButton');
+const cardNumberInput = document.querySelector('#cardNumberInput');
+const cardExpireInput = document.querySelector('#cardExpireInput');
+const cardCVCInput = document.querySelector('#cardCVCInput');
 
 // RegEx
 const nameRegEx = /^[a-zäöå,.'-]+$/i;
@@ -651,11 +654,32 @@ function addProductPopUp() {
     .call(hideAddPopUp);
 }
 
+// Lägger till required på kortfälten alternativt personnummer beroende på radioinput
+
+function changeRequiredFields() {
+  if (cardRadioButton.checked) {
+    socialNr.required = false;
+    cardCVCInput.required = true;
+    cardExpireInput.required = true;
+    cardNumberInput.required = true;
+  } else if (invoiceRadioButton.checked) {
+    socialNr.required = true;
+    cardCVCInput.required = false;
+    cardExpireInput.required = false;
+    cardNumberInput.required = false;
+  }
+}
+
+cardInvoiceRadios.forEach((radioBtn) => {
+  radioBtn.addEventListener('change', changeRequiredFields);
+});
+
 // Funktion för att lägga till produkter i kundvagnen
 function addToCart(e) {
   const index = Number(e.currentTarget.dataset.id);
   console.log(e.currentTarget.dataset.id);
   formSection.classList.remove('hidden');
+  changeRequiredFields();
 
   // Välja ut rätt produkt
   const productToAdd = products.find((p) => p.id === index);

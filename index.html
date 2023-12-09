@@ -295,15 +295,17 @@
                         <h2>Card</h2>
                         <label class="payment_label full_width_field">
                             <span>Card number</span>
-                            <input type="text" class="long_input" autocomplete="cc-number" placeholder="Card Number">
+                            <input type="text" class="long_input" id="cardNumberInput" autocomplete="cc-number"
+                                placeholder="Card Number">
                         </label>
                         <label class="payment_label self_width_field">
                             <span>Expiration date</span>
-                            <input type="text" size="6" maxlength="5" placeholder="MM/YY" autocomplete="cc-exp">
+                            <input type="text" size="6" maxlength="5" id="cardExpireInput" placeholder="MM/YY"
+                                autocomplete="cc-exp">
                         </label>
                         <label class="payment_label half_width_field">
                             <span>CVC</span>
-                            <input type="text" size="3" maxlength="3" placeholder="XXX">
+                            <input type="text" size="3" maxlength="3" id="cardCVCInput" placeholder="XXX">
                         </label>
                     </div>
                     <div id="invoiceForm" class="payment_group hidden form_container">
