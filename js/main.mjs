@@ -268,7 +268,7 @@ if (
   window.matchMedia &&
   window.matchMedia('(prefers-color-scheme: dark)').matches
 ) {
-  document.body.classList.add('dark_mode');
+  bodyTag.classList.add('dark_mode');
   darkMode.classList.toggle('hidden');
   changePhraseToWhite();
 } else {
@@ -279,10 +279,10 @@ if (
 // Toggle the color theme between dark and light and
 // change image in description field depending on theme
 function toggleTheme() {
-  document.body.classList.toggle('dark_mode');
+  bodyTag.classList.toggle('dark_mode');
   lightMode.classList.toggle('hidden');
   darkMode.classList.toggle('hidden');
-  const isDark = document.body.classList.contains('dark_mode');
+  const isDark = bodyTag.classList.contains('dark_mode');
   if (isDark) {
     changePhraseToWhite();
   } else {
@@ -479,12 +479,69 @@ addCode.addEventListener('click', checkCode);
 
 /**
  * --------------------------------------------------
- *                  Render cart
+ *              Render cart item
  * --------------------------------------------------
  */
 
-/* function renderCartIten(product, index) {}
+function renderCartItem(
+  product,
+  index,
+  newProductPrice,
+  productSum,
+  tenProcentAmount,
+  // eslint-disable-next-line
+  tenProcentSpec
+) {
+  const productHTML = `
+  <article class="product_in_cart" id="cartItem_${[index]}">
+    <div class="cart_pic_container">
+      <figure>
+        <img
+          src="${product.images[0].src}"
+          alt="${product.images[0].alt}"
+          height="${product.images[0].height}"
+          width="${product.images[0].width}"
+        />
+      </figure>
+    </div>
+    <div class="cart_amount_container">
+    <div class="cart_name_price">
+    <h2>${product.name}</h2>
+    <p class="product_unit_price">
+      $${newProductPrice}
+    </p>
+    </div>
+      <div class="adjust_btn_container">
+        <button
+          class="decrease_cart_btn cart_adjust_btn product_btn"
+          data-id="${product.id}">-</button>
+        <span class="product_amount">${product.amount}</span>
+        <button
+          class="increase_cart_btn cart_adjust_btn product_btn"
+          data-id="${product.id}">+</button>
+      </div>
+    </div>
+    <div class="cart_total_container">
+      <div class="center_total_amounts">
+        ${tenProcentSpec} ${tenProcentAmount}
+        <p>Total: $${Math.round(productSum)}</p>
+      </div>
+    </div>
+    <button class="delete_product" id="delete-${product.id}">
+      <span class="material-symbols-outlined"> delete </span>
+    </button>
+  </article>
+`;
+
+  return { productHTML };
+}
+
+/**
+ * --------------------------------------------------
+ *              Render cart item
+ * --------------------------------------------------
  */
+
 // En funktion för att printa varukorgen
 function printCart() {
   let priceChange = 1;
@@ -518,6 +575,7 @@ function printCart() {
     let tenProcentAmount = '';
     let tenProcentSpec = '';
     let adjustedProductPrice = Math.round(product.price * priceChange);
+    const newProductPrice = Math.round(product.price * priceChange);
 
     if (product.amount >= 10) {
       const priceDiffer = Math.round(
@@ -532,50 +590,22 @@ function printCart() {
       tenProcentSpec = '<p class="ten_off_text">10 gives 10%</p>';
     }
 
-    totalSum += product.amount * adjustedProductPrice;
-    fullSum += product.amount * adjustedProductPrice;
+    totalSum += Math.round(product.amount * adjustedProductPrice);
+    fullSum += Math.round(product.amount * adjustedProductPrice);
+    const productSum = Math.round(product.amount * adjustedProductPrice);
     totalAmount += product.amount;
 
-    cartProducts.innerHTML += `
-      <article class="product_in_cart" id="cartItem_${[index]}">
-        <div class="cart_pic_container">
-          <figure>
-            <img
-              src="${product.images[0].src}"
-              alt="${product.images[0].alt}"
-              height="${product.images[0].height}"
-              width="${product.images[0].width}"
-            />
-          </figure>
-        </div>
-        <div class="cart_amount_container">
-        <div class="cart_name_price">
-        <h2>${product.name}</h2>
-        <p class="product_unit_price">
-          $${Math.round(product.price * priceChange)}
-        </p>
-        </div>
-          <div class="adjust_btn_container">
-            <button
-              class="decrease_cart_btn cart_adjust_btn product_btn"
-              data-id="${product.id}">-</button>
-            <span class="product_amount">${product.amount}</span>
-            <button
-              class="increase_cart_btn cart_adjust_btn product_btn"
-              data-id="${product.id}">+</button>
-          </div>
-        </div>
-        <div class="cart_total_container">
-          <div class="center_total_amounts">
-            ${tenProcentSpec} ${tenProcentAmount}
-            <p>Total: $${Math.round(adjustedProductPrice * product.amount)}</p>
-          </div>
-        </div>
-        <button class="delete_product" id="delete-${product.id}">
-          <span class="material-symbols-outlined"> delete </span>
-        </button>
-      </article>
-    `;
+    const cartItemRender = renderCartItem(
+      product,
+      index,
+      newProductPrice,
+      productSum,
+      tenProcentAmount,
+      // eslint-disable-next-line
+      tenProcentSpec
+    );
+
+    cartProducts.innerHTML += cartItemRender.productHTML;
   });
 
   // Räkna ut frakt
