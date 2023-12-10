@@ -11,6 +11,7 @@
 @import "layout/footer";
 @import "layout/main";
 @import "components/product-card";
+@import "components/product-in-cart";
 @import "components/slowpopup";
 @import "components/donepopup";
 @import "components/errorpopup";
@@ -25,7 +26,7 @@
 }
 
 @media screen and (min-width: 550px) {
-  @import "abstracts/cart-products";
+  @import "abstracts/cart-product-rows";
 }
 
 @media screen and (min-width: 768px) {

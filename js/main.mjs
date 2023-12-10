@@ -1,74 +1,4 @@
 /**
- *
- *
- *
- *      // produkterna
- *      [X] Skapa en array för alla produkter i butiken
- *      [X] Fyll i all info om objekten i arrayen
- *      [X] Skriv in så att alla bilder får rätt mått i innerHTML
- *      [X] Gör en loop som visar produkterna i HTML-strukturen
- *      [X] Fredagar efter 15 - måndag kl 03 ökar alla priser med 15%
- *
- *      // plus och minus
- *      [X] Skapa event för plus och minusknappar som ökar/minskar antalet av produkten
- *      [X] När antalet uppdateras uppdateras också beställningsknappens värde
- *
- *      // beställningsknappen
- *      [X] Printar antal * priset
- *      [X] Har ett event som placerar munkarna i varukorgen när man klickar på knappen
- *      [X] Nollställer produktkortet när man klickat på knappen
- *
- *
- *      // filtrering och sortering
- *      [X] En knapp för filtrering och sortering öppnar fält med alternativ
- *      [X] Man kan sortera på namn, pris, kategori och rating åt båda håll
- *      [X] Det finns knappar för alla dessa alternativ
- *      [X] ! OPTIONAL ! Olika radiobuttons kan filtrera på olika spann av pris
- *
- *      // varukorgen
- *      [X] Uppdateras /VISUELLT/ när man klickar på beställningsknapparna
- *      [] ! OPTIONAL ! Har en dropdownmeny när man hovrar över som visar valda produkter i nuläget
- *      [X] Stänger produktsidan och öppnar varukorgssidan vid klick
- *      [X] Stänger alltid menyn också om man klickar på varukorgen
- *
- *      // varukorgssidan
- *      [X] Visar alla valda produkter i en loop
- *      [X] Man kan ändra antal med knappar samt ta bort alla produkter av en sort med en knapp
- *      [X] Man kan också rensa alla produkter med en knapp
- *      [X] Det finns ett fält för rabattkoder
- *      [X] Prisspecifikation med frakt och totalpris visas och uppdateras /VISUELLT/ vid ändringar
- *      [X] Måndagar innan kl 10 är det 10% rabatt på totalen och en text visas och förklarar detta
- *      [X] Vid beställning >10 st av samma produkt tillkommer rabatt på 10% på den varan
- *      [X] Vid beställning av mer än 15 produkter är frakten gratis, annars 25kr + 10% av totalen
- *              ^Ändrat denna till $10 istället för 25kr^
- *      [X] Användaren har bara 15 min från att varukorgssidan öppnas att slutföra beställningen
- *      [X] Användaren meddelas om detta överskrids och allt rensas/nollställs
- *
- *      // formuläret
- *      [X] Man kan välja betalsätt vilket öppnar två olika formulär
- *      [X] Har man beställt för mer än 800 kr kan man inte välja faktura
- *      [X] Alla fält, förutom kort-fälten, valideras
- *      [X] Felen som finns markeras tydligt
- *      [X] Knappen skicka är inte möjlig att klicka förrän alla fält är validerade
- *      [X] Det ska visas en beställningsöversikt som kommer fram när beställningen läggs
- *
- *      // EXTRA
- *      [X] Se över alla klasser och namnge dem bättre (knapparna i CSS tex)
- *      [X] Lägga till ruta om försäkran om att man vill tömma varukorg
- *      [X] Lägga in fler bilder på varje produkt
- *      [X] Lägg till copytext
- *      [X] Fixa en tom varukorgs-vy
- *      [X] Sorterings-funktionen
- *      [X] Lösa visually_hidden-problemet
- *      [X] Fallback-meddelande om användaren inte har JS
- *      [X] Skriv ut vad rabatten är på
- *      [] Flytta ut i moduler och förbättra print-funktionerna
- *      [X] Gömma formuläret om varukorgen är tom
- *
- *
- */
-
-/**
  * --------------------------------------------------
  *            Importing product list
  * --------------------------------------------------
@@ -229,7 +159,8 @@ const startOver = document.querySelector('#startOver');
  *                   Menu and theme
  * --------------------------------------------------
  */
-// Toggles the menu and close the menu with the links
+// Toggles the menu with an animation when it opens and makes
+// sure the button has the right aria-label
 function toggleMenu() {
   const isOpen = nav.classList.toggle('open');
   menuBtn.classList.toggle('open');
@@ -248,9 +179,18 @@ function toggleMenu() {
 // For the menubutton
 menuBtn.addEventListener('click', toggleMenu);
 
-// For the links in the menu
+// Function for the links in the menu to get you back to the product page and close menu
+function startPageLinks() {
+  toggleMenu();
+  if (productPage.classList.contains('hidden')) {
+    productPage.classList.remove('hidden');
+    cartPage.classList.add('hidden');
+  }
+}
+
+// Add event listeners for all links in the menu
 menuLinks.forEach((item) => {
-  item.addEventListener('click', toggleMenu);
+  item.addEventListener('click', startPageLinks);
 });
 
 // Open up the cart page when clicking the cart icon in the header
@@ -419,8 +359,8 @@ function emptyCart() {
   cartAmount.classList.add('hidden');
   deleteContainer.classList.add('hidden');
   stopTimer();
+  orderForm.reset();
   cartIsEmpty();
-  console.log(cartArray);
 }
 
 /**
@@ -509,7 +449,7 @@ function ifAddOn(dayOfWeek, currentHour) {
     (dayOfWeek === 5 && currentHour >= 15) ||
     dayOfWeek === 6 ||
     dayOfWeek === 0 ||
-    (dayOfWeek === 1 && currentHour <= 3)
+    (dayOfWeek === 1 && currentHour < 3)
   ) {
     return 1.15;
   }
@@ -946,7 +886,6 @@ function toggleImage(imageType, productId) {
         fourthIcon.classList.add('hidden');
         fifthIcon.classList.remove('hidden');
         sixthIcon.classList.add('hidden');
-        console.log('1');
         break;
       case 'secondImage':
         firstImage.classList.add('hidden');
@@ -958,7 +897,6 @@ function toggleImage(imageType, productId) {
         fourthIcon.classList.remove('hidden');
         fifthIcon.classList.remove('hidden');
         sixthIcon.classList.add('hidden');
-        console.log('2');
         break;
       case 'thirdImage':
         firstImage.classList.add('hidden');
@@ -970,7 +908,6 @@ function toggleImage(imageType, productId) {
         fourthIcon.classList.add('hidden');
         fifthIcon.classList.add('hidden');
         sixthIcon.classList.remove('hidden');
-        console.log('3');
         break;
       default:
         break;
@@ -984,7 +921,6 @@ function toggleImage(imageType, productId) {
         secondIcon.classList.remove('hidden');
         thirdIcon.classList.remove('hidden');
         fourthIcon.classList.add('hidden');
-        console.log('1');
         break;
       case 'secondImage':
         firstImage.classList.add('hidden');
@@ -993,7 +929,6 @@ function toggleImage(imageType, productId) {
         secondIcon.classList.add('hidden');
         thirdIcon.classList.add('hidden');
         fourthIcon.classList.remove('hidden');
-        console.log('2');
         break;
       default:
         break;
@@ -1044,7 +979,144 @@ function addEventListeners(product) {
  * --------------------------------------------------
  */
 
-// En funktion för att printa produkterna
+// Renders the HTML for the product item in the list also adding images if more than
+// one and a third if more than two, returning HTML-structure to the print function
+function renderProductItem(
+  product,
+  priceChange,
+  tenProcentSpec,
+  // eslint-disable-next-line
+  adjustedProductPrice
+) {
+  const secondImage =
+    product.images.length >= 2
+      ? `<img
+        src="${product.images[1].src}"
+        alt="${product.images[1].alt}"
+        height="${product.images[1].height}"
+        width="${product.images[1].width}"
+        class="product_img hidden"
+        id="secondImage-${product.id}"
+      />`
+      : '';
+  // Lägger till knappar om det finns fler bilder
+  const imageBtns =
+    product.images.length >= 2
+      ? ` <button
+          class="change_image"
+          id="firstImageBtn-${product.id}">
+          <span
+            class="material-symbols-outlined image_icon hidden"
+            aria-label="First image"
+            id="firstIcon-${product.id}">
+            crop_16_9
+          </span>
+          <span
+            class="material-symbols-outlined image_icon filled_icon"
+            aria-label="Image showing"
+            id="secondIcon-${product.id}">
+            crop_16_9
+          </span>
+        </button>
+        <button class="change_image" id="secondImageBtn-${product.id}">
+          <span
+            class="material-symbols-outlined image_icon"
+            aria-label="Second image"
+            id="thirdIcon-${product.id}">
+            crop_16_9
+          </span>
+          <span
+            class="material-symbols-outlined image_icon filled_icon hidden"
+            aria-label="Image showing"
+            id="fourthIcon-${product.id}">
+            crop_16_9
+          </span>
+        </button>`
+      : '';
+  // Lägger till en tredje bild och knapp om det finns mer än en
+  const thirdImage =
+    product.images.length === 3
+      ? `<img
+        src="${product.images[2].src}"
+        alt="${product.images[2].alt}"
+        height="${product.images[2].height}"
+        width="${product.images[2].width}"
+        class="product_img hidden"
+        id="thirdImage-${product.id}"
+      />`
+      : '';
+  // Lägger till en till knapp om det finns tre bilder
+  const imageBtnsThird =
+    product.images.length === 3
+      ? `<button
+        class="change_image"
+        id="thirdImageBtn-${product.id}">
+        <span
+          class="material-symbols-outlined image_icon"
+          aria-label="Third image"
+          id="fifthIcon-${product.id}">
+          crop_16_9
+        </span>
+        <span
+          class="material-symbols-outlined image_icon filled_icon hidden"
+          aria-label="Image showing"
+          id="sixthIcon-${product.id}">
+          crop_16_9
+        </span>
+      </button>`
+      : '';
+
+  const productHTML = `
+  <article class="product_card" id="product_card__${product.id}">
+    <figure class="product_img_container">
+      <img
+        src="${product.images[0].src}"
+        alt="${product.images[0].alt}"
+        height="${product.images[0].height}"
+        width="${product.images[0].width}"
+        class="product_img"
+        id="firstImage-${product.id}"
+      />
+      ${secondImage} ${thirdImage}
+      <div class="button_container">${imageBtns} ${imageBtnsThird}</div>
+    </figure>
+    <div class="product_info">
+      <div>
+        <h2>${product.name}</h2>
+        <p class="product_description">${product.description}</p>
+        <p>$${Math.round(product.price * priceChange)}</p>
+        <p>Rating: ${product.rating}/5</p>
+      </div>
+      <div>
+        <div class="offer_spacer">${tenProcentSpec}</div>
+        <div class="adjust_amount_container">
+          <button class="decrease_btn product_btn" data-id="${product.id}">
+            -
+          </button>
+          <p class="amount_number" id="amount-${product.id}">
+            ${product.amount}
+          </p>
+          <button class="increase_btn product_btn" data-id="${product.id}">
+            +
+          </button>
+        </div>
+        <button
+          class="total_btn product_btn"
+          id="total-${product.id}"
+          data-id="${product.id}"
+        >
+          Buy $${Math.round(adjustedProductPrice * product.amount)}
+        </button>
+      </div>
+    </div>
+  </article>
+`;
+
+  return { productHTML };
+}
+
+// Rendering function that receives the HTML structure from renderProductItem and also includes
+// filter options for the products
 function printProducts(filter) {
   const today = new Date();
   const dayOfWeek = today.getDay();
@@ -1052,19 +1124,29 @@ function printProducts(filter) {
   const priceChange = ifAddOn(dayOfWeek, currentHour);
   productContainer.innerHTML = '';
 
+  // Filter products depending on price range
   let filteredProducts;
   switch (filter) {
     case 'ten':
-      filteredProducts = products.filter((product) => product.price <= 10);
+      filteredProducts = products.filter(
+        // eslint-disable-next-line
+        (product) => Math.round(product.price * priceChange) <= 10
+      );
       break;
     case 'eleventothirty':
       filteredProducts = products.filter(
-        // eslint-disable-next-line
-        (product) => product.price > 10 && product.price <= 30
+        (product) =>
+          // eslint-disable-next-line
+          Math.round(product.price * priceChange) > 10 &&
+          // eslint-disable-next-line
+          Math.round(product.price * priceChange) <= 30
       );
       break;
     case 'abovethirty':
-      filteredProducts = products.filter((product) => product.price > 30);
+      filteredProducts = products.filter(
+        // eslint-disable-next-line
+        (product) => Math.round(product.price * priceChange) > 30
+      );
       break;
     case 'all':
     default:
@@ -1072,6 +1154,7 @@ function printProducts(filter) {
       break;
   }
 
+  // Calculates and displays a message if the amount on a single product exceeds 10 to give 10% off
   filteredProducts.forEach((product) => {
     let tenProcentSpec = '';
     let adjustedProductPrice = Math.round(product.price * priceChange);
@@ -1081,141 +1164,27 @@ function printProducts(filter) {
       adjustedProductPrice *= 0.9;
     }
 
-    // Lägger till en bild och knappar om det finns mer än en
-    const secondImage =
-      product.images.length >= 2
-        ? `<img
-            src="${product.images[1].src}"
-            alt="${product.images[1].alt}"
-            height="${product.images[1].height}"
-            width="${product.images[1].width}"
-            class="product_img hidden"
-            id="secondImage-${product.id}"
-          />`
-        : '';
-    // Lägger till knappar om det finns fler bilder
-    const imageBtns =
-      product.images.length >= 2
-        ? ` <button
-              class="change_image"
-              id="firstImageBtn-${product.id}">
-              <span
-                class="material-symbols-outlined image_icon hidden"
-                aria-label="First image"
-                id="firstIcon-${product.id}">
-                crop_16_9
-              </span>
-              <span
-                class="material-symbols-outlined image_icon filled_icon"
-                aria-label="Image showing"
-                id="secondIcon-${product.id}">
-                crop_16_9
-              </span>
-            </button>
-            <button class="change_image" id="secondImageBtn-${product.id}">
-              <span
-                class="material-symbols-outlined image_icon"
-                aria-label="Second image"
-                id="thirdIcon-${product.id}">
-                crop_16_9
-              </span>
-              <span
-                class="material-symbols-outlined image_icon filled_icon hidden"
-                aria-label="Image showing"
-                id="fourthIcon-${product.id}">
-                crop_16_9
-              </span>
-            </button>`
-        : '';
-    // Lägger till en tredje bild och knapp om det finns mer än en
-    const thirdImage =
-      product.images.length === 3
-        ? `<img
-            src="${product.images[2].src}"
-            alt="${product.images[2].alt}"
-            height="${product.images[2].height}"
-            width="${product.images[2].width}"
-            class="product_img hidden"
-            id="thirdImage-${product.id}"
-          />`
-        : '';
-    // Lägger till en till knapp om det finns tre bilder
-    const imageBtnsThird =
-      product.images.length === 3
-        ? `<button
-            class="change_image"
-            id="thirdImageBtn-${product.id}">
-            <span
-              class="material-symbols-outlined image_icon"
-              aria-label="Third image"
-              id="fifthIcon-${product.id}">
-              crop_16_9
-            </span>
-            <span
-              class="material-symbols-outlined image_icon filled_icon hidden"
-              aria-label="Image showing"
-              id="sixthIcon-${product.id}">
-              crop_16_9
-            </span>
-          </button>`
-        : '';
+    const productItemRender = renderProductItem(
+      product,
+      priceChange,
+      tenProcentSpec,
+      // eslint-disable-next-line
+      adjustedProductPrice
+    );
 
-    productContainer.innerHTML += `
-      <article class="product_card" id="product_card__${product.id}">
-        <figure class="product_img_container">
-          <img
-            src="${product.images[0].src}"
-            alt="${product.images[0].alt}"
-            height="${product.images[0].height}"
-            width="${product.images[0].width}"
-            class="product_img"
-            id="firstImage-${product.id}"
-          />
-          ${secondImage} ${thirdImage}
-          <div class="button_container">${imageBtns} ${imageBtnsThird}</div>
-        </figure>
-        <div class="product_info">
-          <div>
-            <h2>${product.name}</h2>
-            <p class="product_description">${product.description}</p>
-            <p>$${Math.round(product.price * priceChange)}</p>
-            <p>Rating: ${product.rating}/5</p>
-          </div>
-          <div>
-            <div class="offer_spacer">${tenProcentSpec}</div>
-            <div class="adjust_amount_container">
-              <button class="decrease_btn product_btn" data-id="${product.id}">
-                -
-              </button>
-              <p class="amount_number" id="amount-${product.id}">
-                ${product.amount}
-              </p>
-              <button class="increase_btn product_btn" data-id="${product.id}">
-                +
-              </button>
-            </div>
-            <button
-              class="total_btn product_btn"
-              id="total-${product.id}"
-              data-id="${product.id}"
-            >
-              Buy $${Math.round(adjustedProductPrice * product.amount)}
-            </button>
-          </div>
-        </div>
-      </article>
-    `;
+    productContainer.innerHTML += productItemRender.productHTML;
   });
-  // Loop för att få alla eventlyssnare
+
+  // Loop to add eventlisteners to all products for the image-buttons
   products.forEach((product) => {
     addEventListeners(product);
   });
 
-  // Funktioner för att minska och öka antal produkter
+  // Variables for the buttons to change the amount on the product in the product list
   const decreaseBtn = document.querySelectorAll('.decrease_btn');
   const increaseBtn = document.querySelectorAll('.increase_btn');
 
-  // Öka och minska antal med knapparna
+  // Adding event listeners to the buttons to change amount in the product list
   decreaseBtn.forEach((btn) => {
     btn.addEventListener('click', decreaseAmount);
   });
@@ -1224,7 +1193,7 @@ function printProducts(filter) {
     btn.addEventListener('click', increaseAmount);
   });
 
-  // Lägga till i kundkorgen
+  // Button to add item to cart
   const buyItem = document.querySelectorAll('.total_btn');
 
   buyItem.forEach((btn) => {
@@ -1336,7 +1305,10 @@ document.querySelectorAll('input[name="priceRange"]').forEach((radioButton) => {
  * --------------------------------------------------
  */
 
-// Lägger till required på kortfälten alternativt personnummer beroende på radioinput
+// ---- NOTE : This part is not made in a perfect way and has some code repetition I
+// wish I had found better ways to solve.
+
+// Adds on required as an attribute to the payment inputs depending on the choice from the user
 function changeRequiredFields() {
   if (cardRadioButton.checked) {
     socialNr.required = false;
@@ -1351,23 +1323,23 @@ function changeRequiredFields() {
   }
 }
 
+// Gives the radio buttons for payment choice their event listeners for adding required
 cardInvoiceRadios.forEach((radioBtn) => {
   radioBtn.addEventListener('change', changeRequiredFields);
 });
 
-// Välja faktura eller kort
+// Toggles which inputs are on display depending on users choice
 function changePaymentMethod() {
   invoiceOption.classList.toggle('hidden');
   cardOption.classList.toggle('hidden');
 }
+
+// Gives the radio buttons for payment choice their event listeners for displaying the right input
 cardInvoiceRadios.forEach((radioBtn) => {
   radioBtn.addEventListener('change', changePaymentMethod);
 });
 
-// Rensa formulär och varukorg
-clearCartAndField.addEventListener('click', emptyCart);
-
-// Funktioner för att validera all RegEx
+// Functions to run the RegEx on each input to return a boolean
 function validateFName() {
   return nameRegEx.test(fName.value);
 }
@@ -1402,7 +1374,8 @@ function isInvoiceChosen() {
   return invoiceRadioButton.checked;
 }
 
-// Funktion för att kolla om det finns error-meddelande eller om det ska läggas till
+// Function that checks if there is already an error message by the input, if not,
+// adding one if the RegEx returns false
 function displayInputError(inputField, isValid) {
   const messageElement = document.querySelector(`#${inputField}-error`);
   const inputErrorField = document.querySelector(`#${inputField}`);
@@ -1425,6 +1398,8 @@ function displayInputError(inputField, isValid) {
   }
 }
 
+// Runs all the RegEx and displays error messages when returning value is false and
+// changing the submit buttons styling depending on RegEx runs false or true
 function checkInput() {
   displayInputError('fName', validateFName());
   displayInputError('lName', validateLName());
@@ -1470,6 +1445,7 @@ function checkInput() {
   }
 }
 
+// Event listeners for all inputs to run the check if valid or not
 cardRadioButton.addEventListener('input', checkInput);
 invoiceRadioButton.addEventListener('input', checkInput);
 policyAgreeCheckbox.addEventListener('input', checkInput);
@@ -1482,26 +1458,17 @@ streetName.addEventListener('input', checkInput);
 lName.addEventListener('input', checkInput);
 fName.addEventListener('input', checkInput);
 
-// Funktion för att kolla fälten
-function activateCheckoutBtn() {
-  /* checkInput(); */
-  const errorMessages = document.querySelectorAll('.input_error_message');
-  errorMessages.forEach((errorMessage) => {
-    errorMessage.classList.remove('hidden');
-  });
-  const allErrorInputs = document.querySelectorAll('.input_error_field');
-  allErrorInputs.forEach((errorInput) => {
-    errorInput.classList.add('error_field');
-  });
-}
-
-// Funktion och animation för popup om att något är fel i formuläret
+// Adds and removes the class hidden from the error pop up if inputs are invalid from RegEx
 function hideErrorPopUp() {
   wrongInputPopUp.classList.add('hidden');
 }
+
 function showErrorPopUp() {
   wrongInputPopUp.classList.remove('hidden');
 }
+
+// Animation for the error message pop up that displays if inputs passes required in
+// HTML but not RegEx validations
 // eslint-disable-next-line
 const wrongInputAnimation = gsap.timeline();
 
@@ -1515,12 +1482,35 @@ function wrongInput() {
     .call(hideErrorPopUp);
 }
 
-// Funktion för skicka-knappen
+// Shows all errormessages if there is any and adds a class to all inputs
+// styling them with a red border
+function displayErrorMessage() {
+  const errorMessages = document.querySelectorAll('.input_error_message');
+  errorMessages.forEach((errorMessage) => {
+    errorMessage.classList.remove('hidden');
+  });
+  const allErrorInputs = document.querySelectorAll('.input_error_field');
+  allErrorInputs.forEach((errorInput) => {
+    errorInput.classList.add('error_field');
+  });
+}
+
+// Event listener for inputs to display error stylings when HTML required is not valid
+policyAgreeCheckbox.addEventListener('invalid', displayErrorMessage);
+socialNr.addEventListener('invalid', displayErrorMessage);
+emailForm.addEventListener('invalid', displayErrorMessage);
+phoneNumber.addEventListener('invalid', displayErrorMessage);
+postalArea.addEventListener('invalid', displayErrorMessage);
+postalCode.addEventListener('invalid', displayErrorMessage);
+streetName.addEventListener('invalid', displayErrorMessage);
+lName.addEventListener('invalid', displayErrorMessage);
+fName.addEventListener('invalid', displayErrorMessage);
+
+// Final check up for submit button before sending form
 function finalCheckout(e) {
-  // Skicka inte in formuläret
+  // Prevents default submit action to be sure that HTML requirements and RegEx is both true
   e.preventDefault();
-  activateCheckoutBtn();
-  checkInput();
+  displayErrorMessage();
   if (isCardChosen()) {
     if (
       validateFName() &&
@@ -1532,14 +1522,12 @@ function finalCheckout(e) {
       validateEmail() &&
       validatePolicy()
     ) {
-      console.log('Allt är ifyllt rätt');
       orderDone.classList.remove('hidden');
       // eslint-disable-next-line
       gsap.fromTo(orderDone, { opacity: 0 }, { opacity: 1, duration: 0.3 });
       window.scrollTo(0, 0);
     } else {
       wrongInput();
-      console.log('Please correct the form errors before submitting.');
     }
   } else if (isInvoiceChosen()) {
     if (
@@ -1553,24 +1541,24 @@ function finalCheckout(e) {
       validatePolicy() &&
       validateSocialNr()
     ) {
-      console.log('Allt är ifyllt rätt');
       orderDone.classList.remove('hidden');
       // eslint-disable-next-line
       gsap.fromTo(orderDone, { opacity: 0 }, { opacity: 1, duration: 0.3 });
       window.scrollTo(0, 0);
     } else {
       wrongInput();
-      console.log('Please correct the form errors before submitting.');
     }
   }
 }
 
-// Kallar på skickaknappen
-checkoutBtn.addEventListener('click', checkInput);
+// Event listener for the submit function/button for the form
 orderForm.addEventListener('submit', finalCheckout);
 
-// Start over när beställning är lagd
+// Triggers a pop up to make sure that the user wants to clear the form and cart
+clearCartAndField.addEventListener('click', triggerPopUp);
 
+// When the pop up with the order confirmation comes up this then resets the page and cart to make
+// sure no inputs or toggles gets disturbed
 function backToStart() {
   orderDone.classList.add('hidden');
   emptyCart();

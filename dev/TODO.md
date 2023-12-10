@@ -1,0 +1,61 @@
+-      // produkterna
+-      [X] Skapa en array för alla produkter i butiken
+-      [X] Fyll i all info om objekten i arrayen
+-      [X] Skriv in så att alla bilder får rätt mått i innerHTML
+-      [X] Gör en loop som visar produkterna i HTML-strukturen
+-      [X] Fredagar efter 15 - måndag kl 03 ökar alla priser med 15%
+-
+-      // plus och minus
+-      [X] Skapa event för plus och minusknappar som ökar/minskar antalet av produkten
+-      [X] När antalet uppdateras uppdateras också beställningsknappens värde
+-
+-      // beställningsknappen
+-      [X] Printar antal * priset
+-      [X] Har ett event som placerar munkarna i varukorgen när man klickar på knappen
+-      [X] Nollställer produktkortet när man klickat på knappen
+-
+-
+-      // filtrering och sortering
+-      [X] En knapp för filtrering och sortering öppnar fält med alternativ
+-      [X] Man kan sortera på namn, pris, kategori och rating åt båda håll
+-      [X] Det finns knappar för alla dessa alternativ
+-      [X] ! OPTIONAL ! Olika radiobuttons kan filtrera på olika spann av pris
+-
+-      // varukorgen
+-      [X] Uppdateras /VISUELLT/ när man klickar på beställningsknapparna
+-      [X] Stänger produktsidan och öppnar varukorgssidan vid klick
+-      [X] Stänger alltid menyn också om man klickar på varukorgen
+-
+-      // varukorgssidan
+-      [X] Visar alla valda produkter i en loop
+-      [X] Man kan ändra antal med knappar samt ta bort alla produkter av en sort med en knapp
+-      [X] Man kan också rensa alla produkter med en knapp
+-      [X] Det finns ett fält för rabattkoder
+-      [X] Prisspecifikation med frakt och totalpris visas och uppdateras /VISUELLT/ vid ändringar
+-      [X] Måndagar innan kl 10 är det 10% rabatt på totalen och en text visas och förklarar detta
+-      [X] Vid beställning >10 st av samma produkt tillkommer rabatt på 10% på den varan
+-      [X] Vid beställning av mer än 15 produkter är frakten gratis, annars 25kr + 10% av totalen
+-              ^Ändrat denna till $10 istället för 25kr^
+-      [X] Användaren har bara 15 min från att varukorgssidan öppnas att slutföra beställningen
+-      [X] Användaren meddelas om detta överskrids och allt rensas/nollställs
+-
+-      // formuläret
+-      [X] Man kan välja betalsätt vilket öppnar två olika formulär
+-      [X] Har man beställt för mer än 800 kr kan man inte välja faktura
+-      [X] Alla fält, förutom kort-fälten, valideras
+-      [X] Felen som finns markeras tydligt
+-      [X] Knappen skicka är inte möjlig att klicka förrän alla fält är validerade
+-      [X] Det ska visas en beställningsöversikt som kommer fram när beställningen läggs
+-
+-      // EXTRA
+-      [X] Se över alla klasser och namnge dem bättre (knapparna i CSS tex)
+-      [X] Lägga till ruta om försäkran om att man vill tömma varukorg
+-      [X] Lägga in fler bilder på varje produkt
+-      [X] Lägg till copytext
+-      [X] Fixa en tom varukorgs-vy
+-      [X] Sorterings-funktionen
+-      [X] Lösa visually_hidden-problemet
+-      [X] Fallback-meddelande om användaren inte har JS
+-      [X] Skriv ut vad rabatten är på
+-      [X] Flytta ut i moduler och förbättra print-funktionerna
+-      [X] Gömma formuläret om varukorgen är tom

@@ -1,12 +1,23 @@
 main {
   min-height: calc(90vh - 250px);
 }
+
+/*
+---------------------------------
+          Product page
+---------------------------------
+*/
+
 .product_page {
   @include theme_colors($light-theme: true);
   body.dark_mode & {
     @include theme_colors($light-theme: false);
   }
-
+  /*
+---------------------------------
+      Description field
+---------------------------------
+*/
   .description_card {
     @include product_card_color($light-theme: true);
     body.dark_mode & {
@@ -31,7 +42,11 @@ main {
       margin: 20px auto;
     }
   }
-
+  /*
+---------------------------------
+    Container for all products
+---------------------------------
+*/
   .product_container {
     display: flex;
     margin: auto;
@@ -47,7 +62,11 @@ main {
       flex-shrink: 1;
     }
   }
-
+  /*
+---------------------------------
+           Deal banner
+---------------------------------
+*/
   .recent_offer {
     width: 100%;
     text-align: center;
@@ -65,7 +84,11 @@ main {
       }
     }
   }
-
+  /*
+---------------------------------
+      Filter and sorting
+---------------------------------
+*/
   .filter_container {
     display: flex;
     width: 93vw;
@@ -139,7 +162,11 @@ main {
     }
   }
 }
-
+/*
+---------------------------------
+            Cart page
+---------------------------------
+*/
 .cart_page {
   margin-top: 50px;
   @include theme_colors($light-theme: true);
@@ -150,6 +177,11 @@ main {
     margin: auto;
     width: 90vw;
   }
+  /*
+---------------------------------
+     Order summary section
+---------------------------------
+*/
   .order_summary {
     @include product_card_color($light-theme: true);
     body.dark_mode & {
@@ -222,13 +254,16 @@ main {
       }
     }
   }
-
+  /*
+---------------------------------
+     Order summary container
+---------------------------------
+*/
   .summary_container {
     margin-top: 15px;
     display: flex;
     flex-wrap: wrap;
     row-gap: 40px;
-
     .empty_cart {
       margin-top: 50px;
       display: flex;
@@ -246,77 +281,6 @@ main {
       width: 33.3%;
       @include hidden_mixin;
     }
-    .product_in_cart {
-      display: flex;
-      position: relative;
-      z-index: 0;
-      width: 100%;
-      height: 400px;
-      flex-direction: column;
-      justify-content: space-between;
-      row-gap: 5px;
-      @include cart_product($light-theme: true);
-      body.dark_mode & {
-        @include cart_product($light-theme: false);
-      }
-      .cart_pic_container {
-        max-height: 50%;
-      }
-      .cart_total_container,
-      .cart_amount_container,
-      .cart_pic_container {
-        max-width: 100%;
-        margin: 5px;
-        text-align: center;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        align-items: center;
-
-        .center_total_amounts {
-          width: fit-content;
-          text-align: right;
-
-          .ten_off_text {
-            font-size: 0.8rem;
-            font-style: italic;
-            opacity: 0.7;
-          }
-        }
-
-        .product_unit_price {
-          font-size: 0.9rem;
-          opacity: 0.7;
-        }
-        figure {
-          height: 200px;
-          width: 100%;
-          max-width: 230px;
-
-          img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-          }
-        }
-      }
-      .cart_amount_container {
-        justify-content: space-between;
-        flex-grow: 1;
-      }
-      .cart_adjust_btn:nth-child(1) {
-        margin: 0 1.5vw 10px 0;
-      }
-      .product_amount {
-        margin-right: 1.5vw;
-      }
-      .delete_product {
-        position: absolute;
-        right: 3vw;
-        top: 10px;
-      }
-    }
-
     .checkout_field {
       width: 100%;
       .discount_display_text {
@@ -324,7 +288,6 @@ main {
         font-style: italic;
         opacity: 0.7;
       }
-
       .checkout_total {
         width: 100%;
         text-align: right;
@@ -332,7 +295,6 @@ main {
         justify-content: flex-end;
         flex-wrap: wrap;
         margin-top: 10px;
-
         p {
           width: 50%;
           margin-right: 10px;
@@ -367,7 +329,11 @@ main {
       }
     }
   }
-
+  /*
+---------------------------------
+         Form section
+---------------------------------
+*/
   .form_section {
     margin: 20px auto 90px auto;
     width: 90vw;
@@ -466,7 +432,11 @@ main {
         }
       }
     }
-
+    /*
+---------------------------------
+         Error messages
+---------------------------------
+*/
     .error_field {
       @include error_field_border($light-theme: true);
       body.dark_mode & {
