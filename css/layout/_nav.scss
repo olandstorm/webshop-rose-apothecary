@@ -7,7 +7,6 @@ nav.open {
   padding-top: 60px;
   z-index: 50;
   overflow-y: auto;
-
   ul {
     list-style: none;
     padding: 0;
@@ -38,7 +37,6 @@ nav.open {
       }
     }
   }
-
   .nav_spacer {
     min-height: 300px;
     height: 80vh;
@@ -51,7 +49,6 @@ nav.open {
     margin-left: 5vw;
     @include icon_btn;
   }
-
   .light_mode_icon,
   .dark_mode_icon {
     @include text_color($light-theme: true);
@@ -60,11 +57,9 @@ nav.open {
     }
   }
 }
-
 nav:not(.open) {
   @include hidden_mixin;
 }
-
 .menu_btn {
   @include header_btn;
   border-radius: 8px;

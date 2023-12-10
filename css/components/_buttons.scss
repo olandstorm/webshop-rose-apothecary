@@ -5,7 +5,6 @@ button {
   cursor: pointer;
   text-transform: uppercase;
 }
-
 .product_btn {
   @include product_buttons($light-theme: true);
   body.dark_mode & {
@@ -15,7 +14,6 @@ button {
   border-radius: 2px;
   touch-action: manipulation;
 }
-
 .total_btn {
   display: block;
   width: 100%;
@@ -23,7 +21,6 @@ button {
   margin-top: 20px;
   font-size: 0.9rem;
 }
-
 .shopping_btn {
   @include header_btn;
   right: 8px;
@@ -36,7 +33,6 @@ button {
     @include text_color($light-theme: false);
   }
 }
-
 .open_products {
   @include back_button($light-theme: true);
   body.dark_mode & {
@@ -51,7 +47,6 @@ button {
   padding-right: 15px;
   font-size: 0.9rem;
 }
-
 .primary_btn {
   @include product_buttons($light-theme: true);
   body.dark_mode & {
@@ -61,18 +56,15 @@ button {
   border-radius: 2px;
   padding: 0 10px;
 }
-
 .add_code_btn {
   margin-top: 40px;
   font-size: 0.9rem;
 }
-
 .code_btn {
   font-size: 0.9rem;
   width: fit-content;
   height: fit-content;
 }
-
 .delete_product {
   @include icon_btn;
   @include delete_btn($light-theme: true);
@@ -80,18 +72,15 @@ button {
     @include delete_btn($light-theme: false);
   }
 }
-
 .cart_adjust_btn {
   @include delete_btn($light-theme: true);
   body.dark_mode & {
     @include delete_btn($light-theme: false);
   }
 }
-
 .clear_cart_btn {
   font-size: 0.9rem;
 }
-
 .disabled_btn {
   @include disabled_btn($light-theme: true);
   body.dark_mode & {

@@ -1,18 +1,15 @@
 a:hover {
   color: $color_accent;
 }
-
 input:hover {
   background-color: $white;
 }
-
 nav.open ul li a:hover {
   @include nav_hover_color($light-theme: true);
   body.dark_mode & {
     @include nav_hover_color($light-theme: false);
   }
 }
-
 .primary_btn:hover,
 .product_btn:hover {
   @include btn_hover($light-theme: true);
@@ -20,21 +17,18 @@ nav.open ul li a:hover {
     @include btn_hover($light-theme: false);
   }
 }
-
 .open_products:hover {
   @include back_btn_hover($light-theme: true);
   body.dark_mode & {
     @include back_btn_hover($light-theme: false);
   }
 }
-
 .delete_product:hover {
   @include delete_btn_hover($light-theme: true);
   body.dark_mode & {
     @include delete_btn_hover($light-theme: false);
   }
 }
-
 .clear_form_cart_btn:hover,
 .send_order_btn:hover {
   @include btn_hover($light-theme: true);
@@ -42,7 +36,6 @@ nav.open ul li a:hover {
     @include btn_hover($light-theme: false);
   }
 }
-
 .clear_cart_btn:hover,
 .clear_form_cart_btn:hover,
 .slow_clear_btn:hover {
@@ -51,7 +44,6 @@ nav.open ul li a:hover {
     @include empty_cart_btn($light-theme: false);
   }
 }
-
 .disabled_btn:hover {
   @include disabled_btn_hover($light-theme: true);
   body.dark_mode & {

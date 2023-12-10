@@ -9,14 +9,12 @@ header {
   padding: 1vw 0 2vw 0;
   border-bottom: 2px solid $light_grey;
   z-index: 1;
-
   .header_logo {
     width: 30%;
     min-width: 100px;
     height: auto;
     @include center_center;
   }
-
   .cart_number {
     background-color: rgba($color_secondary, 0.9);
     color: $color_text;

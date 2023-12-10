@@ -1,14 +1,12 @@
 @mixin hidden_mixin {
   display: none;
 }
-
 @mixin vertically_centered {
   position: absolute;
   top: 50%;
   -ms-transform: translateY(-50%);
   transform: translateY(-50%);
 }
-
 @mixin center_center {
   position: absolute;
   top: 50%;
@@ -16,7 +14,6 @@
   -ms-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
 }
-
 @mixin overlay_background {
   position: fixed;
   height: 100vh;
@@ -26,7 +23,6 @@
   top: 0;
   left: 0;
 }
-
 @mixin header_btn {
   height: 35px;
   width: 35px;
@@ -40,7 +36,6 @@
   color: $white;
   justify-content: center;
 }
-
 @mixin icon_btn {
   background: transparent;
   display: flex;
@@ -49,7 +44,6 @@
   border: 0;
   padding: 0;
 }
-
 @mixin theme_colors($light-theme: true) {
   @if $light-theme {
     background-color: $color_canvas;
@@ -59,7 +53,6 @@
     color: $color_text_dark;
   }
 }
-
 @mixin product_buttons($light-theme: true) {
   @if $light-theme {
     background-color: $color_text;
@@ -69,7 +62,6 @@
     color: $color_canvas;
   }
 }
-
 @mixin nav_open($light-theme: true) {
   @if $light-theme {
     background-color: $color_canvas;
@@ -86,7 +78,6 @@
     background-color: $color_text_dark;
   }
 }
-
 @mixin text_color($light-theme: true) {
   @if $light-theme {
     color: $color_text;
@@ -94,7 +85,6 @@
     color: $color_text_dark;
   }
 }
-
 @mixin nav_hover_color($light-theme: true) {
   @if $light-theme {
     color: $color_secondary;
@@ -102,7 +92,6 @@
     color: $color_primary_dark;
   }
 }
-
 @mixin nav_border_color($light-theme: true) {
   @if $light-theme {
     border-bottom: $color_text 1px solid;
@@ -110,7 +99,6 @@
     border-bottom: $color_text_dark 1px solid;
   }
 }
-
 @mixin filter_option($light-theme: true) {
   @if $light-theme {
     background-color: $color_primary;
@@ -118,7 +106,6 @@
     background-color: $color_primary_dark;
   }
 }
-
 @mixin filter_field_bg($light-theme: true) {
   @if $light-theme {
     background-color: $color_text;
@@ -126,7 +113,6 @@
     background-color: $color_text_dark;
   }
 }
-
 @mixin product_card_color($light-theme: true) {
   @if $light-theme {
     background-color: $color_primary;
@@ -134,7 +120,6 @@
     background-color: $color_primary_dark;
   }
 }
-
 @mixin btn_hover($light-theme: true) {
   @if $light-theme {
     background-color: $color_btn_hover;
@@ -142,7 +127,6 @@
     background-color: $color_text;
   }
 }
-
 @mixin back_button($light-theme: true) {
   @if $light-theme {
     background-color: $color_secondary;
@@ -159,7 +143,6 @@
     background-color: $color_secondary_dark;
   }
 }
-
 @mixin promo_field($light-theme: true) {
   @if $light-theme {
     background-color: $color_secondary;
@@ -178,7 +161,6 @@
     color: $color_text_dark;
   }
 }
-
 @mixin delete_btn($light-theme: true) {
   @if $light-theme {
     background-color: $color_secondary;
@@ -188,7 +170,6 @@
     color: $color_secondary;
   }
 }
-
 @mixin delete_btn_hover($light-theme: true) {
   @if $light-theme {
     color: $color_accent;
@@ -198,7 +179,6 @@
     background-color: $color_canvas_dark;
   }
 }
-
 @mixin delete_btn($light-theme: true) {
   @if $light-theme {
     background-color: $color_text;
@@ -208,7 +188,6 @@
     color: $color_text_dark;
   }
 }
-
 @mixin checkout_numbers($light-theme: true) {
   @if $light-theme {
     color: $color_primary_dark;
@@ -216,7 +195,6 @@
     color: $color_secondary;
   }
 }
-
 @mixin cart_number($light-theme: true) {
   @if $light-theme {
     background-color: rgba($color_primary_dark, 0.9);
@@ -226,7 +204,6 @@
     color: $color_text;
   }
 }
-
 @mixin empty_cart_btn($light-theme: true) {
   @if $light-theme {
     color: $color_accent;
@@ -234,7 +211,6 @@
     color: $color_accent;
   }
 }
-
 @mixin delete_question($light-theme: true) {
   @if $light-theme {
     background-color: rgba($color_primary_dark, 0.9);
@@ -244,7 +220,6 @@
     color: $color_text;
   }
 }
-
 @mixin disabled_btn($light-theme: true) {
   @if $light-theme {
     background-color: rgba($color_primary_dark, 0.4);
@@ -254,7 +229,6 @@
     color: $color_primary_dark;
   }
 }
-
 @mixin disabled_btn_hover($light-theme: true) {
   @if $light-theme {
     background-color: $color_primary_dark;
@@ -264,7 +238,6 @@
     color: $color_secondary;
   }
 }
-
 @mixin error_message($light-theme: true) {
   @if $light-theme {
     color: $dark_red;
@@ -272,7 +245,6 @@
     color: $light_red;
   }
 }
-
 @mixin error_field_outline($light-theme: true) {
   @if $light-theme {
     outline: 1.5px solid $dark_red;
@@ -280,7 +252,6 @@
     outline: 1.5px solid $light_red;
   }
 }
-
 @mixin error_field_border($light-theme: true) {
   @if $light-theme {
     border: 1px solid $dark_red;
@@ -288,7 +259,6 @@
     border: 1px solid $light_red;
   }
 }
-
 @mixin offer_container($light-theme: true) {
   @if $light-theme {
     color: $color_text;

@@ -2,7 +2,6 @@ main .cart_page .summary_container .product_in_cart {
   flex-direction: row;
   justify-content: space-between;
   height: 250px;
-
   .cart_amount_container {
     width: 30%;
     height: 100%;
@@ -26,12 +25,10 @@ main .cart_page .summary_container .product_in_cart {
     }
   }
 }
-
 .cart_page .order_form {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-
   div {
     padding: 30px 0;
   }
@@ -48,7 +45,6 @@ main .cart_page .summary_container .product_in_cart {
     }
     .general_form {
       justify-content: space-between;
-
       label {
         width: 100%;
         margin-left: 0;
