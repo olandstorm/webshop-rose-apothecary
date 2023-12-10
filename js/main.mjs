@@ -253,6 +253,23 @@ menuLinks.forEach((item) => {
   item.addEventListener('click', toggleMenu);
 });
 
+// Open up the cart page when clicking the cart icon in the header
+function openCart() {
+  cartPage.classList.remove('hidden');
+  productPage.classList.add('hidden');
+
+  // Close the menu if the user clicks the icon when the menu is open
+  if (nav.classList.contains('open')) {
+    toggleMenu();
+  }
+  // Scrolls the page to the top when entering the cart page
+  if (productPage.classList.contains('hidden')) {
+    window.scrollTo(0, 0);
+  }
+}
+
+shoppingCart.addEventListener('click', openCart);
+
 // Shift image in description field depending on color theme
 function changePhraseToWhite() {
   phraseImgWhite.classList.remove('hidden');
@@ -437,6 +454,14 @@ sureToDelete.addEventListener('click', emptyCart);
  * --------------------------------------------------
  */
 
+// Toggles the promo code field to display or not with an animation added to it
+function openCodeField() {
+  // eslint-disable-next-line
+  gsap.fromTo(promoContainer, { opacity: 0 }, { opacity: 1, duration: 0.7 });
+  promoContainer.classList.toggle('hidden');
+}
+codeBtn.addEventListener('click', openCodeField);
+
 // Adding product if user writes in the right code
 const dealProduct = {
   name: 'Tomato Tango Symphony by Jenni',
@@ -458,7 +483,7 @@ function checkCode() {
   if (codeInput.value === 'a_damn_fine-cup_of-coffee') {
     deal = 0;
     codeTextField.innerHTML = `
-    <p>You got access to free items! Enjoy!</p>
+      <p>You got access to free items! Enjoy!</p>
     `;
     codeInput.value = '';
     // eslint-disable-next-line
@@ -466,7 +491,7 @@ function checkCode() {
   } else if (codeInput.value === 'JENNIPULLI') {
     cartArray.push(dealProduct);
     codeTextField.innerHTML = `
-    <p>Enjoy your tomatoes!</p>
+      <p>Enjoy your tomatoes!</p>
     `;
     codeInput.value = '';
     // eslint-disable-next-line
@@ -478,7 +503,6 @@ function checkCode() {
 addCode.addEventListener('click', checkCode);
 
 // Weekend increased price
-
 function ifAddOn(dayOfWeek, currentHour) {
   // Helgpåslag av pris 15%
   if (
@@ -494,10 +518,11 @@ function ifAddOn(dayOfWeek, currentHour) {
 
 /**
  * --------------------------------------------------
- *              Render cart item
+ *                Render cart item
  * --------------------------------------------------
  */
 
+// Rendering HTML for each item added to the cart array returning the code with productHTML
 function renderCartItem(
   product,
   index,
@@ -553,12 +578,20 @@ function renderCartItem(
 
 /**
  * --------------------------------------------------
- *               Render cart
+ *                    Cart
  * --------------------------------------------------
  */
 
+// Button to go back to the product page
+function shopMore() {
+  cartPage.classList.add('hidden');
+  productPage.classList.remove('hidden');
+}
+backToProducts.addEventListener('click', shopMore);
+
+// Function to update the total amount of items on the cart icon
+// when amounts on the item is in-/decreased
 function updateCartIcon(totalAmount) {
-  // För att uppdatera numret på varukorgen
   if (totalAmount > 0) {
     cartAmount.classList.remove('hidden');
     clearCart.classList.remove('hidden');
@@ -569,9 +602,10 @@ function updateCartIcon(totalAmount) {
   }
 }
 
+// Toggles the option to pay via invoice if the total amount exceeds $800 and returns a message
+// letting the user know this
 function removeInvoiceOption(billedAmount) {
   let onlyCardMessage = '';
-  // Ta bort faktura som alternativ om $800 överksrids
   if (billedAmount > 800) {
     onlyCardMessage =
       '<p class="discount_display_text">Amounts over $800 can only be payed with card.</p>';
@@ -582,36 +616,65 @@ function removeInvoiceOption(billedAmount) {
   return onlyCardMessage;
 }
 
-// En funktion för att printa varukorgen
+// Renders the HTML for all ordered products in the order summary displaying amount, price and name
+function renderSummaryProducts(item, adjustPriceArray) {
+  let itemHTML = '';
+  item.forEach((product, index) => {
+    const productSum = Math.round(product.amount * adjustPriceArray[index]);
+    itemHTML += `
+      <div class="product_summary_field">
+        <p class="done_amount">${product.amount}x</p>
+        <p>${product.name}</p>
+        <p>$${productSum}</p>
+      </div>
+    `;
+  });
+
+  fullOrderContainer.innerHTML = itemHTML;
+}
+
+// The main function to print the cart of products containing adjustments for price and HTML renders
+// for the cart page
+// ---- NOTE: If I would do this project all over, this would be structured differently and avoid
+// ---- having such a long function.
 function printCart() {
   let totalSum = 0;
   let fullSum = 0;
   let totalAmount = 0;
   let billedAmount = 0;
+  const adjustPriceArray = [];
   let mondayOffer = '';
   let mondayAmount = '';
   let mondayMessage = '';
   let shippingMessage = '';
   let tenProcentMessage = '';
+  // To update the date when the user is active on the page and not when the page loads
   const today = new Date();
   const dayOfWeek = today.getDay();
   const currentHour = today.getHours();
+  // Calls to a function that raises the price on weekends
   const priceChange = ifAddOn(dayOfWeek, currentHour);
 
+  // Clear the HTML
   cartProducts.innerHTML = '';
 
+  // A loop to render all products pushed to the cart array
   cartArray.forEach((product, index) => {
     let tenProcentAmount = '';
     let tenProcentSpec = '';
-    let adjustedProductPrice = Math.round(product.price * priceChange);
+    const adjustedProductPrice = Math.round(product.price * priceChange);
+    // Pushes the items added into an array to be able to get it when displaying the order summary
+    adjustPriceArray.push(adjustedProductPrice);
     const newProductPrice = Math.round(product.price * priceChange);
 
+    // 10% of that item is taken of if the amount of the item exceeds 10
     if (product.amount >= 10) {
+      // Calculates the difference to display it in numbers for the user
       const priceDiffer = Math.round(
         // eslint-disable-next-line
         adjustedProductPrice * product.amount * 0.1
       );
-      adjustedProductPrice *= 0.9;
+      adjustPriceArray[index] *= 0.9;
 
       tenProcentMessage =
         '<p class="discount_display_text">10% off if you buy ten items or more of the same product!</p>';
@@ -619,11 +682,12 @@ function printCart() {
       tenProcentSpec = '<p class="ten_off_text">10 gives 10%</p>';
     }
 
-    totalSum += Math.round(product.amount * adjustedProductPrice);
-    fullSum += Math.round(product.amount * adjustedProductPrice);
-    const productSum = Math.round(product.amount * adjustedProductPrice);
+    const productSum = Math.round(product.amount * adjustPriceArray[index]);
+    totalSum += productSum; // The total that will be adjusted by discounts
+    fullSum += productSum; // The total without any discounts
     totalAmount += product.amount;
 
+    // Call and recieve the return from the function to then render the HTML
     const cartItemRender = renderCartItem(
       product,
       index,
@@ -637,7 +701,8 @@ function printCart() {
     cartProducts.innerHTML += cartItemRender.productHTML;
   });
 
-  // Räkna ut frakt
+  // Calculate shipping that is free if the user orders more than 15 products and otherwise
+  // $10 + 10% of the total amount
   let shippingSumTotal = 0;
   if (totalAmount > 15) {
     shippingSumTotal = 0;
@@ -647,7 +712,8 @@ function printCart() {
     shippingSumTotal = `${Math.round(10 + 0.1 * totalSum)}`;
   }
 
-  // Måndagsrabatt på 10% innan kl 10
+  // Monday morning discount on the total price showing the amount removed from the total and
+  // the new total amount by totalSum
   if (dayOfWeek === 1 && currentHour < 10) {
     totalSum *= 0.9;
     if (Math.round(fullSum) - Math.round(totalSum) > 0) {
@@ -662,12 +728,14 @@ function printCart() {
     }
   }
 
-  // Totalsumman med frakt
+  // The total amount with shipping and discount
   billedAmount = Number(shippingSumTotal) + totalSum;
 
+  // Returns a message if the total amount gets over $800 and the invoice payment option
+  // gets disabled
   const onlyCardMessage = removeInvoiceOption(billedAmount);
 
-  // För att skriva ut totalen
+  // Renders HTML for the calculations of price and messages about discounts and offers recieved
   checkoutTotal.innerHTML = '';
   checkoutTotal.innerHTML = `
     ${mondayOffer} ${tenProcentMessage} ${shippingMessage} ${onlyCardMessage}
@@ -679,51 +747,33 @@ function printCart() {
       ${mondayMessage} ${mondayAmount}
       <p class="total_text">Total:</p>
       <p id="billedAmount" class="total_text">
-      $${Math.round(billedAmount * deal)}</p>
+        $${Math.round(billedAmount * deal)}
+      </p>
     </div>
   `;
 
+  // Updates the amount on the cart icon in the header
   updateCartIcon(totalAmount);
 
-  // Ta bort enskild produkt
+  // Creates event listeners for all delete buttons rendered for each product in the cart array
   Array.from(document.querySelectorAll('.delete_product')).forEach((btn) => {
     btn.addEventListener('click', deleteSingleProduct);
   });
 
-  // Funktioner för att minska och öka antal produkter
-  const decreaseCartBtn = document.querySelectorAll('.decrease_cart_btn');
-  const increaseCartBtn = document.querySelectorAll('.increase_cart_btn');
-
-  // Öka och minska antal med knapparna
-  decreaseCartBtn.forEach((btn) => {
+  // Creates event listeners for all decrease buttons rendered for each product in the cart array
+  Array.from(document.querySelectorAll('.decrease_cart_btn')).forEach((btn) => {
     btn.addEventListener('click', decreaseCartAmount);
   });
 
-  increaseCartBtn.forEach((btn) => {
+  // Creates event listeners for all increase buttons rendered for each product in the cart array
+  Array.from(document.querySelectorAll('.increase_cart_btn')).forEach((btn) => {
     btn.addEventListener('click', increaseCartAmount);
   });
 
-  fullOrderContainer.innerHTML = '';
-  cartArray.forEach((product) => {
-    let productPrice = product.price;
-    if (product.amount >= 10) {
-      productPrice *= 0.9;
-    }
-    const adjustedProductPrice = productPrice * priceChange;
+  // Call to render the products in the order summary
+  renderSummaryProducts(cartArray, adjustPriceArray);
 
-    totalSum += product.amount * adjustedProductPrice;
-    totalAmount += product.amount;
-
-    fullOrderContainer.innerHTML += `
-      <div class="product_summary_field">
-        <p class="done_amount">${product.amount}x</p>
-        <p>${product.name}</p>
-        <p>$${Math.round(adjustedProductPrice * product.amount)}</p>
-      </div>
-    `;
-  });
-
-  // Skriva ut totalen på bekräftelsen
+  // Renders HTML to print on the order summary
   fullOrderSummary.innerHTML = '';
   fullOrderSummary.innerHTML = `
     <p class="done_total">Total:</p>
@@ -731,7 +781,14 @@ function printCart() {
   `;
 }
 
-// Knapparna för att öka och minska antalet
+/**
+ * --------------------------------------------------
+ *           Adjust items in product list
+ * --------------------------------------------------
+ */
+
+// To decrease the amount of the item in the array of products, making it not go below 0 and then
+// render the product list
 function decreaseAmount(e) {
   const index = Number(e.currentTarget.dataset.id);
   const product = products.find((p) => p.id === index);
@@ -740,21 +797,20 @@ function decreaseAmount(e) {
   } else {
     product.amount -= 1;
   }
-  console.log(index);
   // eslint-disable-next-line
   printProducts(currentFilter);
 }
 
+// To increase the amount of the item in the array of products and then render the product list
 function increaseAmount(e) {
   const index = Number(e.currentTarget.dataset.id);
   const product = products.find((p) => p.id === index);
   product.amount += 1;
-  console.log(index);
   // eslint-disable-next-line
   printProducts(currentFilter);
 }
 
-// Animering för att lägga till vara i varukorgen
+// Creates an animation with a pop up when the item is added to the cart to inform the user
 function hideAddPopUp() {
   addPopUp.classList.add('hidden');
 }
@@ -774,69 +830,53 @@ function addProductPopUp() {
     .call(hideAddPopUp);
 }
 
-// Lägger till required på kortfälten alternativt personnummer beroende på radioinput
-
-function changeRequiredFields() {
-  if (cardRadioButton.checked) {
-    socialNr.required = false;
-    cardCVCInput.required = true;
-    cardExpireInput.required = true;
-    cardNumberInput.required = true;
-  } else if (invoiceRadioButton.checked) {
-    socialNr.required = true;
-    cardCVCInput.required = false;
-    cardExpireInput.required = false;
-    cardNumberInput.required = false;
-  }
-}
-
-cardInvoiceRadios.forEach((radioBtn) => {
-  radioBtn.addEventListener('change', changeRequiredFields);
-});
-
-// Funktion för att lägga till produkter i kundvagnen
+// Function to push item into the cart array making sure if the item is already there, then adding
+// to the amount. Otherwise making a new deep copy of the product. Also shows the form when adding
+// a product to the cart array
 function addToCart(e) {
   const index = Number(e.currentTarget.dataset.id);
-  console.log(e.currentTarget.dataset.id);
-  formSection.classList.remove('hidden');
-  changeRequiredFields();
-
-  // Välja ut rätt produkt
+  // Finding the product clicked on
   const productToAdd = products.find((p) => p.id === index);
-  console.log(productToAdd);
-
-  const cartProduct = {
-    id: productToAdd.id,
-    name: productToAdd.name,
-    description: productToAdd.description,
-    price: productToAdd.price,
-    images: [...productToAdd.images],
-    rating: productToAdd.rating,
-    category: productToAdd.category,
-    amount: productToAdd.amount,
-  };
-
-  // Kolla om produkten finns i varukorgen
-  const existingProduct = cartArray.find(
-    // eslint-disable-next-line
-    (product) => product.id === cartProduct.id
-  );
-
-  if (productToAdd.amount >= 10) {
-    // Ta bort rabatt-text när man klickar
-    const offerText = document.getElementById(`offer-${index}`);
-    console.log(offerText);
-    offerText.classList.add('hidden');
-  }
-  // Om den finns adderas amounten istället för att lägga till ny produkt
-  if (existingProduct) {
-    existingProduct.amount += cartProduct.amount;
-    // Annars läggs den till som ny produkt
-  } else {
-    cartArray.push(JSON.parse(JSON.stringify(cartProduct)));
-  }
-
+  // Removes the actions to run if the amount is 0 on the item
   if (productToAdd.amount > 0) {
+    formSection.classList.remove('hidden');
+    // eslint-disable-next-line
+    changeRequiredFields();
+
+    // Defining what information to be copied to the cart array
+    const cartProduct = {
+      id: productToAdd.id,
+      name: productToAdd.name,
+      description: productToAdd.description,
+      price: productToAdd.price,
+      images: [...productToAdd.images],
+      rating: productToAdd.rating,
+      category: productToAdd.category,
+      amount: productToAdd.amount,
+    };
+
+    // Checks if the item already excists in the cart array
+    const existingProduct = cartArray.find(
+      // eslint-disable-next-line
+      (product) => product.id === cartProduct.id
+    );
+
+    // Removes the text about the 10% offer when the amount of items is over 10
+    if (productToAdd.amount >= 10) {
+      const offerText = document.getElementById(`offer-${index}`);
+      offerText.classList.add('hidden');
+    }
+
+    // If the product exists in the cart array, the amount is getting added to the product in cart
+    if (existingProduct) {
+      existingProduct.amount += cartProduct.amount;
+
+      // If the product is not in the array already, it gets a deep copy of the product
+    } else {
+      cartArray.push(JSON.parse(JSON.stringify(cartProduct)));
+    }
+
+    // Adds an animation to the amount displayed on the cart icon in the header
     // eslint-disable-next-line
     gsap.to('#amountCounter', {
       scale: 1.3,
@@ -846,33 +886,43 @@ function addToCart(e) {
       duration: 0.4,
     });
 
-    // Starta timer
+    // Starts the timer for 15 min when an item is added to the cart
     if (!timerRunning) {
       startTimer(1000 * 60 * 15);
     }
 
+    // Calls for the pop up to inform the user that an item(s) has been added to the cart
     addProductPopUp();
+
+    // Renders the cart page with the products in the cart array
+    printCart();
+
+    // Resets the numbers on the item in the product array
+    productToAdd.amount = 0;
+
+    // Resets the amounts displayed on the button and between
+    const totalBtn = document.getElementById(`total-${index}`);
+    const amountNumber = document.getElementById(`amount-${index}`);
+
+    if (amountNumber) {
+      amountNumber.textContent = productToAdd.amount;
+    }
+    if (totalBtn) {
+      totalBtn.textContent = 'Buy $0';
+    }
   }
-
-  printCart();
-  // Nollställa antalet i product-arrayen
-  productToAdd.amount = 0;
-
-  // Nollställa antalet i HTML-strukturen
-  const totalBtn = document.getElementById(`total-${index}`);
-  const amountNumber = document.getElementById(`amount-${index}`);
-
-  if (amountNumber) {
-    amountNumber.textContent = productToAdd.amount;
-  }
-
-  if (totalBtn) {
-    totalBtn.textContent = 'Buy $0';
-  }
-  console.log(cartArray);
 }
 
-// Byta bilder på produkterna
+/**
+ * --------------------------------------------------
+ *           Images in the product list
+ * --------------------------------------------------
+ */
+
+// Change images on the product page, toggling different icons
+// ---- NOTE: This is not an optimized sollution but rather a feature I really wanted to add and
+// ---- used this method just to make it work in a short amount of time during deadline pressure
+// ---- and would find a better sollution if redoing this project again.
 function toggleImage(imageType, productId) {
   const firstImage = document.getElementById(`firstImage-${productId}`);
   const secondImage = document.getElementById(`secondImage-${productId}`);
@@ -951,7 +1001,7 @@ function toggleImage(imageType, productId) {
   }
 }
 
-// Eventlyssnare på knapparna
+// Adding event listeners to the buttons to change image
 function addEventListeners(product) {
   const firstImageBtn = document.getElementById(`firstImageBtn-${product.id}`);
   const secondImageBtn = document.getElementById(
@@ -959,7 +1009,6 @@ function addEventListeners(product) {
     `secondImageBtn-${product.id}`
   );
   const thirdImageBtn = document.getElementById(`thirdImageBtn-${product.id}`);
-
   if (firstImageBtn) {
     firstImageBtn.addEventListener(
       'click',
@@ -969,7 +1018,6 @@ function addEventListeners(product) {
       // eslint-disable-next-line
     );
   }
-
   if (secondImageBtn) {
     secondImageBtn.addEventListener(
       'click',
@@ -979,7 +1027,6 @@ function addEventListeners(product) {
       // eslint-disable-next-line
     );
   }
-
   if (thirdImageBtn) {
     thirdImageBtn.addEventListener(
       'click',
@@ -990,6 +1037,12 @@ function addEventListeners(product) {
     );
   }
 }
+
+/**
+ * --------------------------------------------------
+ *                  Product list
+ * --------------------------------------------------
+ */
 
 // En funktion för att printa produkterna
 function printProducts(filter) {
@@ -1181,7 +1234,13 @@ function printProducts(filter) {
 
 printProducts(currentFilter);
 
-// Filter och sortering
+/**
+ * --------------------------------------------------
+ *          Sort and filter the product list
+ * --------------------------------------------------
+ */
+
+// Displays the filter and sorting field with animation added to it
 function toggleFilter() {
   // eslint-disable-next-line
   gsap.fromTo(
@@ -1192,10 +1251,9 @@ function toggleFilter() {
   );
   filterField.classList.toggle('hidden');
 }
-
 filterBtn.addEventListener('click', toggleFilter);
 
-// Sorteringsfunktion
+// Generic sorting function to sort products from A to Z / 1 to 9 and then render the new order
 function sortProducts(property) {
   products.sort((product1, product2) => {
     if (product1[property] < product2[property]) {
@@ -1209,7 +1267,7 @@ function sortProducts(property) {
   printProducts(currentFilter);
 }
 
-// Sortera baklänges
+// Generic sorting function to sort products from Z to A / 9 to 1 and then render the new order
 function sortProductsReversed(property) {
   products.sort((product1, product2) => {
     if (product1[property] > product2[property]) {
@@ -1222,7 +1280,8 @@ function sortProductsReversed(property) {
   });
   printProducts(currentFilter);
 }
-// Funktioner för att få in rätt property
+
+// Different functions to sort with the different properties
 function sortProductsByName() {
   sortProducts('name');
 }
@@ -1247,7 +1306,8 @@ function sortProductsByRating() {
 function sortProductsByRatingReversed() {
   sortProductsReversed('rating');
 }
-// Eventlyssnare på sorteringsknapparna
+
+// Event listeners for the different sorting options to trigger the sorting
 sortNameAZ.addEventListener('click', sortProductsByName);
 sortNameZA.addEventListener('click', sortProductsByNameReversed);
 sortPrice19.addEventListener('click', sortProductsByPrice);
@@ -1257,49 +1317,43 @@ sortCategoryZA.addEventListener('click', sortProductsByCategoryReversed);
 sortRating19.addEventListener('click', sortProductsByRating);
 sortRating91.addEventListener('click', sortProductsByRatingReversed);
 
-// Filtrering
+// Function to trigger the filter options by recieving the value of the clicked radio button
+// and then render the new filtered list
 function filterPrice(e) {
   const selectedRange = e.target.value;
   currentFilter = selectedRange;
   printProducts(currentFilter);
 }
 
+// Event listener on each of the radiobuttons to receive the value on the selected button
 document.querySelectorAll('input[name="priceRange"]').forEach((radioButton) => {
   radioButton.addEventListener('change', filterPrice);
 });
 
-// Öppna kundkorgen
+/**
+ * --------------------------------------------------
+ *               Form and validation
+ * --------------------------------------------------
+ */
 
-function openCart() {
-  cartPage.classList.remove('hidden');
-  productPage.classList.add('hidden');
-
-  if (nav.classList.contains('open')) {
-    toggleMenu();
+// Lägger till required på kortfälten alternativt personnummer beroende på radioinput
+function changeRequiredFields() {
+  if (cardRadioButton.checked) {
+    socialNr.required = false;
+    cardCVCInput.required = true;
+    cardExpireInput.required = true;
+    cardNumberInput.required = true;
+  } else if (invoiceRadioButton.checked) {
+    socialNr.required = true;
+    cardCVCInput.required = false;
+    cardExpireInput.required = false;
+    cardNumberInput.required = false;
   }
-  if (productPage.classList.contains('hidden')) {
-    window.scrollTo(0, 0);
-  }
 }
 
-shoppingCart.addEventListener('click', openCart);
-
-// Gå tillbaka till produktsidan
-function shopMore() {
-  cartPage.classList.add('hidden');
-  productPage.classList.remove('hidden');
-}
-
-backToProducts.addEventListener('click', shopMore);
-
-// Toggle rabattkodsfältet
-function openCodeField() {
-  // eslint-disable-next-line
-  gsap.fromTo(promoContainer, { opacity: 0 }, { opacity: 1, duration: 0.7 });
-  promoContainer.classList.toggle('hidden');
-}
-
-codeBtn.addEventListener('click', openCodeField);
+cardInvoiceRadios.forEach((radioBtn) => {
+  radioBtn.addEventListener('change', changeRequiredFields);
+});
 
 // Välja faktura eller kort
 function changePaymentMethod() {
@@ -1430,7 +1484,7 @@ fName.addEventListener('input', checkInput);
 
 // Funktion för att kolla fälten
 function activateCheckoutBtn() {
-  checkInput();
+  /* checkInput(); */
   const errorMessages = document.querySelectorAll('.input_error_message');
   errorMessages.forEach((errorMessage) => {
     errorMessage.classList.remove('hidden');
@@ -1512,7 +1566,7 @@ function finalCheckout(e) {
 }
 
 // Kallar på skickaknappen
-checkoutBtn.addEventListener('click', finalCheckout);
+checkoutBtn.addEventListener('click', checkInput);
 orderForm.addEventListener('submit', finalCheckout);
 
 // Start over när beställning är lagd
